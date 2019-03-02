@@ -1,4 +1,3 @@
-import { Ingredient } from "./ingredient";
 import { RecipeIngredient } from "./recipe-ingredient";
 
 export interface Recipe {
