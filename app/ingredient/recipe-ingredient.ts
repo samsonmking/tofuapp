@@ -5,9 +5,9 @@ export interface RecipeIngredient {
 }
 
 export enum Units {
-    Item = "ITEM",
-    Tsp = "TSP",
-    Tbsp = "TBSP",
-    Cups = "CUPS",
-    Oz = "OZ"
+    Item = "item",
+    Teaspoon = "teaspoon",
+    Tablespoon = "tablespoon",
+    Cups = "cup",
+    Oz = "oz"
 }

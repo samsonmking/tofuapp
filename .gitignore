@@ -81,3 +81,6 @@ typings/
 
 # Typescript transpiled
 build
+
+# Secret configs
+*config.ts

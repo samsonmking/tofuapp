@@ -1,7 +1,7 @@
-import { MemoryRecipeRepo } from "../app/recipe/memory-recipe-repo";
+import { MemoryRecipeRepo } from "../../app/recipe/memory-recipe-repo";
 import { expect } from "chai";
-import { Units } from "../app/recipe/recipe-ingredient";
-import { Recipe } from "../app/recipe/recipe";
+import { Units } from "../../app/ingredient/recipe-ingredient";
+import { Recipe } from "../../app/recipe/recipe";
 
 describe('memory-recipe-repo', () => {
     const quiche: Recipe = {

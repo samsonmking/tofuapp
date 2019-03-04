@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import { RecipeRoutes } from './recipe/recipe-routes';
 import { RecipeController } from './recipe/recipe-controller';
 import { seedRepo } from './recipe/memory-repo-seed';
+import { ZestfulIngredientParser } from './ingredient/zestful-ingredient-parser';
 
 const app: express.Application = express();
 
@@ -15,6 +16,6 @@ const recipeController = new RecipeController(recipeRepo);
 const recipeRoutes = new RecipeRoutes(recipeController);
 recipeRoutes.contributeRoutes(app);
 
-const server = app.listen(app.get('port'), () => {
-    console.log(`Listening on port ${app.get('port')}`);
-});
+ const server = app.listen(app.get('port'), () => {
+     console.log(`Listening on port ${app.get('port')}`);
+ });
