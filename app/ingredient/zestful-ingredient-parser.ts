@@ -21,12 +21,18 @@ export class ZestfulIngredientParser {
 
         const results: Results = await rp(options);
         return results.results.reduce<IngredientParsingResult>((acc, current) => {
-            
-            return this.updateParsingResult(acc, current.error, current.ingredientParsed ? {
-                ingredient: current.ingredientParsed.product || '',
-                quantity: current.ingredientParsed.quantity || 0,
-                unit: this.getUnit(current.ingredientParsed.unit)
-            } : undefined)
+            if(current.error) {
+                return this.updateParsingResult(acc, current.error);
+            }
+            if(current.ingredientParsed && current.ingredientParsed.product) {
+                return this.updateParsingResult(acc, current.error,  {
+                    ingredient: current.ingredientParsed.product,
+                    quantity: current.ingredientParsed.quantity || 1,
+                    unit: this.getUnit(current.ingredientParsed.unit)
+                })
+            } else {
+                return this.updateParsingResult(acc, `Could not parse '${current.ingredientRaw}'`);
+            }
         }, 
         {
             error: [],
@@ -46,14 +52,14 @@ export class ZestfulIngredientParser {
         if(!unit) {
             return Units.Item;
         } else {
-            switch(unit) {
-                case Units.Cups.toString():
+            switch(unit.toLowerCase()) {
+                case Units.Cups.toString().toLowerCase():
                     return Units.Cups;
-                case Units.Oz.toString():
+                case Units.Oz.toString().toLowerCase():
                     return Units.Oz;
-                case Units.Tablespoon.toString():
+                case Units.Tablespoon.toString().toLowerCase():
                     return Units.Tablespoon;
-                case Units.Teaspoon.toString():
+                case Units.Teaspoon.toString().toLowerCase():
                     return Units.Teaspoon;
                 default:
                     return Units.Item;

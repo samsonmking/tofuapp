@@ -25,7 +25,29 @@ describe('zestful-ingredient-parser', () => {
         expect(result.recipeIngredients).to.deep.include({
             ingredient: 'cinnamon',
             quantity: 1.5,
-        unit: Units.Tablespoon
+            unit: Units.Tablespoon
         });
     });
+    it('#parse() returns error if no ingredient can be parsed', async () => {
+        const testee = new ZestfulIngredientParser();
+        const result = await testee.parse([
+            "1"
+        ]);
+
+        expect(result.error).to.have.lengthOf(1);
+        expect(result.recipeIngredients).to.have.lengthOf(0);
+    });
+    it('#parse() defaults to 1 unit if only the ingredient is specified', async () => {
+        const testee = new ZestfulIngredientParser();
+        const result = await testee.parse([
+            "egg"
+        ]);
+
+        expect(result.error).to.have.lengthOf(0);
+        expect(result.recipeIngredients).to.deep.include({
+            ingredient: 'egg',
+            quantity: 1,
+            unit: Units.Item
+        });
+    })
 });
