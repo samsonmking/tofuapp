@@ -7,6 +7,9 @@ export class RecipeRoutes implements Route {
     }
 
     contributeRoutes(app: express.Application): void {
-        app.get("/recipe", this.recipeController.getRecipies);
+        app.get('/recipe', this.recipeController.getRecipies);
+        app.get('/recipe/:id', this.recipeController.getRecipe);
+        app.post('/recipe', this.recipeController.addNewRecipe);
+        app.put('/recipe/:id', this.recipeController.updateRecipe);
     }
 }
