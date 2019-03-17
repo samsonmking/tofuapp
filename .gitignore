@@ -84,3 +84,6 @@ build
 
 # Secret configs
 *config.ts
+
+# Images
+images/

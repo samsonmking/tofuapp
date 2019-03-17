@@ -4,7 +4,7 @@ import { Recipe, getRecipeRoute } from '../../app/recipe';
 import { expect } from 'chai';
 
 describe('recipe API IT', () => {
-    const app = buildApp(getRecipeRoute());
+    const app = buildApp([getRecipeRoute()], []);
     let newRecipe: Recipe;
 
     it('#POST /recipe adds new recipe', async () => {
