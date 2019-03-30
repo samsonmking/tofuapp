@@ -5,9 +5,10 @@ export class MemoryRecipeRepo implements RecipeRepo {
     private store: Map<number, Recipe>;
     private index: number;
 
-    constructor() {
-        this.store = new Map<number, Recipe>();
-        this.index = 1;
+    constructor(seed: Map<number, Recipe> = new Map<number, Recipe>(),
+     index: number = 1) {
+        this.store = seed;
+        this.index = index;
     }
 
     getRecipies(): Promise<Recipe[]> {
