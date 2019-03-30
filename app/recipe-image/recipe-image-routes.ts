@@ -10,6 +10,6 @@ export class RecipeImageRoutes implements Route {
 
     contributeRoutes(app: express.Application): void {
         app.post('/image/recipe', this.controller.addNewImage);
+        app.put('/image/recipe/:recipeId', this.controller.updateImage);
     }    
-    
 }
