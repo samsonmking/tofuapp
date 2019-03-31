@@ -13,7 +13,12 @@ describe('recipe API IT', () => {
         const ingredients = "1 cup tomatoe sauce\n2 cups cheese\nflour\n1 teaspoon sugar";
         const result = await request(app)
             .post('/recipe')
-            .send(`name=pizza&url=${url}&ingredients=${ingredients}&imageUrl=${imageUrl}`);
+            .send({
+                name: "pizza",
+                url: url,
+                ingredients: ingredients,
+                imageUrl: imageUrl
+            });
         const recipe = <Recipe>result.body;
         expect(recipe.ingredients).to.have.lengthOf(4);
         expect(recipe.name).to.eq("pizza");
