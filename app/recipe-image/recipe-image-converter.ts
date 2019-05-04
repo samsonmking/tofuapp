@@ -4,5 +4,4 @@ export interface RecipeImageConverter {
 
 export interface ImageConversionResult {
     success: boolean,
-    error? : string
 }

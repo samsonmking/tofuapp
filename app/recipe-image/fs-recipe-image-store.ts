@@ -22,8 +22,11 @@ export class FileRecipeImageStore implements RecipeImageStore, RecipeImageConver
             request(uri).pipe(resize);
             resize.pipe(fileStream);
             fileStream.on('finish', () => {
-                resolve({ success: true, error: undefined });
+                resolve({ success: true });
             });
+            fileStream.on('error', e => {
+                reject(e);
+            })
         });
     }
 }

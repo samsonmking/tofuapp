@@ -19,11 +19,11 @@ export class RecipeImageController {
             return next(boom.badRequest('missing image url'));
         }
 
-        const result = await this.converter.saveImage(recipeId, imageUrl);
-        if(result.success) {
+        try {
+           await this.converter.saveImage(recipeId, imageUrl);
             res.json({path: this.store.getImagePathForRecipe(recipeId)});
-        } else {
-            next(boom.notAcceptable(result.error));
+        } catch (e) {
+            next(boom.notAcceptable(e));
         }
     }
 
@@ -37,11 +37,11 @@ export class RecipeImageController {
             return next(boom.badRequest('missing image url'));
         }
 
-        const result = await this.converter.saveImage(recipeId, imageUrl);
-        if(result.success) {
+        try {
+            await this.converter.saveImage(recipeId, imageUrl);
             res.json({path: this.store.getImagePathForRecipe(recipeId)});
-        } else {
-            next(boom.notAcceptable(result.error));
+        } catch (e) {
+            next(boom.notAcceptable(e));
         }
     }
 

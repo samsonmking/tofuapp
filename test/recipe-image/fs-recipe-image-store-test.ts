@@ -13,14 +13,13 @@ describe('fs-recipe-image-store', () => {
         mock.restore();
     })
 
-    it('#saveImage() saves image to disk and returns successful ImageParseResult', async () => {
+    it('#saveImage() saves image to disk and returns successful ImageParseResult', async function() {
         const testee = new FileRecipeImageStore();
 
-        const result = await testee.saveImage(1, 'https://i.imgur.com/hG9Ykq5.jpg');
-        expect(result).to.deep.equal({ success: true, error: undefined });
+        await testee.saveImage(1, 'https://i.imgur.com/hG9Ykq5.jpg');
     });
 
-    it('#getImagePathForRecipe() returns base path + id', () => {
+    it('#getImagePathForRecipe() returns base path + id', function() {
         const basePath = '/images';
         const id = 1;
         const testee = new FileRecipeImageStore(basePath);

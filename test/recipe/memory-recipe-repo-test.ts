@@ -11,7 +11,7 @@ describe('memory-recipe-repo', () => {
             {ingredient: "egg", quantity: 4, unit: Units.Item}
         ]
     };
-    it('#getRecipies() new repo contains no elements', async() => {
+    it('#getRecipies() new repo contains no elements', async function() {
         const testee = new MemoryRecipeRepo();
         const result = await testee.getRecipies();
 
@@ -28,7 +28,7 @@ describe('memory-recipe-repo', () => {
         expect(sizeAfter).to.equal(sizeBefore + 1);
     });
 
-    it('#deleteRecipe() recepies can be removed from repo', async () => {
+    it('#deleteRecipe() recepies can be removed from repo', async function() {
         const testee = new MemoryRecipeRepo();
         const sizeBefore = (await testee.getRecipies()).length;
         await testee.addRecipe(quiche);
@@ -40,7 +40,7 @@ describe('memory-recipe-repo', () => {
         expect(sizeAfter).to.equal(sizeBefore + 1);
     });
 
-    it('#updateRecipe() changes recipe record', async() => {
+    it('#updateRecipe() changes recipe record', async function() {
         const testee = new MemoryRecipeRepo();
         const newRecipe = await testee.addRecipe(quiche);
         const updated = await testee.updateRecipe(

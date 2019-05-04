@@ -3,7 +3,7 @@ import { expect } from "chai";
 import { Units } from "../../app/ingredient/recipe-ingredient";
 
 describe('zestful-ingredient-parser', () => {
-    it('#parse() parses ingredient strings', async() => {
+    it('#parse() parses ingredient strings', async function() {
         const testee = new ZestfulIngredientParser();
         const result = await testee.parse([
             "2 cups baby portobello mushrooms, sliced",
@@ -28,7 +28,7 @@ describe('zestful-ingredient-parser', () => {
             unit: Units.Tablespoon
         });
     });
-    it('#parse() returns error if no ingredient can be parsed', async () => {
+    it('#parse() returns error if no ingredient can be parsed', async function() {
         const testee = new ZestfulIngredientParser();
         const result = await testee.parse([
             "1"
@@ -37,7 +37,7 @@ describe('zestful-ingredient-parser', () => {
         expect(result.error).to.have.lengthOf(1);
         expect(result.recipeIngredients).to.have.lengthOf(0);
     });
-    it('#parse() defaults to 1 unit if only the ingredient is specified', async () => {
+    it('#parse() defaults to 1 unit if only the ingredient is specified', async function() {
         const testee = new ZestfulIngredientParser();
         const result = await testee.parse([
             "egg"

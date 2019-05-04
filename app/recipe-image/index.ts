@@ -3,6 +3,8 @@ import { RecipeImageRoutes } from "./recipe-image-routes";
 import { RecipeImageController } from "./recipe-image-controller";
 import { RecipeImageStatic } from "./recipe-image-static";
 
+export * from './recipe-image-converter';
+
 export const getImageRoutes = () => {
     const fileSystemStore = new FileRecipeImageStore();
     const controller = new RecipeImageController(fileSystemStore, fileSystemStore);
@@ -11,4 +13,8 @@ export const getImageRoutes = () => {
 
 export const getImageResources = () => {
     return new RecipeImageStatic();
+}
+
+export const getImageConverter = () => {
+    return new FileRecipeImageStore;
 }

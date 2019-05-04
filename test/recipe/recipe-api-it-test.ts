@@ -2,12 +2,20 @@ import request from 'supertest';
 import { buildApp } from '../../app/app';
 import { Recipe, getRecipeRoute } from '../../app/recipe';
 import { expect } from 'chai';
+import { RecipeImageConverter, ImageConversionResult } from '../../app/recipe-image';
 
 describe('recipe-api-it', () => {
-    const app = buildApp([getRecipeRoute()], []);
+    class MockImageConverter implements RecipeImageConverter {
+        saveImage(recipeId: number, uri: string): Promise<ImageConversionResult> {
+            return Promise.resolve({success: true});
+        }
+
+        constructor() { }
+    }
+    const app = buildApp([getRecipeRoute(new MockImageConverter(), 'MEMORY')], []);
     let newRecipe: Recipe;
 
-    it('#POST /recipe adds new recipe', async () => {
+    it('#POST /recipe adds new recipe', async function() {
         const url = "https://www.tasteofhome.com/recipes/homemade-pizza/";
         const imageUrl = "https://www.tasteofhome.com/wp-content/uploads/2018/01/Homemade-Pizza_EXPS_THcom19_376_C02_14_6b-696x696.jpg";
         const ingredients = "1 cup tomatoe sauce\n2 cups cheese\nflour\n1 teaspoon sugar";
@@ -27,14 +35,14 @@ describe('recipe-api-it', () => {
         newRecipe = recipe;
     });
 
-    it('#GET /recipe/:id returns recipe with matching id', async () => {
+    it('#GET /recipe/:id returns recipe with matching id', async function() {
         const result = await request(app)
             .get(`/recipe/${newRecipe.id}`);
         const recipe = <Recipe>result.body;
         expect(recipe).to.deep.equal(newRecipe);
     });
 
-    it('#GET /recipe returns all recipes', async () => {
+    it('#GET /recipe returns all recipes', async function() {
         const result = await request(app)
             .get('/recipe');
         const recipes = <Recipe[]>result.body;
@@ -42,7 +50,7 @@ describe('recipe-api-it', () => {
         expect(recipes[0]).to.deep.equal(newRecipe);
     });
 
-    it('#PUT /recipe/:id updates recipe and returns new entity', async () => {
+    it('#PUT /recipe/:id updates recipe and returns new entity', async function () {
         const result = await request(app)
             .put(`/recipe/${newRecipe.id}`)
             .send(Object.assign({}, newRecipe, {name: 'cheese pizza'}));

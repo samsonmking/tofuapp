@@ -2,9 +2,14 @@ import { RecipeRepo } from "./recipe-repo";
 import { Request, Response, NextFunction } from "express";
 import { IngredientParser } from "../ingredient/ingredient-parser";
 import boom from 'boom';
+import { RecipeImageConverter } from "../recipe-image";
 
 export class RecipeController {
-    constructor(private repo: RecipeRepo, private parser: IngredientParser) { 
+    constructor(
+        private repo: RecipeRepo, 
+        private parser: IngredientParser,
+        private imageConverter: RecipeImageConverter
+        ) { 
     }
 
     getRecipies = async(req: Request, res: Response, next: NextFunction) => {
@@ -54,7 +59,11 @@ export class RecipeController {
                 name: name,
                 url: url,
                 ingredients: parseResults.recipeIngredients
-            })
+            });
+
+            if (newRecipe.id) {
+                await this.imageConverter.saveImage(newRecipe.id, imageSource);
+            }
 
             res.json(newRecipe);
         } catch (e) {

@@ -12,7 +12,7 @@ describe('file-recipe-repo', () => {
         mock.restore();
     });
 
-    it('#addRecipe() saves new entities to disk', async () => {
+    it('#addRecipe() saves new entities to disk', async function() {
         const path = 'store.json'; 
         const firstRepo = new FileRecipeRepo(path);
         const newEntry = await firstRepo.addRecipe({
