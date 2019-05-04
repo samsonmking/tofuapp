@@ -85,5 +85,6 @@ build
 # Secret configs
 *config.ts
 
-# Images
+# Development FS storage
+data/
 images/
