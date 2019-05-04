@@ -3,7 +3,7 @@ import { buildApp } from '../../app/app';
 import { Recipe, getRecipeRoute } from '../../app/recipe';
 import { expect } from 'chai';
 
-describe('recipe API IT', () => {
+describe('recipe-api-it', () => {
     const app = buildApp([getRecipeRoute()], []);
     let newRecipe: Recipe;
 
