@@ -8,10 +8,12 @@ import { MaterialModule } from './material/material.module';
 import { AddRecipeModule } from './add-recipe/add-recipe.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CoreDataModule } from './core-data/core-data.module';
+import { RecipesComponent } from './recipes/recipes.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    RecipesComponent,
   ],
   imports: [
     BrowserModule,

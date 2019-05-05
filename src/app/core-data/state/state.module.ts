@@ -7,6 +7,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { ManualEntryEffects } from './manual-entry/manual-entry.effects';
 import { NxModule } from '@nrwl/nx';
 import { ServicesModule } from '../services/services.module';
+import { RecipesEffects } from './recipies/recipes.effects';
 
 @NgModule({
   declarations: [],
@@ -15,7 +16,8 @@ import { ServicesModule } from '../services/services.module';
     NxModule.forRoot(),
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot([
-      ManualEntryEffects
+      ManualEntryEffects,
+      RecipesEffects
     ]),
     ServicesModule
   ]
