@@ -2,14 +2,14 @@ import {FileRecipeImageStore} from '../../app/recipe-image/fs-recipe-image-store
 import { expect } from 'chai';
 import mock from 'mock-fs';
 
-describe('fs-recipe-image-store', () => {
-    before(() => {
+describe('fs-recipe-image-store', function() {
+    before(function() {
         mock({
             'images': {}
         });
     });
 
-    after(() => {
+    after(function() {
         mock.restore();
     })
 

@@ -3,7 +3,7 @@ import { expect } from "chai";
 import { Units } from "../../app/ingredient/recipe-ingredient";
 import { NewRecipe } from "../../app/recipe/new-recipe";
 
-describe('memory-recipe-repo', () => {
+describe('memory-recipe-repo', function() {
     const quiche: NewRecipe = {
         name: "quiche",
         url: "http://food.com",

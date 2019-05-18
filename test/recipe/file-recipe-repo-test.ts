@@ -2,13 +2,13 @@ import { expect } from 'chai';
 import mock from 'mock-fs';
 import { FileRecipeRepo } from '../../app/recipe/file-recipe-repo';
 
-describe('file-recipe-repo', () => {
+describe('file-recipe-repo', function() {
 
-    before(() => {
+    before(function() {
         mock({});
     });
 
-    after(() => {
+    after(function() {
         mock.restore();
     });
 

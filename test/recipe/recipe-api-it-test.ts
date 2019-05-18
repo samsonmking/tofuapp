@@ -4,7 +4,7 @@ import { Recipe, getRecipeRoute } from '../../app/recipe';
 import { expect } from 'chai';
 import { RecipeImageConverter, ImageConversionResult } from '../../app/recipe-image';
 
-describe('recipe-api-it', () => {
+describe('recipe-api-it', function() {
     class MockImageConverter implements RecipeImageConverter {
         saveImage(recipeId: number, uri: string): Promise<ImageConversionResult> {
             return Promise.resolve({success: true});

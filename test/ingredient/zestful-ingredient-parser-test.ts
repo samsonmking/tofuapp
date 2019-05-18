@@ -2,7 +2,7 @@ import { ZestfulIngredientParser } from "../../app/ingredient/zestful-ingredient
 import { expect } from "chai";
 import { Units } from "../../app/ingredient/recipe-ingredient";
 
-describe('zestful-ingredient-parser', () => {
+describe('zestful-ingredient-parser', function() {
     it('#parse() parses ingredient strings', async function() {
         const testee = new ZestfulIngredientParser();
         const result = await testee.parse([
