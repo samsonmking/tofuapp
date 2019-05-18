@@ -1,6 +1,7 @@
+import { RecipeIngredient } from "../ingredient/recipe-ingredient";
+
 export interface NewRecipe {
-    title: string,
-    time: number,
-    ingredients: string,
-    photoUrl: string
+    name: String,
+    url: String,
+    ingredients: RecipeIngredient[]
 }

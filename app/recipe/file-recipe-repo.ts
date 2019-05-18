@@ -3,6 +3,8 @@ import { Recipe } from ".";
 import { MemoryRecipeRepo } from "./memory-recipe-repo";
 import fs from 'fs';
 import util from 'util';
+import { NewRecipe } from "./new-recipe";
+import { ShortRecipe } from "./short-recipe";
 
 export class FileRecipeRepo implements RecipeRepo {
     private readonly innerRepo: MemoryRecipeRepo;
@@ -27,24 +29,24 @@ export class FileRecipeRepo implements RecipeRepo {
         }
     }
     
-    getRecipies(): Promise<Recipe[]> {
-        return this.innerRepo.getRecipies();
+    getRecipes(): Promise<ShortRecipe[]> {
+        return this.innerRepo.getRecipes();
     }    
     
     getRecipe(id: number): Promise<Recipe> {
         return this.innerRepo.getRecipe(id);
     }
 
-    async addRecipe(recipe: Recipe): Promise<Recipe> {
+    async addRecipe(recipe: NewRecipe): Promise<Recipe> {
         const newRecipe = await this.innerRepo.addRecipe(recipe);
-        const updatedRecipies = await this.innerRepo.getRecipies();
+        const updatedRecipies = await this.innerRepo.getFullRecipes();
         await this.saveToFile(updatedRecipies);
         return newRecipe
     }
 
     async updateRecipe(recipe: Recipe): Promise<Recipe> {
         const updatedRecipe = await this.innerRepo.updateRecipe(recipe);
-        const updatedRecipies = await this.innerRepo.getRecipies();
+        const updatedRecipies = await this.innerRepo.getFullRecipes();
         await this.saveToFile(updatedRecipies);
         return updatedRecipe;
     }
@@ -52,7 +54,7 @@ export class FileRecipeRepo implements RecipeRepo {
     async deleteRecipe(id: number): Promise<boolean> {
         const deleted = await this.innerRepo.deleteRecipe(id);
         if (deleted) {
-            const updatedRecipies = await this.innerRepo.getRecipies();
+            const updatedRecipies = await this.innerRepo.getFullRecipes();
             await this.saveToFile(updatedRecipies);
         }
         return deleted;

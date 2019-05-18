@@ -14,7 +14,7 @@ export class RecipeController {
 
     getRecipies = async(req: Request, res: Response, next: NextFunction) => {
         try {
-            const recipies = await this.repo.getRecipies();
+            const recipies = await this.repo.getRecipes();
             res.json(recipies);
         } catch (e) {
             next(e);

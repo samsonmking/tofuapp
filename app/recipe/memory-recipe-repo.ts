@@ -1,5 +1,7 @@
 import { RecipeRepo } from "./recipe-repo";
 import { Recipe } from "./recipe";
+import { NewRecipe } from "./new-recipe";
+import { ShortRecipe } from "./short-recipe";
 
 export class MemoryRecipeRepo implements RecipeRepo {
     private store: Map<number, Recipe>;
@@ -11,11 +13,18 @@ export class MemoryRecipeRepo implements RecipeRepo {
         this.index = index;
     }
 
-    getRecipies(): Promise<Recipe[]> {
+    async getRecipes(): Promise<ShortRecipe[]> {
+       return (await this.getFullRecipes()).map(full => {
+           const { ingredients, ...short } = full;
+           return short;
+       });
+    }    
+
+    getFullRecipes() : Promise<Recipe[]> {
         return new Promise((resolve, reject) => {
             resolve(Array.from(this.store.values()));
         });
-    }    
+    }
     
     getRecipe(id: number): Promise<Recipe> {
         return new Promise((resolve, reject) => {
@@ -23,21 +32,17 @@ export class MemoryRecipeRepo implements RecipeRepo {
         });
     }
 
-    addRecipe(recipe: Recipe): Promise<Recipe> {
+    addRecipe(recipe: NewRecipe): Promise<Recipe> {
         return new Promise((resolve, reject) => {
-            if(recipe.id) {
-                reject(`new recipe cannot have id`);
-            } else {
-                const updatedRecipe = Object.assign({}, recipe, {id: this.index++});
-                this.store.set(updatedRecipe.id, updatedRecipe);
-                resolve(updatedRecipe);
-            }
+            const updatedRecipe = Object.assign({}, recipe, {id: this.index++});
+            this.store.set(updatedRecipe.id, updatedRecipe);
+            resolve(updatedRecipe);
         });
     }
 
     updateRecipe(recipe: Recipe): Promise<Recipe> {
         return new Promise((resolve, reject) => {
-            if(recipe.id && this.store.has(recipe.id)) {
+            if(this.store.has(recipe.id)) {
                 this.store.delete(recipe.id);
                 this.store.set(recipe.id, recipe);
                 resolve(recipe);
@@ -49,7 +54,7 @@ export class MemoryRecipeRepo implements RecipeRepo {
 
     deleteRecipe(id: number): Promise<boolean> {
         return new Promise((resolve, reject) => {
-            if(id && this.store.has(id)) {
+            if(this.store.has(id)) {
                 this.store.delete(id);
                 resolve(true);
             } else {

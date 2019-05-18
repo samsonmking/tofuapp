@@ -47,7 +47,8 @@ describe('recipe-api-it', () => {
             .get('/recipe');
         const recipes = <Recipe[]>result.body;
         expect(recipes).to.have.lengthOf(1);
-        expect(recipes[0]).to.deep.equal(newRecipe);
+        const {ingredients, ...shortNewRecipe} = newRecipe;
+        expect(recipes[0]).to.deep.equal(shortNewRecipe);
     });
 
     it('#PUT /recipe/:id updates recipe and returns new entity', async function () {

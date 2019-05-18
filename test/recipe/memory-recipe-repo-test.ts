@@ -1,10 +1,10 @@
 import { MemoryRecipeRepo } from "../../app/recipe/memory-recipe-repo";
 import { expect } from "chai";
 import { Units } from "../../app/ingredient/recipe-ingredient";
-import { Recipe } from "../../app/recipe/recipe";
+import { NewRecipe } from "../../app/recipe/new-recipe";
 
 describe('memory-recipe-repo', () => {
-    const quiche: Recipe = {
+    const quiche: NewRecipe = {
         name: "quiche",
         url: "http://food.com",
         ingredients: [
@@ -13,16 +13,16 @@ describe('memory-recipe-repo', () => {
     };
     it('#getRecipies() new repo contains no elements', async function() {
         const testee = new MemoryRecipeRepo();
-        const result = await testee.getRecipies();
+        const result = await testee.getRecipes();
 
         expect(result).to.have.lengthOf(0);
     });
 
     it('#addRecipe() new recepies are added to repo', async () => {
         const testee = new MemoryRecipeRepo();
-        const sizeBefore = (await testee.getRecipies()).length;
+        const sizeBefore = (await testee.getRecipes()).length;
         const result = await testee.addRecipe(quiche);
-        const sizeAfter = (await testee.getRecipies()).length;
+        const sizeAfter = (await testee.getRecipes()).length;
 
         expect(result.id).to.not.be.null;
         expect(sizeAfter).to.equal(sizeBefore + 1);
@@ -30,11 +30,11 @@ describe('memory-recipe-repo', () => {
 
     it('#deleteRecipe() recepies can be removed from repo', async function() {
         const testee = new MemoryRecipeRepo();
-        const sizeBefore = (await testee.getRecipies()).length;
+        const sizeBefore = (await testee.getRecipes()).length;
         await testee.addRecipe(quiche);
         const secondQuiche = await testee.addRecipe(quiche);
         const result = await testee.deleteRecipe(<number>secondQuiche.id);
-        const sizeAfter = (await testee.getRecipies()).length;
+        const sizeAfter = (await testee.getRecipes()).length;
 
         expect(result).to.be.true;
         expect(sizeAfter).to.equal(sizeBefore + 1);
