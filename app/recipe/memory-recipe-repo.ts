@@ -34,7 +34,8 @@ export class MemoryRecipeRepo implements RecipeRepo {
 
     addRecipe(recipe: NewRecipe): Promise<Recipe> {
         return new Promise((resolve, reject) => {
-            const updatedRecipe = Object.assign({}, recipe, {id: this.index++});
+            this.index += 1;
+            const updatedRecipe = Object.assign({}, recipe, {id: this.index });
             this.store.set(updatedRecipe.id, updatedRecipe);
             resolve(updatedRecipe);
         });
