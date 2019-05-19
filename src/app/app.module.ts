@@ -9,11 +9,14 @@ import { AddRecipeModule } from './add-recipe/add-recipe.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CoreDataModule } from './core-data/core-data.module';
 import { RecipesComponent } from './recipes/recipes.component';
+import { RecipeThumbComponent } from './recipe-thumb/recipe-thumb.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
     AppComponent,
     RecipesComponent,
+    RecipeThumbComponent,
   ],
   imports: [
     BrowserModule,
@@ -23,6 +26,7 @@ import { RecipesComponent } from './recipes/recipes.component';
     MaterialModule,
     AddRecipeModule,
     CoreDataModule,
+    FlexLayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]

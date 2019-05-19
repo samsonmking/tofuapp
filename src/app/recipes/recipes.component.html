@@ -1,3 +1,5 @@
-<div>
-  <pre>{{recipes$ | async | json}}</pre>
+<div fxLayout="row column" fxLayoutGap="10px">
+  <div *ngFor="let recipe of recipes$ | async">
+    <app-recipe-thumb [recipe]="recipe"></app-recipe-thumb>
+  </div>
 </div>

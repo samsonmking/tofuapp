@@ -26,9 +26,9 @@ export class RecipesEffects {
     });
 
     private getDisplayRecipe(recipe: Recipe): DisplayRecipe {
-        return Object.assign({}, recipe, 
+        return Object.assign({}, recipe,
             {
-                imageUrl: `http://localhost/images/recipe/${recipe.id}`
+                imageUrl: `http://localhost:3000/image/recipe/${recipe.id}.jpg`
             });
     }
 
