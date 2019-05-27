@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ManualEntryFacade } from 'src/app/core-data/state/manual-entry/manual-entry.facade';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-manual-entry',
@@ -15,7 +16,9 @@ export class ManualEntryComponent implements OnInit {
     ingredients: new FormControl('')
   });
 
-  constructor(private entryFacade: ManualEntryFacade) {
+  constructor(
+    private dialogRef: MatDialogRef<ManualEntryComponent>,
+    private entryFacade: ManualEntryFacade) {
   }
 
   ngOnInit() {

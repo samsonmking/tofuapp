@@ -6,6 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [ManualEntryComponent],
+  entryComponents: [ManualEntryComponent],
   imports: [
     CommonModule,
     MaterialModule,
