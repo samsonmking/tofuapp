@@ -12,3 +12,7 @@
     color: white;
     text-decoration: none;
 }
+
+.nav li a.active{
+    font-weight: bold;
+}
