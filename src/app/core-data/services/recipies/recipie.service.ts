@@ -7,7 +7,11 @@ import { ServicesModule } from '../services.module';
 @Injectable({providedIn: ServicesModule})
 export class RecipeService {
     getAllRecipies(): Observable<Recipe[]> {
-        return this.http.get<Recipe[]>('http://localhost:3000/recipe');
+        return this.http.get<Recipe[]>(`http://localhost:3000/recipe`);
+    }
+
+    getRecipeDetails(id: number): Observable<Recipe> {
+        return this.http.get<Recipe>(`http://localhost:3000/recipe/${id}`);
     }
 
     constructor(private http: HttpClient) {}
