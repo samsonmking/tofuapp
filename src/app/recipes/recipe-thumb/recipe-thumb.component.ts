@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { DisplayRecipe } from '../core-data/models/recipe/display-recipe';
+import { DisplayRecipe } from 'src/app/core-data/models/recipe/display-recipe';
 
 @Component({
   selector: 'app-recipe-thumb',

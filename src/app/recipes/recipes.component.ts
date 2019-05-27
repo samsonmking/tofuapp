@@ -3,7 +3,7 @@ import { RecipeFacade } from '../core-data/state/recipies/recipes.facade';
 import { Observable } from 'rxjs';
 import { DisplayRecipe } from '../core-data/models/recipe/display-recipe';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import { ManualEntryComponent } from '../add-recipe/manual-entry/manual-entry.component';
+import { ManualEntryComponent } from './add-recipe/manual-entry/manual-entry.component';
 
 @Component({
   selector: 'app-recipes',
