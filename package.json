@@ -35,5 +35,8 @@
     "supertest": "^4.0.2",
     "ts-node-dev": "^1.0.0-pre.32",
     "typescript": "^3.3.3333"
+  },
+  "devDependencies": {
+    "tslint": "^5.17.0"
   }
 }
