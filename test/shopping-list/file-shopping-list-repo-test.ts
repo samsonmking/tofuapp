@@ -12,11 +12,11 @@ describe("file-shopping-list-repo", function() {
         ]
     };
 
-    before(function() {
+    beforeEach(function() {
         mock({});
     });
 
-    after(function() {
+    afterEach(function() {
         mock.restore();
     });
 
@@ -40,5 +40,40 @@ describe("file-shopping-list-repo", function() {
         const thirdId = thirdEntry.id as number;
 
         expect(thirdId - secondId).to.equal(1);
+    });
+
+    it("#getShoppingLists returns all lists", async function() {
+        const repo_1 = new FileShoppingListRepo(path);
+        const firstEntry = await repo_1.addShoppingList(newList);
+        const secondEntry = await repo_1.addShoppingList(newList);
+
+        const repo_2 = new FileShoppingListRepo(path);
+        const result = await repo_2.getShoppingLists();
+
+        expect(result).to.deep.eq([firstEntry, secondEntry]);
+    });
+
+    it("#deleteShoppingList deletes shopping list", async function() {
+        const repo_1 = new FileShoppingListRepo(path);
+        const firstEntry = await repo_1.addShoppingList(newList);
+        await repo_1.deleteShoppingList(firstEntry.id as number);
+
+        const repo_2 = new FileShoppingListRepo(path);
+        const result = await repo_2.getShoppingLists();
+
+        expect(result).to.have.lengthOf(0);
+    });
+
+    it("#updateShoppingList updates entity", async function() {
+        const repo_1 = new FileShoppingListRepo(path);
+        const firstEntry = await repo_1.addShoppingList(newList);
+        const updatedEntry = Object.assign({}, firstEntry, { name: "updated" });
+        await repo_1.updateShoppingList(updatedEntry);
+
+
+        const repo_2 = new FileShoppingListRepo(path);
+        const result = await repo_2.getShoppingList(updatedEntry.id as number);
+
+        expect(result).to.deep.equal(updatedEntry);
     });
 });
