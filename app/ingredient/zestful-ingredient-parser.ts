@@ -1,5 +1,6 @@
 import { IngredientParser } from "./ingredient-parser";
-import { RecipeIngredient, Units } from "./recipe-ingredient";
+import { RecipeIngredient } from "./recipe-ingredient";
+import { Units } from "./Units";
 import rp from 'request-promise-native';
 import { IngredientParsingResult } from "./ingredients-parsing-result";
 import { apiKey } from "./config";

@@ -1,5 +1,5 @@
 import { MemoryRecipeRepo } from "./memory-recipe-repo";
-import { Units } from "../ingredient/recipe-ingredient";
+import { Units } from "../ingredient/Units";
 
 export const seedRepo = () => {
     const innerRepo = new MemoryRecipeRepo();

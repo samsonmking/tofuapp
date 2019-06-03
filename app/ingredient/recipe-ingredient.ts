@@ -1,13 +1,7 @@
-export interface RecipeIngredient {
-    ingredient: string,
-    quantity: number,
-    unit: Units
-}
+import { Units } from "./Units";
 
-export enum Units {
-    Item = "item",
-    Teaspoon = "teaspoon",
-    Tablespoon = "tablespoon",
-    Cups = "cup",
-    Oz = "oz"
+export interface RecipeIngredient {
+    ingredient: string;
+    quantity: number;
+    unit: Units;
 }

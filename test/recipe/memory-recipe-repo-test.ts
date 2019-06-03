@@ -1,6 +1,6 @@
 import { MemoryRecipeRepo } from "../../app/recipe/memory-recipe-repo";
 import { expect } from "chai";
-import { Units } from "../../app/ingredient/recipe-ingredient";
+import { Units } from "../../app/ingredient/Units";
 import { NewRecipe } from "../../app/recipe/new-recipe";
 
 describe('memory-recipe-repo', function() {

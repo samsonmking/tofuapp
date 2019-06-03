@@ -1,6 +1,6 @@
 import { ZestfulIngredientParser } from "../../app/ingredient/zestful-ingredient-parser";
 import { expect } from "chai";
-import { Units } from "../../app/ingredient/recipe-ingredient";
+import { Units } from "../../app/ingredient/Units";
 
 describe('zestful-ingredient-parser', function() {
     it('#parse() parses ingredient strings', async function() {
