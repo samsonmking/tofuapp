@@ -3,8 +3,19 @@ import { buildApp } from '../../app/app';
 import { Recipe, getRecipeRoute } from '../../app/recipe';
 import { expect } from 'chai';
 import { RecipeImageConverter, ImageConversionResult } from '../../app/recipe-image';
+import { dropDatabase, createDatabase } from '../../app/db/scaffold';
+import { deepEqual } from 'assert';
 
 describe('recipe-api-it', function() {
+    before(async function() {
+        await dropDatabase();
+        await createDatabase();
+    });
+
+    after(async function() {
+        await dropDatabase();
+    });
+    
     class MockImageConverter implements RecipeImageConverter {
         saveImage(recipeId: number, uri: string): Promise<ImageConversionResult> {
             return Promise.resolve({success: true});
@@ -12,7 +23,7 @@ describe('recipe-api-it', function() {
 
         constructor() { }
     }
-    const app = buildApp([getRecipeRoute(new MockImageConverter(), 'MEMORY')], []);
+    const app = buildApp([getRecipeRoute(new MockImageConverter())], []);
     let newRecipe: Recipe;
 
     it('#POST /recipe adds new recipe', async function() {
@@ -63,7 +74,7 @@ describe('recipe-api-it', function() {
 
         expect(queriedRecipe.name).to.eq('cheese pizza');
         expect(queriedRecipe).to.deep.eq(updatedRecipe);
-        expect(queriedRecipe).to.not.deep.eq(newRecipe);
+        expect(queriedRecipe).to.not.deep.include(newRecipe);
     });
 
 });

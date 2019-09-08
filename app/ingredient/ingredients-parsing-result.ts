@@ -1,6 +1,6 @@
-import { RecipeIngredient } from "./recipe-ingredient";
+import { ParsedIngredient } from "./parsed-ingredient";
 
 export interface IngredientParsingResult {
     error: string[],
-    recipeIngredients: RecipeIngredient[],
+    recipeIngredients: ParsedIngredient[],
 }

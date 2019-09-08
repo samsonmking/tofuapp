@@ -1,25 +1,18 @@
 import { ZestfulIngredientParser } from "../ingredient/zestful-ingredient-parser";
 import { RecipeController } from "./recipe-controller";
 import { RecipeRoutes } from "./recipe-routes";
-import { FileRecipeRepo } from "./file-recipe-repo";
 import { getImageConverter, RecipeImageConverter } from "../recipe-image";
-import { MemoryRecipeRepo } from "./memory-recipe-repo";
 import { RecipeRepo } from "./recipe-repo";
-export { Recipe } from './recipe';
+import { RecipePSRepo } from "./recipe-ps-repo";
+import { IngredientRepo } from "../ingredient/persistance/ingredient-repo";
+import { IngredientPSRepo } from "../ingredient/persistance/ingredient-ps-repo";
+export { Recipe } from './models/recipe';
 
 export const getRecipeRoute = (
         imageConverter: RecipeImageConverter = getImageConverter(),
-        repo: String = 'FILE') => {
+        repo: RecipeRepo = new RecipePSRepo(),
+        ingredientRepo: IngredientRepo = new IngredientPSRepo()) => {
     const parser = new ZestfulIngredientParser();
-    const repoImpl = repo === 'FILE' ? getFileRecipeRepo() : getMemoryRecipeRepo();
-    const recipeController = new RecipeController(repoImpl , parser, imageConverter);
+    const recipeController = new RecipeController(repo, ingredientRepo, parser, imageConverter);
     return new RecipeRoutes(recipeController);
-}
-
-const getFileRecipeRepo = (path: string = './data/recipe-store.json') => {
-    return new FileRecipeRepo(path);
-}
-
-const getMemoryRecipeRepo = () => {
-    return new MemoryRecipeRepo();
 }

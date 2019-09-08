@@ -4,8 +4,9 @@ import { Units } from "./Units";
 import rp from 'request-promise-native';
 import { IngredientParsingResult } from "./ingredients-parsing-result";
 import { apiKey } from "./config";
+import { ParsedIngredient } from "./parsed-ingredient";
 
-export class ZestfulIngredientParser {
+export class ZestfulIngredientParser implements IngredientParser {
     async parse(ingredients: string[]): Promise<IngredientParsingResult> {
         const options = {
             method: 'POST',
@@ -42,7 +43,7 @@ export class ZestfulIngredientParser {
 
     }
 
-    private updateParsingResult(original: IngredientParsingResult, error?: string, ingredient?: RecipeIngredient) {
+    private updateParsingResult(original: IngredientParsingResult, error?: string, ingredient?: ParsedIngredient) {
         return {
             error: error ? [...original.error, error] : original.error,
             recipeIngredients: ingredient ? [...original.recipeIngredients, ingredient] : original.recipeIngredients

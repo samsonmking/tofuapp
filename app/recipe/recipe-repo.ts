@@ -1,11 +1,11 @@
-import { Recipe } from "./recipe";
-import { NewRecipe } from "./new-recipe";
-import { ShortRecipe } from "./short-recipe";
+import { Recipe } from "./models/recipe";
+import { NewRecipe } from "./models/new-recipe";
+import { ShortRecipe } from "./models/short-recipe";
 
 export interface RecipeRepo {
     getRecipes(): Promise<ShortRecipe[]>,
-    getRecipe(id: number): Promise<Recipe>,
-    addRecipe(recipe: NewRecipe): Promise<Recipe>,
-    updateRecipe(recipe: Recipe): Promise<Recipe>,
+    getRecipeWithIngredients(id: number): Promise<Recipe>,
+    addRecipe(recipe: NewRecipe): Promise<ShortRecipe>,
+    updateRecipe(recipe: Recipe): Promise<ShortRecipe>,
     deleteRecipe(id: number): Promise<boolean>
 }

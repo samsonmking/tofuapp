@@ -3,10 +3,12 @@ import { Request, Response, NextFunction } from "express";
 import { IngredientParser } from "../ingredient/ingredient-parser";
 import boom from 'boom';
 import { RecipeImageConverter } from "../recipe-image";
+import { IngredientRepo } from "../ingredient/persistance/ingredient-repo";
 
 export class RecipeController {
     constructor(
-        private repo: RecipeRepo, 
+        private repo: RecipeRepo,
+        private ingredientRepo: IngredientRepo, 
         private parser: IngredientParser,
         private imageConverter: RecipeImageConverter
         ) { 
@@ -23,7 +25,7 @@ export class RecipeController {
 
     getRecipe = async(req: Request, res: Response, next: NextFunction) => {
         try{
-            const recipe = await this.repo.getRecipe(parseInt(req.params.id));
+            const recipe = await this.repo.getRecipeWithIngredients(parseInt(req.params.id));
             res.json(recipe);
         } catch (e) {
             next(e);
@@ -58,14 +60,15 @@ export class RecipeController {
             const newRecipe = await this.repo.addRecipe({
                 name: name,
                 url: url,
-                ingredients: parseResults.recipeIngredients
             });
 
-            if (newRecipe.id) {
-                await this.imageConverter.saveImage(newRecipe.id, imageSource);
-            }
-
-            res.json(newRecipe);
+            await this.imageConverter.saveImage(newRecipe.id, imageSource);
+            const newIngredients = await Promise.all(parseResults.recipeIngredients.map((i) => 
+                (this.ingredientRepo.addIngredient({ recipe_id: newRecipe.id, ...i }))
+            ));
+            // TODO implement multiple insert in db
+            newIngredients.sort((a, b) => ((a.id as number) - (b.id as number)));
+            res.json({ ...newRecipe, ingredients: newIngredients });
         } catch (e) {
             next(e);
         }

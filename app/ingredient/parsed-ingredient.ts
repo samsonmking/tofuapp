@@ -1,8 +1,6 @@
 import { Units } from "./Units";
 
-export interface RecipeIngredient {
-    id?: number;
-    recipe_id: number;
+export interface ParsedIngredient {
     ingredient: string;
     quantity: number;
     unit: Units;
