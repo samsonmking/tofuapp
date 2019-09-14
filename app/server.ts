@@ -1,10 +1,12 @@
 import { getRecipeRoute } from './recipe';
 import { buildApp } from './app';
 import { getImageRoutes, getImageResources } from './recipe-image';
+import { getIngredientRoutes } from './ingredient';
 
 const routes = [
     getRecipeRoute(),
     getImageRoutes(),
+    getIngredientRoutes()
 ];
 const staticResources = [
     getImageResources(),

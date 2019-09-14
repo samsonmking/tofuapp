@@ -12,7 +12,9 @@ export class IngredientPSRepo implements IngredientRepo {
             WHERE recipe_id = $1
             ORDER BY id ASC`, [recipeId]);
         return dbResult.rows.map(row => (
-            { ...row, unit: Units[row.unit] }
+            { ...row, 
+                quantity: parseFloat(row.quantity) 
+            }
         ) as RecipeIngredient);
     }    
     
