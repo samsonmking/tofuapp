@@ -45,6 +45,17 @@ export class RecipePSRepo implements RecipeRepo {
         return result.rows[0];
     }
 
+    public async addRecipes(recipes: NewRecipe[]): Promise<ShortRecipe> {
+        const values = recipes.reduce((acc, curr) => {
+            return acc + (acc ? "," : "") + `('${curr.name}', '${curr.url}')`;
+        }, "");
+        const result = await query(`
+            INSERT into recipes (name, url) 
+            VALUES ${values} 
+            RETURNING name, id`);
+        return result.rows[0];
+    }
+
     public async updateRecipe(recipe: Recipe): Promise<ShortRecipe> {
         const result = await query(`
             UPDATE recipes

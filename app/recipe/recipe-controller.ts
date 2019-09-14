@@ -63,12 +63,10 @@ export class RecipeController {
             });
 
             await this.imageConverter.saveImage(newRecipe.id, imageSource);
-            const newIngredients = await Promise.all(parseResults.recipeIngredients.map((i) => 
-                (this.ingredientRepo.addIngredient({ recipe_id: newRecipe.id, ...i }))
-            ));
-            // TODO implement multiple insert in db
-            newIngredients.sort((a, b) => ((a.id as number) - (b.id as number)));
-            res.json({ ...newRecipe, ingredients: newIngredients });
+            const newIngredients = parseResults.recipeIngredients.map((i) => 
+                ({ recipe_id: newRecipe.id, ...i }));
+            const createdIngredients = await this.ingredientRepo.addIngredients(newIngredients);
+            res.json({ ...newRecipe, ingredients: createdIngredients });
         } catch (e) {
             next(e);
         }

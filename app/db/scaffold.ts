@@ -57,21 +57,15 @@ export async function importData(payload: string) {
     const ingredientRepo = new IngredientPSRepo();
 
     const recipes: Recipe[] = JSON.parse(payload);
-    recipes.forEach(async (recipe) => {
+    for (const recipe of recipes) {
         const dbRecipe = await recipeRepo.addRecipe({
             name: recipe.name,
             url: recipe.url
         });
         const recipeId = dbRecipe.id;
-        recipe.ingredients.forEach(async (ingredient) => {
-            await ingredientRepo.addIngredient({
-                recipe_id: recipeId,
-                ingredient: ingredient.ingredient,
-                quantity: ingredient.quantity,
-                unit: ingredient.unit
-            });
-        })
-    });
+        const ingredients = recipe.ingredients.map(i => ({ ...i, recipe_id: recipeId }));
+        await ingredientRepo.addIngredients(ingredients);
+    }   
 }
 
 export async function dropDatabase() {

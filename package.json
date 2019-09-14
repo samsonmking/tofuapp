@@ -8,7 +8,7 @@
     "tsc": "tsc",
     "dev": "NODE_ENV=dev ts-node-dev -r dotenv/config --respawn --transpileOnly ./app/server.ts dotenv_config_path=./dev.env",
     "prod": "tsc && node ./build/server.js",
-    "scaffold": "NODE_ENV=dev ts-node-dev -r dotenv/config --transpileOnly ./app/scaffold-db.ts dotenv_config_path=./dev.env"
+    "scaffold": "./scaffold/copy_images.sh && NODE_ENV=dev ts-node-dev -r dotenv/config --transpileOnly ./scaffold/scaffold.ts dotenv_config_path=./dev.env"
   },
   "author": "",
   "license": "ISC",

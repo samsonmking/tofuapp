@@ -33,6 +33,21 @@ export class IngredientPSRepo implements IngredientRepo {
         };
     }
 
+    public async addIngredients(payload: RecipeIngredient[]): Promise<RecipeIngredient[]> {
+        const values = payload.reduce((acc, curr) => 
+            (acc + (acc ? "," : "") + `('${curr.recipe_id}', '${curr.ingredient}', ${curr.quantity}, '${curr.unit}')`), "");
+            
+        const dbResult = await query(`
+            INSERT INTO ingredients(recipe_id, ingredient, quantity, unit)
+            VALUES ${values} 
+            RETURNING id, recipe_id, ingredient, quantity, unit`);
+
+        return dbResult.rows.map(dbIngredient => ({
+            ...dbIngredient,
+            quantity: Number.parseFloat(dbIngredient.quantity),
+        }));
+    }
+
     public updateIngredient(payload: RecipeIngredient): Promise<RecipeIngredient> {
         throw new Error("Method not implemented.");
     }
