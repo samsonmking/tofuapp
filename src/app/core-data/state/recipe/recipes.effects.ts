@@ -3,7 +3,7 @@ import { Effect, Actions } from '@ngrx/effects';
 import { DataPersistence } from '@nrwl/nx';
 import { RecipesState } from './recipes.reducer';
 import { RecipeService } from '../../services/recipies/recipie.service';
-import { RecipesActionTypes, GetAllRequest, GetAllComplete, GetRecipeDetails, RecipeDetailsComplete } from './recipes.actions';
+import { RecipesActionTypes, GetAllRequest, GetAllComplete } from './recipes.actions';
 import { DisplayRecipe } from '../../models/recipe/display-recipe';
 import { Recipe } from '../../models/recipe/recipe';
 import { map, switchMap } from 'rxjs/operators';
@@ -19,26 +19,6 @@ export class RecipesEffects {
                 map(recipes => recipes.map(r => this.getDisplayRecipe(r))),
                 map(displayRecipies => new GetAllComplete(displayRecipies))
             );
-        },
-
-        onError: (action: GetAllRequest, error) => {
-            console.log('Error', error);
-        }
-    });
-
-    @Effect()
-    getRecipeDetails$ = this.dataPersistance.pessimisticUpdate(RecipesActionTypes.GetRecipeDetails, {
-        run: (action: GetRecipeDetails, state: RecipesState) => {
-            const id = action.payload;
-            const lastState = selectRecipeEntities(state)[id];
-            if (lastState && lastState.ingredients) {
-                return new RecipeDetailsComplete(lastState);
-            } else {
-                return this.service.getRecipeDetails(id).pipe(
-                    map(r => this.getDisplayRecipe(r)),
-                    map(r => new RecipeDetailsComplete(Object.assign({}, lastState, r)))
-                );
-            }
         },
 
         onError: (action: GetAllRequest, error) => {

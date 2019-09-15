@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RecipeFacade } from '../core-data/state/recipies/recipes.facade';
+import { RecipeFacade } from '../core-data/state/recipe/recipes.facade';
 import { Observable } from 'rxjs';
 import { DisplayRecipe } from '../core-data/models/recipe/display-recipe';
 import { MatDialog } from '@angular/material';

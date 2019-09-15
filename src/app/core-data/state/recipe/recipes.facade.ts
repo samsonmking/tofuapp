@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { AppState, selectAllRecipes, selectRecipeEntities } from '..';
+import { AppState, selectAllRecipes, selectRecipeEntities, selectRecipeById } from '..';
 import { ActionsSubject, Store, select } from '@ngrx/store';
-import { GetAllRequest, GetRecipeDetails } from './recipes.actions';
+import { GetAllRequest } from './recipes.actions';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -14,12 +14,8 @@ export class RecipeFacade {
         this.store.dispatch(new GetAllRequest());
     }
 
-    getRecipeDetails(id: number) {
-        this.store.dispatch(new GetRecipeDetails(id));
-        return this.store.pipe(
-            select(selectRecipeEntities),
-            map(entities => entities[id])
-        );
+    getRecipe(id: number) {
+        return this.store.pipe(select(selectRecipeById(id)));
     }
 
     constructor(private store: Store<AppState>,
