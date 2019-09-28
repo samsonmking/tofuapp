@@ -9,6 +9,7 @@ import { NxModule } from '@nrwl/nx';
 import { ServicesModule } from '../services/services.module';
 import { RecipesEffects } from './recipe/recipes.effects';
 import { IngredientEffects } from './ingredient/ingredient.effects';
+import { UserEffects } from './user/user.effects';
 
 @NgModule({
   declarations: [],
@@ -19,7 +20,8 @@ import { IngredientEffects } from './ingredient/ingredient.effects';
     EffectsModule.forRoot([
       ManualEntryEffects,
       RecipesEffects,
-      IngredientEffects
+      IngredientEffects,
+      UserEffects
     ]),
     ServicesModule
   ]

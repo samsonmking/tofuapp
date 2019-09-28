@@ -1,8 +1,9 @@
-<mat-toolbar color="primary">
+<mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="start center">
     <img src="assets/img/tofu.png" style="width: 48px; height: 48px;">
     <span class="title">TOFU</span>
-    <ul class="nav">
+    <ul class="nav" fxFlex="1 1 auto">
       <li><a routerLink="recipes" routerLinkActive="active" #rla="routerLinkActive">Collection</a></li>
     </ul>
+    <span *ngIf="$user | async as user">{{user.id}}</span>
 </mat-toolbar>
 <router-outlet></router-outlet>
