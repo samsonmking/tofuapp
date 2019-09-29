@@ -1,4 +1,4 @@
 export interface User {
     id?: string;
-    defaultListId?: number;
+    default_list_id?: number;
 }

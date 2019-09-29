@@ -2,6 +2,7 @@ import * as fromManualEntry from './manual-entry/manual-entry.reducer';
 import * as fromRecipe from './recipe/recipes.reducer';
 import * as fromIngredients from './ingredient/ingredient.reducer';
 import * as fromUsers from './user/user.reducer';
+import * as fromShoppingLists from './shopping-list/shopping-list.reducer';
 import { ActionReducerMap, createFeatureSelector, createSelector } from '@ngrx/store';
 
 export interface AppState {
@@ -9,6 +10,7 @@ export interface AppState {
     recipes: fromRecipe.RecipesState;
     ingredients: fromIngredients.IngredientState;
     user: fromUsers.UserState;
+    shoppingLists: fromShoppingLists.ShoppingListState;
 }
 
 // Recipe Selectors
@@ -16,7 +18,8 @@ export const reducers: ActionReducerMap<AppState> =  {
     manualRecipeEntry: fromManualEntry.manualEntryReducer,
     recipes: fromRecipe.recipesReducer,
     ingredients: fromIngredients.ingredientReducer,
-    user: fromUsers.userReducer
+    user: fromUsers.userReducer,
+    shoppingLists: fromShoppingLists.shoppingListReducer
 };
 export const selectManualEntryState = createFeatureSelector<fromManualEntry.ManualRecipeEntryState>('manualRecipeEntry');
 export const selectRecipeCreated = createSelector(
@@ -55,3 +58,6 @@ export const selectTotalIngredientsForRecipe = (recipeId: number) => createSelec
 
 // User Selectors
 export const selectUser = createFeatureSelector<fromUsers.UserState>('user');
+
+// Shopping List Selectors
+const selectShoppingListState = createFeatureSelector<fromShoppingLists.ShoppingListState>('shoppingLists');

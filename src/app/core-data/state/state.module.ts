@@ -10,6 +10,7 @@ import { ServicesModule } from '../services/services.module';
 import { RecipesEffects } from './recipe/recipes.effects';
 import { IngredientEffects } from './ingredient/ingredient.effects';
 import { UserEffects } from './user/user.effects';
+import { ShoppingListEffects } from './shopping-list/shopping-list.effects';
 
 @NgModule({
   declarations: [],
@@ -21,7 +22,8 @@ import { UserEffects } from './user/user.effects';
       ManualEntryEffects,
       RecipesEffects,
       IngredientEffects,
-      UserEffects
+      UserEffects,
+      ShoppingListEffects
     ]),
     ServicesModule
   ]

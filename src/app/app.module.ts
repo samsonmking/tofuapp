@@ -12,7 +12,7 @@ import { RecipesModule } from './recipes/recipes.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,

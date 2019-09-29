@@ -1,9 +1,8 @@
-import { EntityState } from '@ngrx/entity';
 import { User } from '../../models/user/user';
 import { UserActions, UserActionTypes, GetUserComplete, UpdateUserComplete } from './user.actions';
 
 export interface UserState extends User {
-
+    
 }
 
 export function userReducer(state: UserState = {}, action: UserActions): UserState {

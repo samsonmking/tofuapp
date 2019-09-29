@@ -8,13 +8,15 @@ import { RecipeThumbComponent } from './recipe-thumb/recipe-thumb.component';
 import { RecipeDetailComponent } from './recipe-detail/recipe-detail.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { RecipeDetailDialogComponent } from './recipe-detail-dialog/recipe-detail-dialog.component';
+import { DefaultShoppingListComponent } from './default-shopping-list/default-shopping-list.component';
 
 @NgModule({
   declarations: [
     RecipesComponent,
     RecipeThumbComponent,
     RecipeDetailComponent,
-    RecipeDetailDialogComponent
+    RecipeDetailDialogComponent,
+    DefaultShoppingListComponent
   ],
   entryComponents: [
     RecipeDetailDialogComponent

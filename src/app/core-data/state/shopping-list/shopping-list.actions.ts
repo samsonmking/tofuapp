@@ -1,30 +1,42 @@
-import { Recipe } from '../../models/recipe/recipe';
 import { Action } from '@ngrx/store';
-import { RecipeIngredient } from '../../models/ingredient/recipe-ingredient';
-import { ShoppingListItem } from '../../models/shopping-list/shopping-list-item';
+import { ShoppingList } from '../../models/shopping-list/shopping-list';
 
 export enum ShoppingListActionTypes {
-    AddRecipeToList = '[List] Add recipe to list',
-    AddIngredientsToList = '[List] Add ingredients to list',
-    AddIngredientsToListComplete = '[List] Add ingredients to list complete'
+    GetListsRequest = '[List] Get list request',
+    GetListsComplete = '[List] Get list complete',
+    SetDefaultList = '[List] Set Default list',
+    CreateDefaultListRequest = '[List] Create default list request',
+    CreateDefaultListComplete = '[List] Create default list complete'
 }
 
-export class AddRecipeToList implements Action {
-    type: string = ShoppingListActionTypes.AddRecipeToList;
-    constructor(public recipe: Recipe) { }
+export class GetListsRequest implements Action {
+    type = ShoppingListActionTypes.GetListsRequest;
+    constructor() {}
 }
 
-export class AddIngredientsToList implements Action {
-    type: string = ShoppingListActionTypes.AddIngredientsToList;
-    constructor(public ingredients: RecipeIngredient[]) { }
+export class GetListsComplete implements Action {
+    type = ShoppingListActionTypes.GetListsComplete;
+    constructor(public lists: ShoppingList[]) {}
 }
 
-export class AddIngredientsToListComplete implements Action {
-    type: string = ShoppingListActionTypes.AddIngredientsToListComplete;
-    constructor(public payload: ShoppingListItem[]) { }
+export class SetDefaultList implements Action {
+    type = ShoppingListActionTypes.SetDefaultList;
+    constructor(public id: number) {}
+}
+
+export class CreateDefaultListRequest implements Action {
+    type = ShoppingListActionTypes.CreateDefaultListRequest
+    constructor() {}
+}
+
+export class CreateDefaultListComplete implements Action {
+    type = ShoppingListActionTypes.CreateDefaultListComplete
+    constructor(public list: ShoppingList) {}
 }
 
 export type ShoppingListActions = 
-    AddRecipeToList |
-    AddIngredientsToList |
-    AddIngredientsToListComplete;
+    GetListsRequest |
+    GetListsComplete |
+    SetDefaultList |
+    CreateDefaultListRequest |
+    CreateDefaultListComplete;
