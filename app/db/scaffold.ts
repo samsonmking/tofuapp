@@ -44,6 +44,22 @@ export async function createDatabase() {
         unit text
     )`;
     await newDb.query(ingredientSchema);
+    const shoppingListSchema = `CREATE TABLE IF NOT EXISTS shopping_lists (
+        id serial primary key,
+        name text
+    )`;
+    await newDb.query(shoppingListSchema);
+    const shoppingListItemSchema = `CREATE TABLE IF NOT EXISTS shopping_list_items (
+        id serial primary key,
+        shopping_list_id integer references shopping_lists(id),
+        ingredient_id integer references ingredients(id)
+    )`;
+    await newDb.query(shoppingListItemSchema);
+    const userSchema = `CREATE TABLE IF NOT EXISTS users (
+        id text primary key,
+        default_list_id integer references shopping_lists(id)
+    )`;
+    await newDb.query(userSchema);
     await newDb.end();
 }
 
