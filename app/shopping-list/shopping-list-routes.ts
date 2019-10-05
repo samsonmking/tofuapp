@@ -11,11 +11,12 @@ export class ShoppingListRoutes implements Route {
         }
 
     contributeRoutes(app: express.Application): void {
+        app.get('/list/:listid/items', this.itemController.getItemsForList);
+        app.post('/list/:listid/items', this.itemController.addItemsToList);
         app.get('/list', this.listController.getShoppingLists);
         app.post('/list', this.listController.addShoppingList);
         app.get('/list/:id', this.listController.getShoppingList);
-        app.get('/list/:listid', this.itemController.getItemsForList);
-        app.post('/list/:listid', this.itemController.addItemsToList);
+
     }
 
 }
