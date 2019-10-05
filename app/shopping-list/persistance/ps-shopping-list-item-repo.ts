@@ -15,7 +15,8 @@ export class ShoppingListItemRepoPS implements ShoppingListItemRepo {
         const result = await query(`
             INSERT INTO shopping_list_items (shopping_list_id, ingredient_id, recipe_id) 
             VALUES ($1, $2, $3) 
-            RETURNING id, shopping_list_id, ingredient_id, recipe_id`, [payload.shopping_list_id, payload.ingredient_id, payload.recipe_id]);
+            RETURNING id, shopping_list_id, ingredient_id, recipe_id`, 
+            [payload.shopping_list_id, payload.ingredient_id, payload.recipe_id]);
         return result.rows[0];
     }
 
@@ -29,7 +30,16 @@ export class ShoppingListItemRepoPS implements ShoppingListItemRepo {
         return result.rows;
     }
 
-    public async removeItemFromList(itemId: number): Promise<boolean> {
+    public async removeRecipeFromList(listId: number, recipeId: number): Promise<number[]> {
+        const result = await query(`
+            DELETE FROM shopping_list_items 
+            WHERE shopping_list_id=$1 AND recipe_id=$2 
+            RETURNING id`, 
+            [listId, recipeId]);
+        return result.rows.map(deleted => deleted.id);
+    }
+
+    public async removeItemFromList(itemId: number): Promise<void> {
         throw new Error("Method not implemented.");
     }
 
