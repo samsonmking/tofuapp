@@ -1,8 +1,10 @@
-import express from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import { Route } from './route';
 import { StaticResource } from './static-resource';
+import Boom from 'boom';
+import boom from 'boom';
 
 export const buildApp = (routes: Route[], staticResources: StaticResource[]): express.Application => {
     const app: express.Application = express();
@@ -15,5 +17,13 @@ export const buildApp = (routes: Route[], staticResources: StaticResource[]): ex
     }
     routes.forEach(r => r.contributeRoutes(app));
     staticResources.forEach(r => r.contributeStatic(app));
+    app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+        const boomError: Boom = (err.isBoom) ? err : boom.badImplementation();
+        res.status(boomError.output.statusCode).json(boomError.output.payload);
+        if(boomError.isServer) {
+            console.log(`[ERROR] ${err}`);
+        }
+        next();
+    });
     return app;
 }
