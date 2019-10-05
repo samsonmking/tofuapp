@@ -3,7 +3,9 @@ import * as fromRecipe from './recipe/recipes.reducer';
 import * as fromIngredients from './ingredient/ingredient.reducer';
 import * as fromUsers from './user/user.reducer';
 import * as fromShoppingLists from './shopping-list/shopping-list.reducer';
+import * as fromShoppingListItems from './shopping-list-item/shopping-list-items.reducer';
 import { ActionReducerMap, createFeatureSelector, createSelector } from '@ngrx/store';
+import { Recipe } from '../models/recipe/recipe';
 
 export interface AppState {
     manualRecipeEntry: fromManualEntry.ManualRecipeEntryState;
@@ -11,6 +13,7 @@ export interface AppState {
     ingredients: fromIngredients.IngredientState;
     user: fromUsers.UserState;
     shoppingLists: fromShoppingLists.ShoppingListState;
+    shoppingListItems: fromShoppingListItems.ListItemsState;
 }
 
 // Recipe Selectors
@@ -19,7 +22,8 @@ export const reducers: ActionReducerMap<AppState> =  {
     recipes: fromRecipe.recipesReducer,
     ingredients: fromIngredients.ingredientReducer,
     user: fromUsers.userReducer,
-    shoppingLists: fromShoppingLists.shoppingListReducer
+    shoppingLists: fromShoppingLists.shoppingListReducer,
+    shoppingListItems: fromShoppingListItems.listItemsReducer
 };
 export const selectManualEntryState = createFeatureSelector<fromManualEntry.ManualRecipeEntryState>('manualRecipeEntry');
 export const selectRecipeCreated = createSelector(
@@ -61,3 +65,30 @@ export const selectUser = createFeatureSelector<fromUsers.UserState>('user');
 
 // Shopping List Selectors
 const selectShoppingListState = createFeatureSelector<fromShoppingLists.ShoppingListState>('shoppingLists');
+
+// Shopping List Item Selectors
+export const selectShoppingListItems = createSelector(
+    createFeatureSelector<fromShoppingListItems.ListItemsState>('shoppingListItems'),
+    fromShoppingListItems.selectAllListItems
+);
+export const selectItemsInCurrentList = createSelector(
+    selectShoppingListItems,
+    selectShoppingListState,
+    (shoppingListItems, shoppingList) => shoppingListItems.filter(item => {
+        return item.shopping_list_id === shoppingList.selectedId
+    })
+);
+
+export const selectRecipesInCurrentList = createSelector(
+    selectItemsInCurrentList,
+    selectIngredientState,
+    selectRecipeState,
+    (items, ingredients, recipes) => Array.from(items.reduce((recipesInList, item) => {
+       const ingredient = ingredients.entities[item.ingredient_id];
+       const recipe = recipes.entities[ingredient.recipe_id];
+       if(!recipesInList.has(recipe)) {
+           recipesInList.add(recipe)
+       }
+       return recipesInList;
+    }, new Set<Recipe>()))
+)

@@ -6,8 +6,7 @@ import { RecipeService } from '../../services/recipies/recipie.service';
 import { RecipesActionTypes, GetAllRequest, GetAllComplete } from './recipes.actions';
 import { DisplayRecipe } from '../../models/recipe/display-recipe';
 import { Recipe } from '../../models/recipe/recipe';
-import { map, switchMap } from 'rxjs/operators';
-import { selectRecipeEntities } from '..';
+import { map } from 'rxjs/operators';
 
 @Injectable({providedIn: 'root'})
 export class RecipesEffects {

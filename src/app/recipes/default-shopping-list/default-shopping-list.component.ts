@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ShoppingListFacade } from 'src/app/core-data/state/shopping-list/shopping-list.facade';
+import { ShoppingListItemFacade } from 'src/app/core-data/state/shopping-list-item/shopping-list-items.facade';
 import { Observable } from 'rxjs';
-import { ShoppingList } from 'src/app/core-data/models/shopping-list/shopping-list';
+import { Recipe } from 'src/app/core-data/models/recipe/recipe';
 
 @Component({
   selector: 'app-default-shopping-list',
@@ -9,13 +9,12 @@ import { ShoppingList } from 'src/app/core-data/models/shopping-list/shopping-li
   styleUrls: ['./default-shopping-list.component.css']
 })
 export class DefaultShoppingListComponent implements OnInit {
-  $list;
+  public recipesInList$: Observable<Recipe[]>;
 
-  constructor(private readonly shoppingListFacade: ShoppingListFacade) { }
+  constructor(private readonly itemFacade: ShoppingListItemFacade) { }
 
   ngOnInit() {
-    this.$list = this.shoppingListFacade.defaultShoppingList$;
-    this.$list.subscribe(console.log);
+    this.recipesInList$ = this.itemFacade.recipesInCurrentList$;
   }
 
 }
