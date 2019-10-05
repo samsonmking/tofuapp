@@ -17,4 +17,7 @@ export class DefaultShoppingListComponent implements OnInit {
     this.recipesInList$ = this.itemFacade.recipesInCurrentList$;
   }
 
+  removeFromList(id: number) {
+    this.itemFacade.removeRecipeFromList(id);
+  }
 }

@@ -65,6 +65,10 @@ export const selectUser = createFeatureSelector<fromUsers.UserState>('user');
 
 // Shopping List Selectors
 const selectShoppingListState = createFeatureSelector<fromShoppingLists.ShoppingListState>('shoppingLists');
+export const selectCurrentShoppingList = createSelector(
+    selectShoppingListState,
+    (list) => list.selectedId
+);
 
 // Shopping List Item Selectors
 export const selectShoppingListItems = createSelector(

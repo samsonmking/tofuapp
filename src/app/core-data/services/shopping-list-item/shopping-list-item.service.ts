@@ -20,4 +20,8 @@ export class ShoppingListItemService {
     public getItemsForList(listId: number) {
         return this.http.get<ShoppingListItem[]>(`http://localhost:3000/list/${listId}/items`);
     }
+
+    public deleteRecipeFromList(listId: number, recipeId: number) {
+        return this.http.delete<number[]>(`http://localhost:3000/list/${listId}/recipe/${recipeId}`);
+    }
 }

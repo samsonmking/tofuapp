@@ -3,7 +3,7 @@ import { Effect, Actions, ofType } from '@ngrx/effects';
 import { DataPersistence } from '@nrwl/nx';
 import { ListItemsState } from './shopping-list-items.reducer';
 import { ShoppingListItemService } from '../../services/shopping-list-item/shopping-list-item.service';
-import { AddRecipeToList, ShoppingListItemsActionTypes, AddItemsToList, AddItemsToListComplete, GetItemsForListRequest, GetItemsForListComplete } from './shopping-list-items.actions';
+import { AddRecipeToList, ShoppingListItemsActionTypes, AddItemsToList, AddItemsToListComplete, GetItemsForListRequest, GetItemsForListComplete, RemoveRecipeFromList, RemoveRecipeFromListComplete } from './shopping-list-items.actions';
 import { mergeMap, switchMap, map } from 'rxjs/operators';
 import { GetIngredientsForRecipeInList, GetIngredientsForRecipeComplete, GetIngredientsForRecipeInListComplete, IngredientActionsType } from '../ingredient/ingredient.actions';
 import { of } from 'rxjs';
@@ -60,6 +60,17 @@ export class ShoppingListItemEffects {
                 map(li => {
                     return new AddItemsToListComplete(li);
                 })
+            );
+        },
+        onError: (action, error) => console.log('Error', error)
+    });
+
+    @Effect()
+    deleteRecipeFromList$ = this.dataPersistence.pessimisticUpdate(ShoppingListItemsActionTypes.RemoveRecipeFromList, {
+        run: (action: RemoveRecipeFromList, state) => {
+            const listId = state.shoppingLists.selectedId;
+            return this.service.deleteRecipeFromList(listId, action.recipeId).pipe(
+                map(deleted => new RemoveRecipeFromListComplete(deleted))
             );
         },
         onError: (action, error) => console.log('Error', error)

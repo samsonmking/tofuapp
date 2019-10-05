@@ -1,5 +1,5 @@
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
-import { ListItemActions, ShoppingListItemsActionTypes, AddItemsToListComplete, GetItemsForListRequest, GetItemsForListComplete } from './shopping-list-items.actions';
+import { ListItemActions, ShoppingListItemsActionTypes, AddItemsToListComplete, GetItemsForListRequest, GetItemsForListComplete, RemoveRecipeFromListComplete } from './shopping-list-items.actions';
 import { ShoppingListItem } from '../../models/shopping-list-item/shopping-list-item';
 
 export interface ListItemsState extends EntityState<ShoppingListItem> {
@@ -21,6 +21,11 @@ export function listItemsReducer(state: ListItemsState = initialState, action: L
         case ShoppingListItemsActionTypes.AddItemsToListComplete: {
             const addToList = action as AddItemsToListComplete;
             return adapter.upsertMany(addToList.items, state);
+        }
+        case ShoppingListItemsActionTypes.RemoveRecipeFromListComplete: {
+            const deleteRecipe = action as RemoveRecipeFromListComplete;
+            const next = adapter.removeMany(deleteRecipe.ids, state);
+            return next;
         }
         default:
             return state;
