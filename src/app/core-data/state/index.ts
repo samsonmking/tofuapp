@@ -81,11 +81,9 @@ export const selectItemsInCurrentList = createSelector(
 
 export const selectRecipesInCurrentList = createSelector(
     selectItemsInCurrentList,
-    selectIngredientState,
     selectRecipeState,
-    (items, ingredients, recipes) => Array.from(items.reduce((recipesInList, item) => {
-       const ingredient = ingredients.entities[item.ingredient_id];
-       const recipe = recipes.entities[ingredient.recipe_id];
+    (items, recipes) => Array.from(items.reduce((recipesInList, item) => {
+       const recipe = recipes.entities[item.recipe_id];
        if(!recipesInList.has(recipe)) {
            recipesInList.add(recipe)
        }
