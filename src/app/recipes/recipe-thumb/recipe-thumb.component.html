@@ -6,7 +6,11 @@
     <img src={{recipe.imageUrl}} >
     <div fxLayout="row" fxLayoutAlign="end end" fxLayoutGap="10px">
       <a routerLink="/recipes/{{recipe.id}}" mat-mini-fab><i class="material-icons">launch</i></a>
-      <button mat-mini-fab (click)="addRecipeToList()"><i class="material-icons">shopping_basket</i></button>
+      <button mat-mini-fab 
+        (click)="addRecipeToList()" 
+        [disabled]="disabled$ | async">
+          <i class="material-icons">shopping_basket</i>
+        </button>
     </div>
   </mat-card-content>
 </mat-card>

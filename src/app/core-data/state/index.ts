@@ -89,4 +89,16 @@ export const selectRecipesInCurrentList = createSelector(
        }
        return recipesInList;
     }, new Set<Recipe>()))
-)
+);
+
+export const selectRecipeIdsInCurrentList = createSelector(
+    selectItemsInCurrentList,
+    selectRecipeState,
+    (items, recipes) => items.reduce((recipesInList, item) => {
+       const recipe = recipes.entities[item.recipe_id];
+       if(!recipesInList.has(recipe.id)) {
+           recipesInList.add(recipe.id)
+       }
+       return recipesInList;
+    }, new Set<number>())
+);
