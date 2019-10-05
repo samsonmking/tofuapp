@@ -12,6 +12,23 @@
             "args": ["-r", "ts-node/register", "${relativeFile}"],
             "cwd": "${workspaceRoot}",
             "protocol": "inspector"
+        },
+        {
+            "name": "TSNode Server",
+            "type": "node",
+            "request": "launch",
+            "env": {
+                "NODE_ENV":"dev"
+            },
+            "runtimeArgs": [
+                "-r",
+                "ts-node/register",
+                "-r",
+                "dotenv/config"
+            ],
+            "args": ["./app/server.ts", "dotenv_config_path=./dev.env"],
+            "cwd": "${workspaceRoot}",
+            "protocol": "inspector"
         }
     ]
 }
