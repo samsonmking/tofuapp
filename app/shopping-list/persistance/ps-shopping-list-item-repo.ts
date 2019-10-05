@@ -5,7 +5,7 @@ import { query } from "../../db";
 export class ShoppingListItemRepoPS implements ShoppingListItemRepo {
     public async getItemsForList(listId: number): Promise<ShoppingListItem[]> {
         const result = await query(`
-            SELECT id, shopping_list_id, ingredient_id 
+            SELECT id, shopping_list_id, ingredient_id, recipe_id  
             FROM shopping_list_items 
             WHERE shopping_list_id=$1`, [listId]);
         return result.rows;
@@ -13,19 +13,19 @@ export class ShoppingListItemRepoPS implements ShoppingListItemRepo {
     
     public async addItemToList(payload: ShoppingListItem): Promise<ShoppingListItem> {
         const result = await query(`
-            INSERT INTO shopping_list_items (shopping_list_id, ingredient_id) 
-            VALUES ($1, $2) 
-            RETURNING id, shopping_list_id, ingredient_id`, [payload.shopping_list_id, payload.ingredient_id]);
+            INSERT INTO shopping_list_items (shopping_list_id, ingredient_id, recipe_id) 
+            VALUES ($1, $2, $3) 
+            RETURNING id, shopping_list_id, ingredient_id, recipe_id`, [payload.shopping_list_id, payload.ingredient_id, payload.recipe_id]);
         return result.rows[0];
     }
 
     public async addItemsToList(payload: ShoppingListItem[]): Promise<ShoppingListItem[]> {
         const values = payload.reduce((acc, curr) => 
-            (acc + (acc ? "," : "") + `('${curr.shopping_list_id}', '${curr.ingredient_id}')`), "");
+            (acc + (acc ? "," : "") + `('${curr.shopping_list_id}', '${curr.ingredient_id}', '${curr.recipe_id}')`), "");
         const result = await query(`
-            INSERT INTO shopping_list_items (shopping_list_id, ingredient_id) 
+            INSERT INTO shopping_list_items (shopping_list_id, ingredient_id, recipe_id) 
             VALUES ${values} 
-            RETURNING id, shopping_list_id, ingredient_id`);
+            RETURNING id, shopping_list_id, ingredient_id, recipe_id`);
         return result.rows;
     }
 
