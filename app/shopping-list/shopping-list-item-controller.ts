@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { ShoppingListItemRepo } from "./persistance/shopping-list-item-repo";
+import boom from "boom";
 
 export class ShoppingListItemController {
     constructor(private readonly repo: ShoppingListItemRepo) {
@@ -20,7 +21,11 @@ export class ShoppingListItemController {
             const items = await this.repo.addItemsToList(req.body);
             res.json(items);
         } catch (e) {
-            next(e);
+            if(e.code && e.code === "23505") { // Unique violation (items already in lst)
+                next( boom.conflict(e.message));
+            } else {
+                next(e);
+            }
         }
     }
 
