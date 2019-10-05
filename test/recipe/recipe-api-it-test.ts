@@ -3,7 +3,7 @@ import { buildApp } from '../../app/app';
 import { Recipe, getRecipeRoute } from '../../app/recipe';
 import { expect } from 'chai';
 import { RecipeImageConverter, ImageConversionResult } from '../../app/recipe-image';
-import { dropDatabase, createDatabase } from '../../app/db/scaffold';
+import { dropDatabase, createDatabase } from '../../app/db/create-schema';
 
 describe('recipe-api-it', function() {
     before(async function() {

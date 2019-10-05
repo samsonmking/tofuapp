@@ -1,4 +1,4 @@
-import { dropDatabase, createDatabase } from "../../app/db/scaffold";
+import { dropDatabase, createDatabase } from "../../app/db/create-schema";
 import { buildApp } from "../../app/app";
 import { getIngredientRoutes } from "../../app/ingredient";
 import { RecipePSRepo } from "../../app/recipe/recipe-ps-repo";

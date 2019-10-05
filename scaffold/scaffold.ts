@@ -1,4 +1,4 @@
-import { createDatabase, importDataFromFile, dropDatabase } from "../app/db/scaffold";
+import { createDatabase, importDataFromFile, dropDatabase } from "../app/db/create-schema";
 import { dispose } from "../app/db/index";
 import { UserRepoPS } from "../app/user/user-repo-ps";
 const { PGDATABASE } = process.env;

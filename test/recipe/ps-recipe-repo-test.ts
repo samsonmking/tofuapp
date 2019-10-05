@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { RecipePSRepo } from '../../app/recipe/recipe-ps-repo';
-import { createDatabase, dropDatabase } from '../../app/db/scaffold'
+import { createDatabase, dropDatabase } from '../../app/db/create-schema'
 
 describe('ps-recipe-repo', function() {
     before(async function() {
