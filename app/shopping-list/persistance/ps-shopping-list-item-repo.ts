@@ -15,13 +15,13 @@ export class ShoppingListItemRepoPS implements ShoppingListItemRepo {
         const result = await query(`
             INSERT INTO shopping_list_items (shopping_list_id, ingredient_id) 
             VALUES ($1, $2) 
-            RETURNING id, shopping_list_id, ingredient_id`, [payload.shoppingListId, payload.ingredientId]);
+            RETURNING id, shopping_list_id, ingredient_id`, [payload.shopping_list_id, payload.ingredient_id]);
         return result.rows[0];
     }
 
     public async addItemsToList(payload: ShoppingListItem[]): Promise<ShoppingListItem[]> {
         const values = payload.reduce((acc, curr) => 
-            (acc + (acc ? "," : "") + `('${curr.shoppingListId}', '${curr.ingredientId}')`), "");
+            (acc + (acc ? "," : "") + `('${curr.shopping_list_id}', '${curr.ingredient_id}')`), "");
         const result = await query(`
             INSERT INTO shopping_list_items (shopping_list_id, ingredient_id) 
             VALUES ${values} 

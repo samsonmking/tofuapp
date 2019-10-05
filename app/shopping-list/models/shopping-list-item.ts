@@ -1,5 +1,5 @@
 export interface ShoppingListItem {
     id?: number;
-    shoppingListId: number;
-    ingredientId: number;
+    shopping_list_id: number;
+    ingredient_id: number;
 }
