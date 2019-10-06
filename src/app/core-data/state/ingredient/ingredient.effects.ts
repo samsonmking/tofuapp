@@ -1,15 +1,19 @@
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { DataPersistence } from '@nrwl/nx';
-import { IngredientState, selectAllIngredients } from './ingredient.reducer';
-import { IngredientActionsType, GetIngredientsForRecipeRequest, GetIngredientsForRecipeComplete, GetIngredientsForRecipeInList, GetIngredientsForRecipeInListComplete, GetIngredientsForCurrentListRequest, GetIngredientsForCurrentListComplete } from './ingredient.actions';
+import { selectAllIngredients } from './ingredient.reducer';
+import { IngredientActionsType, 
+    GetIngredientsForRecipeRequest, 
+    GetIngredientsForRecipeComplete, 
+    GetIngredientsForRecipeInList, 
+    GetIngredientsForRecipeInListComplete, 
+    GetIngredientsForCurrentListRequest } from './ingredient.actions';
 import { IngredientService } from '../../services/ingredient/ingredient-service';
-import { map, flatMap, merge, switchMap, withLatestFrom } from 'rxjs/operators';
+import { map, switchMap, withLatestFrom, mergeMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { of, zip, from, forkJoin } from 'rxjs';
-import { AppState, selectRecipeIdsInCurrentList } from '..';
+import { AppState, selectRecipeIdsInCurrentList, selectIngredients } from '..';
 import { Store, select } from '@ngrx/store';
-import { promise } from 'protractor';
 import { GetItemsForListComplete, ShoppingListItemsActionTypes } from '../shopping-list-item/shopping-list-items.actions';
+import { empty } from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 export class IngredientEffects {
@@ -44,17 +48,16 @@ export class IngredientEffects {
     });
 
     @Effect()
-    getIngredientsForRecipe$ = this.dataPersistence.pessimisticUpdate(IngredientActionsType.GetIngredientsForRecipeRequest, {
-        run: (action: GetIngredientsForRecipeRequest, state) => {
-            return this.ingredientService.getIngredientForRecipe(action.recipeId).pipe(
-                map(ingredients => new GetIngredientsForRecipeComplete(ingredients))
-            );
-        },
-
-        onError: (action: GetIngredientsForRecipeRequest, error) => {
-            console.log('Error', error);
-        }
-    });
+    getIngredientsForRecipe$ = this.actions$.pipe(
+        ofType<GetIngredientsForRecipeRequest>(IngredientActionsType.GetIngredientsForRecipeRequest),
+        withLatestFrom(this.store.pipe(select(selectIngredients))),
+        mergeMap(([action, ingredients]) => {
+            const inStore = ingredients.findIndex(i => i.recipe_id === action.recipeId) > -1;
+            return inStore ? empty() : this.ingredientService.getIngredientForRecipe(action.recipeId).pipe(
+                map(i => new GetIngredientsForRecipeComplete(i))
+            )
+        })
+    );
 
     @Effect()
     getCurrentList = this.actions$.pipe(
@@ -66,7 +69,7 @@ export class IngredientEffects {
     getIngredientsForCurrentList$ = this.actions$.pipe(
         ofType<GetIngredientsForCurrentListRequest>(IngredientActionsType.GetIngredientsForCurrentListRequest),
         switchMap(_ => this.store.pipe(select(selectRecipeIdsInCurrentList))),
-        switchMap(idSet => {
+        mergeMap(idSet => {
             const ids = Array.from(idSet);
             return ids.map(id => new GetIngredientsForRecipeRequest(id))
         })
