@@ -32,4 +32,13 @@ export class ShoppingListController {
             next(e);
         }
     }
+
+    updateShoppingList = async(req: Request, res: Response, next: NextFunction) => {
+        try{
+            const updatedList = await this.repo.updateShoppingList(req.body);
+            res.json(updatedList);
+        } catch (e) {
+            next(e);
+        }
+    }
 }

@@ -26,8 +26,13 @@ export class ShoppingListPSRepo implements ShoppingListRepo {
         return result.rows[0];
     }
     
-    public updateShoppingList(list: ShoppingList): Promise<ShoppingList> {
-        throw new Error("Method not implemented.");
+    public async updateShoppingList(list: ShoppingList): Promise<ShoppingList> {
+        const updated = await query(`
+            UPDATE shopping_lists\
+            SET name=$2 
+            WHERE id=$1 
+            RETURNING id, name`, [list.id, list.name]);
+        return updated.rows[0];
     }
     
     public deleteShoppingList(id: number): Promise<boolean> {

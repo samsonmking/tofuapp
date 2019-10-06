@@ -14,6 +14,7 @@ export class ShoppingListRoutes implements Route {
         app.get('/list', this.listController.getShoppingLists);
         app.post('/list', this.listController.addShoppingList);
         app.get('/list/:id', this.listController.getShoppingList);
+        app.put('/list/:id', this.listController.updateShoppingList);
 
         app.get('/list/:listid/items', this.itemController.getItemsForList);
         app.post('/list/:listid/items', this.itemController.addItemsToList);
