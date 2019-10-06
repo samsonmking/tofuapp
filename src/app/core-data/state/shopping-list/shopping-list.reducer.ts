@@ -1,14 +1,14 @@
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { ShoppingList } from '../../models/shopping-list/shopping-list';
-import { ShoppingListActions, ShoppingListActionTypes, GetListsComplete, CreateDefaultListComplete, SetDefaultList } from './shopping-list.actions';
+import { ShoppingListActions, ShoppingListActionTypes, GetListsComplete, CreateDefaultListComplete, SetDefaultList, UpdateShoppingListComplete } from './shopping-list.actions';
 
 export interface ShoppingListState extends EntityState<ShoppingList> {
-    selectedId?: number;
+    defaultListId?: number;
 }
 
 export const adapter: EntityAdapter<ShoppingList> = createEntityAdapter<ShoppingList>();
 export const initialState: ShoppingListState = adapter.getInitialState( {
-    selectedId: null
+    defaultListId: null
 });
 
 const { selectAll, selectIds, selectEntities } = adapter.getSelectors();
@@ -24,11 +24,15 @@ export function shoppingListReducer(state: ShoppingListState = initialState, act
         case ShoppingListActionTypes.CreateDefaultListComplete: {
             const newDefault = action as CreateDefaultListComplete;
             const newList = newDefault.list;
-            return { ...adapter.upsertOne(newList, state), selectedId: newList.id }
+            return { ...adapter.upsertOne(newList, state), defaultListId: newList.id }
         }
         case ShoppingListActionTypes.SetDefaultList: {
             const setDefault = action as SetDefaultList;
-            return { ...state, selectedId: setDefault.id };
+            return { ...state, defaultListId: setDefault.id };
+        }
+        case ShoppingListActionTypes.UpdateShoppingListComplete: {
+            const updated = action as UpdateShoppingListComplete;
+            return adapter.upsertOne(updated.list, state);
         }
         default:
             return state;

@@ -18,4 +18,8 @@ export class ShoppingListService {
     addShoppingList(list: ShoppingList) {
         return this.http.post<ShoppingList>(`http://localhost:3000/list`, list);
     }
+
+    updateShoppingList(list: ShoppingList) {
+        return this.http.put<ShoppingList>(`http://localhost:3000/list/${list.id}`, list);
+    }
 }

@@ -6,7 +6,9 @@ export enum ShoppingListActionTypes {
     GetListsComplete = '[List] Get list complete',
     SetDefaultList = '[List] Set Default list',
     CreateDefaultListRequest = '[List] Create default list request',
-    CreateDefaultListComplete = '[List] Create default list complete'
+    CreateDefaultListComplete = '[List] Create default list complete',
+    UpdateShoppingListRequest = '[List] Update shopping list request',
+    UpdateShoppingListComplete = '[List] Update shopping list complete'
 }
 
 export class GetListsRequest implements Action {
@@ -25,12 +27,22 @@ export class SetDefaultList implements Action {
 }
 
 export class CreateDefaultListRequest implements Action {
-    type = ShoppingListActionTypes.CreateDefaultListRequest
+    type = ShoppingListActionTypes.CreateDefaultListRequest;
     constructor() {}
 }
 
 export class CreateDefaultListComplete implements Action {
-    type = ShoppingListActionTypes.CreateDefaultListComplete
+    type = ShoppingListActionTypes.CreateDefaultListComplete;
+    constructor(public list: ShoppingList) {}
+}
+
+export class UpdateShoppingListRequest implements Action {
+    type = ShoppingListActionTypes.UpdateShoppingListRequest;
+    constructor(public list: ShoppingList) {}
+}
+
+export class UpdateShoppingListComplete implements Action {
+    type = ShoppingListActionTypes.UpdateShoppingListComplete;
     constructor(public list: ShoppingList) {}
 }
 
@@ -39,4 +51,6 @@ export type ShoppingListActions =
     GetListsComplete |
     SetDefaultList |
     CreateDefaultListRequest |
-    CreateDefaultListComplete;
+    CreateDefaultListComplete |
+    UpdateShoppingListRequest |
+    UpdateShoppingListComplete;

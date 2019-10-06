@@ -17,7 +17,7 @@ export interface AppState {
     user: fromUsers.UserState;
     shoppingLists: fromShoppingLists.ShoppingListState;
     shoppingListItems: fromShoppingListItems.ListItemsState;
-    router: RouterReducerState;
+    router: RouterReducerState<RouterStateUrl>;
 }
 
 // Recipe Selectors
@@ -69,14 +69,10 @@ export const selectTotalIngredientsForRecipe = (recipeId: number) => createSelec
 export const selectUser = createFeatureSelector<fromUsers.UserState>('user');
 
 // Shopping List Selectors
-const selectShoppingListState = createFeatureSelector<fromShoppingLists.ShoppingListState>('shoppingLists');
+export const selectShoppingListState = createFeatureSelector<fromShoppingLists.ShoppingListState>('shoppingLists');
 export const selectAllLists = createSelector(
     selectShoppingListState,
     fromShoppingLists.selectAllLists
-);
-export const selectCurrentShoppingList = createSelector(
-    selectShoppingListState,
-    (list) => list.selectedId
 );
 
 // Shopping List Item Selectors
@@ -88,7 +84,7 @@ export const selectItemsInCurrentList = createSelector(
     selectShoppingListItems,
     selectShoppingListState,
     (shoppingListItems, shoppingList) => shoppingListItems.filter(item => 
-        item.shopping_list_id === shoppingList.selectedId)
+        item.shopping_list_id === shoppingList.defaultListId)
 );
 
 export const selectRecipesInCurrentList = createSelector(

@@ -53,7 +53,7 @@ export class ShoppingListItemEffects {
     @Effect()
     addItemsToList$ = this.dataPersistence.pessimisticUpdate(ShoppingListItemsActionTypes.AddItemsToList, {
         run: (action: AddItemsToList, state) => {
-            const listId = state.shoppingLists.selectedId;
+            const listId = state.shoppingLists.defaultListId;
             const listItems: ShoppingListItem[] = action.items.map(ri => 
                 ({ shopping_list_id: listId, ingredient_id: ri.id, recipe_id: ri.recipe_id }));
             return this.service.addItemsToList(listId, listItems).pipe(
@@ -68,7 +68,7 @@ export class ShoppingListItemEffects {
     @Effect()
     deleteRecipeFromList$ = this.dataPersistence.pessimisticUpdate(ShoppingListItemsActionTypes.RemoveRecipeFromList, {
         run: (action: RemoveRecipeFromList, state) => {
-            const listId = state.shoppingLists.selectedId;
+            const listId = state.shoppingLists.defaultListId;
             return this.service.deleteRecipeFromList(listId, action.recipeId).pipe(
                 map(deleted => new RemoveRecipeFromListComplete(deleted))
             );

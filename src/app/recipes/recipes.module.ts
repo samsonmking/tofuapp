@@ -34,7 +34,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     AddRecipeModule,
     FlexLayoutModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class RecipesModule { }

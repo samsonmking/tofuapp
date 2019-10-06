@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AppState, selectRecipesInCurrentList, selectRecipeIdsInCurrentList, selectCurrentShoppingList } from '..';
+import { AppState, selectRecipesInCurrentList, selectRecipeIdsInCurrentList } from '..';
 import { Store, select } from '@ngrx/store';
 import { AddRecipeToList, RemoveRecipeFromList } from './shopping-list-items.actions';
 import { take } from 'rxjs/operators';
