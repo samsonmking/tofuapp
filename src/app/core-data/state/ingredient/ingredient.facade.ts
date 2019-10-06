@@ -1,10 +1,13 @@
-import { AppState, selectIngredientsForRecipe } from '..';
+import { AppState, selectIngredientsForRecipe, selectIngredients, selectIngredientState } from '..';
 import { ActionsSubject, Store, select } from '@ngrx/store';
-import { GetIngredientsForRecipeRequest } from './ingredient.actions';
+import { GetIngredientsForRecipeRequest, GetIngredientsForCurrentListRequest } from './ingredient.actions';
 import { Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class IngredientFacade {
+    $ingredientState = this.store.pipe(select(selectIngredientState));
+    $ingredients = this.store.pipe(select(selectIngredients));
+
     constructor(private store: Store<AppState>, private actions$: ActionsSubject) {
 
     }
@@ -12,6 +15,10 @@ export class IngredientFacade {
     getIngredientsForRecipe(recipeId: number) {
         this.store.dispatch(new GetIngredientsForRecipeRequest(recipeId)) ;
         return this.store.pipe(select(selectIngredientsForRecipe(recipeId)));
+    }
+
+    getIngredientsForCurrentList() {
+        this.store.dispatch(new GetIngredientsForCurrentListRequest());
     }
 
 }

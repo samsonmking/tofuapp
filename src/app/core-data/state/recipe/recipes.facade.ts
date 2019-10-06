@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AppState, selectAllRecipes, selectRecipeEntities, selectRecipeById } from '..';
+import { AppState, selectAllRecipes, selectRecipeEntities, selectRecipeById, selectRecipeState } from '..';
 import { ActionsSubject, Store, select } from '@ngrx/store';
 import { GetAllRequest } from './recipes.actions';
 import { map } from 'rxjs/operators';
@@ -8,6 +8,7 @@ import { map } from 'rxjs/operators';
     providedIn: 'root'
 })
 export class RecipeFacade {
+    recipeState$ = this.store.pipe(select(selectRecipeState));
     recipes$ = this.store.pipe(select(selectAllRecipes));
 
     getAllRecipes(): void {

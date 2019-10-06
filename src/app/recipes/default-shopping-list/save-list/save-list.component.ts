@@ -28,16 +28,17 @@ export class SaveListComponent implements OnInit {
     });
 
     const nameInput$ = this.saveListForm.valueChanges.pipe(
-      skip(1), // First value is form being set from store
       debounceTime(1000),
       map(form => form.name)
     );
 
     nameInput$.pipe(withLatestFrom(this.listFacade.currentList$))
       .subscribe(([name, list]) => {
-        console.log('updating value');
-        this.listFacade.updateShoppingList({ ...list, name })
-      })
+        if (name !== list.name) {
+          console.log('updating value');
+          this.listFacade.updateShoppingList({ ...list, name })          
+        }
+      });
 
   }
 

@@ -1,3 +1,14 @@
-<p>
-  list-detail works!
-</p>
+<table matSort>
+  <tr>
+    <td>Ingredient</td>
+    <td>Quantity</td>
+    <td>Unit</td>
+    <td>Recipe</td>
+  </tr>
+  <tr *ngFor="let listItem of listItems$ | async">
+    <td>{{listItem.ingredientName}}</td>
+    <td>{{listItem.ingredientQuantity}}</td>
+    <td>{{listItem.ingredientUnit}}</td>
+    <td>{{listItem.recipeName}}</td>
+  </tr>
+</table>

@@ -35,7 +35,7 @@ export const selectRecipeCreated = createSelector(
     selectManualEntryState,
     (state: fromManualEntry.ManualRecipeEntryState) => state.recipeId
 );
-const selectRecipeState = createFeatureSelector<fromRecipe.RecipesState>('recipes');
+export const selectRecipeState = createFeatureSelector<fromRecipe.RecipesState>('recipes');
 export const selectAllRecipes = createSelector(
     selectRecipeState,
     fromRecipe.selectAllRecipes
@@ -50,7 +50,7 @@ export const selectRecipeById = (id: number) => createSelector(
 );
 
 // Ingredient Selectors
-const selectIngredientState = createFeatureSelector<fromIngredients.IngredientState>('ingredients');
+export const selectIngredientState = createFeatureSelector<fromIngredients.IngredientState>('ingredients');
 export const selectIngredients = createSelector(
     selectIngredientState,
     fromIngredients.selectAllIngredients
@@ -92,7 +92,7 @@ export const selectRecipesInCurrentList = createSelector(
     selectRecipeState,
     (items, recipes) => Array.from(items.reduce((recipesInList, item) => {
        const recipe = recipes.entities[item.recipe_id];
-       if(!recipesInList.has(recipe)) {
+       if(recipe && !recipesInList.has(recipe)) {
            recipesInList.add(recipe)
        }
        return recipesInList;
@@ -104,7 +104,7 @@ export const selectRecipeIdsInCurrentList = createSelector(
     selectRecipeState,
     (items, recipes) => items.reduce((recipesInList, item) => {
        const recipe = recipes.entities[item.recipe_id];
-       if(!recipesInList.has(recipe.id)) {
+       if(recipe && !recipesInList.has(recipe.id)) {
            recipesInList.add(recipe.id)
        }
        return recipesInList;

@@ -5,6 +5,7 @@ import { UserState } from './core-data/state/user/user.reducer';
 import { ShoppingListFacade } from './core-data/state/shopping-list/shopping-list.facade';
 import { AppState } from './core-data/state';
 import { Store, select } from '@ngrx/store';
+import { RecipeFacade } from './core-data/state/recipe/recipes.facade';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +19,7 @@ export class AppComponent implements OnInit {
   constructor(
     private readonly userFacade: UserFacade,
     private readonly listFacade: ShoppingListFacade,
+    private readonly recipeFacade: RecipeFacade,
     private readonly store: Store<AppState>) {
     
   }
@@ -27,8 +29,9 @@ export class AppComponent implements OnInit {
     this.userFacade.getUser('sam');
 
     this.listFacade.getAllShoppingLists();
+    this.recipeFacade.getAllRecipes();
 
-    this.store.subscribe(console.log);
+    // this.store.subscribe(console.log);
   }
 
 }
