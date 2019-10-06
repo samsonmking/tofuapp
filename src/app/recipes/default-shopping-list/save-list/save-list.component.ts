@@ -41,7 +41,7 @@ export class SaveListComponent implements OnInit {
 
   }
 
-  onSaveList() {
+  createNewList() {
     this.listFacade.createNewDefaultList();
   }
 

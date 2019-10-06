@@ -47,7 +47,7 @@ export class ShoppingListEffects {
     @Effect()
     createDefaultList$ = this.dataPersisence.pessimisticUpdate(ShoppingListActionTypes.CreateDefaultListRequest, {
         run: (action, state) => {
-            return this.service.addShoppingList({ name: 'DEFAULT' }).pipe(
+            return this.service.addShoppingList({ name: 'New List' }).pipe(
                 map(list => new CreateDefaultListComplete(list))
             );
         },
