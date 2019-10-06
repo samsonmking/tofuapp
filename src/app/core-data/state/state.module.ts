@@ -12,6 +12,8 @@ import { IngredientEffects } from './ingredient/ingredient.effects';
 import { UserEffects } from './user/user.effects';
 import { ShoppingListEffects } from './shopping-list/shopping-list.effects';
 import { ShoppingListItemEffects } from './shopping-list-item/shopping-list-items.effects';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { CustomSerializer } from './custom-route-serializer';
 
 @NgModule({
   declarations: [],
@@ -19,6 +21,9 @@ import { ShoppingListItemEffects } from './shopping-list-item/shopping-list-item
     CommonModule,
     NxModule.forRoot(),
     StoreModule.forRoot(reducers),
+    StoreRouterConnectingModule.forRoot({
+      serializer: CustomSerializer
+    }),
     EffectsModule.forRoot([
       ManualEntryEffects,
       RecipesEffects,

@@ -27,6 +27,8 @@ export class AppComponent implements OnInit {
     this.userFacade.getUser('sam');
 
     this.listFacade.getAllShoppingLists();
+
+    this.store.subscribe(console.log);
   }
 
 }

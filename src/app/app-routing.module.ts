@@ -5,7 +5,7 @@ import { RecipeDetailComponent } from './recipes/recipe-detail/recipe-detail.com
 import { ListsComponent } from './lists/lists.component';
 import { ListDetailComponent } from './lists/list-detail/list-detail.component';
 
-const routes: Routes = [
+export const routes: Routes = [
   { path: '', redirectTo: 'recipes', pathMatch: 'full' },
   {
     path: 'recipes',

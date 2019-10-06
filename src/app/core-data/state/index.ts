@@ -6,6 +6,9 @@ import * as fromShoppingLists from './shopping-list/shopping-list.reducer';
 import * as fromShoppingListItems from './shopping-list-item/shopping-list-items.reducer';
 import { ActionReducerMap, createFeatureSelector, createSelector } from '@ngrx/store';
 import { Recipe } from '../models/recipe/recipe';
+import { routerReducer, RouterReducerState } from '@ngrx/router-store';
+import { RouterStateUrl } from './custom-route-serializer';
+import { RouterState } from '@angular/router';
 
 export interface AppState {
     manualRecipeEntry: fromManualEntry.ManualRecipeEntryState;
@@ -14,6 +17,7 @@ export interface AppState {
     user: fromUsers.UserState;
     shoppingLists: fromShoppingLists.ShoppingListState;
     shoppingListItems: fromShoppingListItems.ListItemsState;
+    router: RouterReducerState;
 }
 
 // Recipe Selectors
@@ -23,7 +27,8 @@ export const reducers: ActionReducerMap<AppState> =  {
     ingredients: fromIngredients.ingredientReducer,
     user: fromUsers.userReducer,
     shoppingLists: fromShoppingLists.shoppingListReducer,
-    shoppingListItems: fromShoppingListItems.listItemsReducer
+    shoppingListItems: fromShoppingListItems.listItemsReducer,
+    router: routerReducer
 };
 export const selectManualEntryState = createFeatureSelector<fromManualEntry.ManualRecipeEntryState>('manualRecipeEntry');
 export const selectRecipeCreated = createSelector(
@@ -82,9 +87,8 @@ export const selectShoppingListItems = createSelector(
 export const selectItemsInCurrentList = createSelector(
     selectShoppingListItems,
     selectShoppingListState,
-    (shoppingListItems, shoppingList) => shoppingListItems.filter(item => {
-        return item.shopping_list_id === shoppingList.selectedId
-    })
+    (shoppingListItems, shoppingList) => shoppingListItems.filter(item => 
+        item.shopping_list_id === shoppingList.selectedId)
 );
 
 export const selectRecipesInCurrentList = createSelector(
@@ -110,3 +114,6 @@ export const selectRecipeIdsInCurrentList = createSelector(
        return recipesInList;
     }, new Set<number>())
 );
+
+// Router Selectors
+const selectRouterState = createFeatureSelector<RouterReducerState>('router');
