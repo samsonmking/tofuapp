@@ -9,6 +9,8 @@ import { RecipeDetailComponent } from './recipe-detail/recipe-detail.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { RecipeDetailDialogComponent } from './recipe-detail-dialog/recipe-detail-dialog.component';
 import { DefaultShoppingListComponent } from './default-shopping-list/default-shopping-list.component';
+import { SaveListComponent } from './default-shopping-list/save-list/save-list.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,8 @@ import { DefaultShoppingListComponent } from './default-shopping-list/default-sh
     RecipeThumbComponent,
     RecipeDetailComponent,
     RecipeDetailDialogComponent,
-    DefaultShoppingListComponent
+    DefaultShoppingListComponent,
+    SaveListComponent
   ],
   entryComponents: [
     RecipeDetailDialogComponent
@@ -30,7 +33,8 @@ import { DefaultShoppingListComponent } from './default-shopping-list/default-sh
     MaterialModule,
     AddRecipeModule,
     FlexLayoutModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule
   ]
 })
 export class RecipesModule { }

@@ -3,6 +3,8 @@ import { UserFacade } from './core-data/state/user/user.facade';
 import { Observable } from 'rxjs';
 import { UserState } from './core-data/state/user/user.reducer';
 import { ShoppingListFacade } from './core-data/state/shopping-list/shopping-list.facade';
+import { AppState } from './core-data/state';
+import { Store, select } from '@ngrx/store';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +17,8 @@ export class AppComponent implements OnInit {
 
   constructor(
     private readonly userFacade: UserFacade,
-    private readonly listFacade: ShoppingListFacade) {
+    private readonly listFacade: ShoppingListFacade,
+    private readonly store: Store<AppState>) {
     
   }
 

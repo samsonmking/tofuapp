@@ -1,0 +1,6 @@
+<form [formGroup]="saveListForm" (ngSubmit)="onSaveList()">
+    <mat-form-field>
+      <input matInput type="text" formControlName="name" placeholder="Name">
+    </mat-form-field>
+    <button mat-stroked-button type="submit">Save</button>
+</form>

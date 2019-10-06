@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CoreDataModule } from './core-data/core-data.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { RecipesModule } from './recipes/recipes.module';
+import { ListsModule } from './lists/lists.module';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { RecipesModule } from './recipes/recipes.module';
     MaterialModule,
     CoreDataModule,
     FlexLayoutModule,
-    RecipesModule
+    RecipesModule,
+    ListsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
