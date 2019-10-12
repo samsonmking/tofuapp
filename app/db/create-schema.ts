@@ -52,8 +52,9 @@ export async function createDatabase() {
     const shoppingListItemSchema = `CREATE TABLE IF NOT EXISTS shopping_list_items (
         id serial primary key,
         shopping_list_id integer references shopping_lists(id),
-        ingredient_id integer references ingredients(id) unique,
-        recipe_id integer references recipes(id)
+        ingredient_id integer references ingredients(id),
+        recipe_id integer references recipes(id),
+        unique (ingredient_id, shopping_list_id)
     )`;
     await newDb.query(shoppingListItemSchema);
     const userSchema = `CREATE TABLE IF NOT EXISTS users (
