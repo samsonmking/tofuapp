@@ -11,7 +11,7 @@ export class ShoppingListItemService {
     }
 
     public addItemsToList(listId: number, items: ShoppingListItem[]) {
-        return this.http.post<ShoppingListItem[]>(`http://localhost:3000/list/1/items`, items, 
+        return this.http.post<ShoppingListItem[]>(`http://localhost:3000/list/${listId}/items`, items, 
         { headers: new HttpHeaders({
             'Content-Type':  'application/json',
         })});
