@@ -1,11 +1,11 @@
-<table matSort>
+<table matSort (matSortChange)="sort$.next($event)">
   <tr>
-    <td>Ingredient</td>
-    <td>Quantity</td>
-    <td>Unit</td>
-    <td>Recipe</td>
+    <td mat-sort-header="ingredient">Ingredient</td>
+    <td mat-sort-header="quantity">Quantity</td>
+    <td mat-sort-header="unit">Unit</td>
+    <td mat-sort-header="recipe">Recipe</td>
   </tr>
-  <tr *ngFor="let listItem of listItems$ | async">
+  <tr *ngFor="let listItem of sortedItems$ | async">
     <td>{{listItem.ingredientName}}</td>
     <td>{{listItem.ingredientQuantity}}</td>
     <td>{{listItem.ingredientUnit}}</td>

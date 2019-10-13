@@ -1,14 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ShoppingListItemFacade } from 'src/app/core-data/state/shopping-list-item/shopping-list-items.facade';
-import { ActivatedRoute } from '@angular/router';
-import { map, switchMap, withLatestFrom, filter, reduce } from 'rxjs/operators';
-import { Observable, combineLatest, zip } from 'rxjs';
-import { RecipeIngredient } from 'src/app/core-data/models/ingredient/recipe-ingredient';
-import { ShoppingListItem } from 'src/app/core-data/models/shopping-list-item/shopping-list-item';
-import { Recipe } from 'src/app/core-data/models/recipe/recipe';
+import { map, filter } from 'rxjs/operators';
+import { Observable, combineLatest, BehaviorSubject } from 'rxjs';
 import { IngredientFacade } from 'src/app/core-data/state/ingredient/ingredient.facade';
 import { RecipeFacade } from 'src/app/core-data/state/recipe/recipes.facade';
-import { IngredientService } from 'src/app/core-data/services/ingredient/ingredient-service';
+import { Sort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-list-detail',
@@ -16,15 +12,14 @@ import { IngredientService } from 'src/app/core-data/services/ingredient/ingredi
   styleUrls: ['./list-detail.component.css']
 })
 export class ListDetailComponent implements OnInit {
-  listItems$: Observable<DisplayListItem[]>;
+  sortedItems$: Observable<DisplayListItem[]>;
+  sort$ = new BehaviorSubject<Sort>({ active: 'ingredient', direction:'asc'});
 
   constructor(
     private readonly listItemsFacade: ShoppingListItemFacade,
     private readonly ingredientFacade: IngredientFacade,
-    private readonly recipeFacade: RecipeFacade,
-    private readonly route: ActivatedRoute,
-    private readonly is: IngredientService) {
-      const listId$ = this.route.params.pipe(map(params => params.id));
+    private readonly recipeFacade: RecipeFacade) {
+
     }
 
   ngOnInit() {
@@ -32,7 +27,7 @@ export class ListDetailComponent implements OnInit {
     const recipes$ = this.recipeFacade.recipeState$.pipe(filter(r => r.ids.length > 0));
     const items$ = this.listItemsFacade.itemsInCurrentList$.pipe(filter(i => i.length > 0));
 
-    this.listItems$ =  combineLatest(ingredients$, recipes$, items$).pipe(
+    const listItems$ = combineLatest(ingredients$, recipes$, items$).pipe(
      map(([ingredients, recipes, items]) => {
        return items.reduce<DisplayListItem[]>((acc, curr) => {
          const recipe = recipes.entities[curr.recipe_id];
@@ -51,8 +46,33 @@ export class ListDetailComponent implements OnInit {
        }, [])
      })
     );
+
+    this.sortedItems$ = combineLatest(listItems$, this.sort$).pipe(
+      map(([items, sort]) => sortData(items, sort))
+    )
+  }
+}
+
+function sortData(items: DisplayListItem[], sort: Sort) {
+  const data = items.slice();
+  if (!sort.active || sort.direction === '') {
+    return data;
   }
 
+  return data.sort((a, b) => {
+    const isAsc = sort.direction === 'asc';
+    switch (sort.active) {
+      case 'ingredient': return compare(a.ingredientName, b.ingredientName, isAsc);
+      case 'quantity': return compare(a.ingredientQuantity, b.ingredientQuantity, isAsc);
+      case 'unit': return compare(a.ingredientUnit, b.ingredientUnit, isAsc);
+      case 'recipe': return compare(a.recipeName, b.recipeName, isAsc);
+      default: return 0;
+    }
+  });
+}
+
+function compare(a: number | string, b: number | string, isAsc: boolean) {
+  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }
 
 interface DisplayListItem {
