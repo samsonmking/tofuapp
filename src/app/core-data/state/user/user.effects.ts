@@ -3,11 +3,12 @@ import { Effect, Actions, ofType } from '@ngrx/effects';
 import { DataPersistence } from '@nrwl/nx';
 import { UserState } from './user.reducer';
 import { UserService } from '../../services/user/user.service';
-import { UserActionTypes, GetUserRequest, GetUserComplete, UpdateUserRequest, UpdateUserComplete, SetDefaultListRequest, SetDefaultListComplete } from './user.actions';
+import { UserActionTypes, GetUserRequest, GetUserComplete, UpdateUserRequest, UpdateUserComplete, ResetDefaultOnDeleteRequest, ResetDefaultOnDeleteComplete } from './user.actions';
 import { map, withLatestFrom, mergeMap } from 'rxjs/operators';
 import { ShoppingListActionTypes, CreateDefaultListComplete, DeleteShoppingListRequest } from '../shopping-list/shopping-list.actions';
 import { AppState, selectUser } from '..';
 import { Store, select } from '@ngrx/store';
+import { of } from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 export class UserEffects {
@@ -56,10 +57,13 @@ export class UserEffects {
 
     @Effect()
     setDefaultUser = this.actions$.pipe(
-        ofType<SetDefaultListRequest>(UserActionTypes.SetDefaultListRequest),
+        ofType<ResetDefaultOnDeleteRequest>(UserActionTypes.ResetDefaultOnDeleteRequest),
         withLatestFrom(this.store.pipe(select(selectUser))),
-        mergeMap(([action, user]) => this.service.updateUser({ ...user, default_list_id: action.listId })),
-        map(user => new SetDefaultListComplete(user.default_list_id))
+        mergeMap(([action, user]) => action.listToDeleteId === user.default_list_id ? 
+            this.service.updateUser({ ...user, default_list_id: null }) :
+            of(user)
+        ),
+        map(user => new ResetDefaultOnDeleteComplete(user.default_list_id))
     );
 
 }

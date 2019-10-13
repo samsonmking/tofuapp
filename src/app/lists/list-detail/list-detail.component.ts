@@ -25,7 +25,7 @@ export class ListDetailComponent implements OnInit {
   ngOnInit() {
     const ingredients$ = this.ingredientFacade.$ingredientState.pipe(filter(i => i.ids.length > 0));
     const recipes$ = this.recipeFacade.recipeState$.pipe(filter(r => r.ids.length > 0));
-    const items$ = this.listItemsFacade.itemsInCurrentList$.pipe(filter(i => i.length > 0));
+    const items$ = this.listItemsFacade.itemsInCurrentList$;
 
     const listItems$ = combineLatest(ingredients$, recipes$, items$).pipe(
      map(([ingredients, recipes, items]) => {
@@ -46,6 +46,8 @@ export class ListDetailComponent implements OnInit {
        }, [])
      })
     );
+
+    listItems$.subscribe(console.log);
 
     this.sortedItems$ = combineLatest(listItems$, this.sort$).pipe(
       map(([items, sort]) => sortData(items, sort))

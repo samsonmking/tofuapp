@@ -1,5 +1,8 @@
 <ul>
   <li *ngFor="let list of lists$ | async">
-    <a routerLink="/lists/{{list.id}}">{{list.name}}</a><button (click)="deleteList(list.id)">x</button>
+    <div [ngClass]="(defaultListId$ | async) === list.id ? 'active' : 'inactive'">
+        <a routerLink="/lists/{{list.id}}">{{list.name}}</a>
+        <button (click)="deleteList(list.id)">x</button>
+    </div>
   </li>
 </ul>

@@ -13,14 +13,15 @@ import { ShoppingListActionTypes,
     UpdateShoppingListComplete, 
     DeleteShoppingListRequest, 
     DeleteShoppingListComplete } from './shopping-list.actions';
-import { map, filter, withLatestFrom, switchMap, mergeMap } from 'rxjs/operators';
-import { UserActionTypes, GetUserComplete, SetDefaultListRequest, SetDefaultListComplete } from '../user/user.actions';
+import { map, filter, withLatestFrom, switchMap, mergeMap, tap } from 'rxjs/operators';
+import { UserActionTypes, GetUserComplete, ResetDefaultOnDeleteRequest, ResetDefaultOnDeleteComplete } from '../user/user.actions';
 import { RouterNavigatedAction, ROUTER_NAVIGATED } from '@ngrx/router-store';
 import { RouterStateUrl } from '../custom-route-serializer';
 import { AppState } from '..';
 import { Store } from '@ngrx/store';
 import { ShoppingListItemsActionTypes, RemoveItemsFromListRequest, RemoveItemsFromListComplete } from '../shopping-list-item/shopping-list-items.actions';
-import { zip } from 'rxjs';
+import { zip, empty, of, EMPTY } from 'rxjs';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Injectable({providedIn: 'root'})
 export class ShoppingListEffects {
@@ -29,7 +30,9 @@ export class ShoppingListEffects {
         private readonly actions$: Actions,
         private dataPersisence: DataPersistence<ShoppingListState>,
         private readonly service: ShoppingListService,
-        private readonly store: Store<AppState>
+        private readonly store: Store<AppState>,
+        private readonly router: Router,
+        private route: ActivatedRoute
     ) {}
     
     @Effect()
@@ -80,6 +83,31 @@ export class ShoppingListEffects {
         })
     );
 
+    @Effect({ dispatch: false })
+    defaultCreated$ = this.actions$.pipe(
+        ofType<CreateDefaultListComplete>(ShoppingListActionTypes.CreateDefaultListComplete),
+        withLatestFrom(this.actions$.pipe(ofType<RouterNavigatedAction<RouterStateUrl>>(ROUTER_NAVIGATED))),
+        tap(([action, route]) => {
+            if(route.payload.routerState.url.includes('lists')) {
+                this.router.navigate([`/lists/${action.list.id}`]);
+            }
+        })
+    );
+
+    @Effect({ dispatch: false })
+    defaultSet$ = this.actions$.pipe(
+        ofType<SetDefaultList>(ShoppingListActionTypes.SetDefaultList),
+        withLatestFrom(this.actions$.pipe(ofType<RouterNavigatedAction<RouterStateUrl>>(ROUTER_NAVIGATED))),
+        tap(([action, route]) => {
+            if(route.payload.routerState.url.includes('lists')) {
+                const params = route.payload.routerState.params;
+                if(action.id && params['id'] && params['id'] !== action.id) {
+                    this.router.navigate([`/lists/${action.id}`]);
+                }
+            }
+        })
+    );
+
     @Effect()
     updateShoppingList$ = this.actions$.pipe(
         ofType<UpdateShoppingListRequest>(ShoppingListActionTypes.UpdateShoppingListRequest),
@@ -90,22 +118,31 @@ export class ShoppingListEffects {
     @Effect()
     deleteShoppingList$ = this.actions$.pipe(
         ofType<DeleteShoppingListRequest>(ShoppingListActionTypes.DeleteShoppingListRequest),
-        withLatestFrom(this.store),
-        switchMap(([action, store]) => [
-            new RemoveItemsFromListRequest(action.id), 
-            new SetDefaultListRequest(store.shoppingLists.ids[0] as number)
-        ])
+        switchMap(action => [
+                new RemoveItemsFromListRequest(action.id), 
+                new ResetDefaultOnDeleteRequest(action.id)
+            ]
+        )
     );
 
     @Effect()
     updateDefaultList$ = this.actions$.pipe(
-        ofType<SetDefaultListComplete>(UserActionTypes.SetDefaultListComplete),
-        map(action => new SetDefaultList(action.listId))
+        ofType<DeleteShoppingListComplete>(ShoppingListActionTypes.DeleteShoppingListComplete),
+        withLatestFrom(this.store),
+        mergeMap(([action, store]) => {
+            if (!store.user.default_list_id) {
+                return of(new CreateDefaultListRequest())
+            } else if(store.shoppingLists.defaultListId === action.id) {
+                return of(new SetDefaultList(store.user.default_list_id));
+            } else {
+                return EMPTY;
+            }
+        })
     );
 
     deletePreReq$ = zip(
         this.actions$.pipe(ofType<RemoveItemsFromListComplete>(ShoppingListItemsActionTypes.RemoveItemsFromListComplete)),
-        this.actions$.pipe(ofType<SetDefaultList>(ShoppingListActionTypes.SetDefaultList))
+        this.actions$.pipe(ofType<ResetDefaultOnDeleteComplete>(UserActionTypes.ResetDefaultOnDeleteComplete))
     );
 
     @Effect()

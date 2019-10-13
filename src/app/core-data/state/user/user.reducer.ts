@@ -1,5 +1,5 @@
 import { User } from '../../models/user/user';
-import { UserActions, UserActionTypes, GetUserComplete, UpdateUserComplete, SetDefaultListComplete } from './user.actions';
+import { UserActions, UserActionTypes, GetUserComplete, UpdateUserComplete, ResetDefaultOnDeleteComplete } from './user.actions';
 
 export interface UserState extends User {
     
@@ -14,9 +14,9 @@ export function userReducer(state: UserState = {}, action: UserActions): UserSta
         case UserActionTypes.UpdateUserComplete:
             const updateUser = action as UpdateUserComplete;
             return { ...state, ...updateUser.user };
-        case UserActionTypes.SetDefaultListComplete: {
-            const defaultList = action as SetDefaultListComplete;
-            return { ...state, default_list_id: defaultList.listId };
+        case UserActionTypes.ResetDefaultOnDeleteComplete: {
+            const defaultList = action as ResetDefaultOnDeleteComplete;
+            return { ...state, default_list_id: defaultList.updatedDefaultId };
         }
         default:
             return state;

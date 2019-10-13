@@ -18,7 +18,9 @@ export class SaveListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.listFacade.currentList$
+    this.listFacade.currentList$.pipe(
+      filter(list => list !== null && list !== undefined)
+    )
       .subscribe(list => {
       const name = list.name;
       if (this.saveListForm.value.name !== name) {

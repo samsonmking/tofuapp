@@ -19,6 +19,11 @@ export class ShoppingListFacade {
         map(listState => listState.entities[listState.defaultListId])
     );
 
+    currentListId$ = this.store.pipe(
+        select(selectShoppingListState),
+        map(state => state.defaultListId)
+    );
+
     constructor(private readonly store: Store<AppState>) {}
 
     public getAllShoppingLists() {

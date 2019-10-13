@@ -6,7 +6,7 @@ import { ShoppingListItemService } from '../../services/shopping-list-item/shopp
 import { AddRecipeToList, ShoppingListItemsActionTypes, AddItemsToList, AddItemsToListComplete, GetItemsForListRequest, GetItemsForListComplete, RemoveRecipeFromList, RemoveRecipeFromListComplete, RemoveItemsFromListRequest, RemoveItemsFromListComplete } from './shopping-list-items.actions';
 import { mergeMap, switchMap, map } from 'rxjs/operators';
 import { GetIngredientsForRecipeInList, GetIngredientsForRecipeComplete, GetIngredientsForRecipeInListComplete, IngredientActionsType } from '../ingredient/ingredient.actions';
-import { of, zip } from 'rxjs';
+import { of, zip, empty } from 'rxjs';
 import { ShoppingListActionTypes, SetDefaultList } from '../shopping-list/shopping-list.actions';
 import { ShoppingListItem } from '../../models/shopping-list-item/shopping-list-item';
 import { AppState } from '..';
@@ -24,7 +24,7 @@ export class ShoppingListItemEffects {
     @Effect()
     setDefaultList$ = this.actions$.pipe(
         ofType<SetDefaultList>(ShoppingListActionTypes.SetDefaultList),
-        switchMap(defaultList => of(new GetItemsForListRequest(defaultList.id)))
+        switchMap(defaultList => defaultList.id ? of(new GetItemsForListRequest(defaultList.id)) : empty())
     );
 
     @Effect()

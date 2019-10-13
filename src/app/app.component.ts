@@ -38,8 +38,8 @@ export class AppComponent implements OnInit {
     this.listFacade.getAllShoppingLists();
     this.recipeFacade.getAllRecipes();
 
-    this.store.subscribe(console.log);
-    this.actions$.subscribe(console.log);
+    // this.store.subscribe(console.log);
+    // this.actions$.subscribe(console.log);
     
   }
 
