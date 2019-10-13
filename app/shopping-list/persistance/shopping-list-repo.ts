@@ -5,5 +5,5 @@ export interface ShoppingListRepo {
     getShoppingList(id: number): Promise<ShoppingList>;
     updateShoppingList(list: ShoppingList): Promise<ShoppingList>;
     addShoppingList(list: ShoppingList): Promise<ShoppingList>;
-    deleteShoppingList(id: number): Promise<boolean>;
+    deleteShoppingList(id: number): Promise<number>;
 }

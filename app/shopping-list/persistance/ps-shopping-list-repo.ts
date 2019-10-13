@@ -35,7 +35,12 @@ export class ShoppingListPSRepo implements ShoppingListRepo {
         return updated.rows[0];
     }
     
-    public deleteShoppingList(id: number): Promise<boolean> {
-        throw new Error("Method not implemented.");
+    public async deleteShoppingList(id: number): Promise<number> {
+        const deleted = await query(`
+            DELETE FROM shopping_lists 
+            WHERE id=$1 
+            RETURNING id`,
+            [id]);
+        return deleted.rows[0].id;
     }
 }

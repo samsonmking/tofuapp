@@ -6,4 +6,5 @@ export interface ShoppingListItemRepo {
     addItemsToList(payload: ShoppingListItem[]): Promise<ShoppingListItem[]>;
     removeItemFromList(itemId: number): Promise<void>;
     removeRecipeFromList(listId: number, recipeId: number): Promise<number[]>;
+    removeItemsFromList(listId: number): Promise<number[]>;
 }

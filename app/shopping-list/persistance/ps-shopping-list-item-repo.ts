@@ -43,4 +43,13 @@ export class ShoppingListItemRepoPS implements ShoppingListItemRepo {
         throw new Error("Method not implemented.");
     }
 
+    public async removeItemsFromList(listId: number): Promise<number[]> {
+        const deleted = await query(`
+            DELETE FROM shopping_list_items
+            WHERE shopping_list_id=$1
+            RETURNING id`,
+            [listId]);
+        return deleted.rows.map(deleted => deleted.id);
+    }
+
 }

@@ -15,9 +15,11 @@ export class ShoppingListRoutes implements Route {
         app.post('/list', this.listController.addShoppingList);
         app.get('/list/:id', this.listController.getShoppingList);
         app.put('/list/:id', this.listController.updateShoppingList);
+        app.delete('/list/:id', this.listController.deleteShoppingList);
 
         app.get('/list/:listid/items', this.itemController.getItemsForList);
         app.post('/list/:listid/items', this.itemController.addItemsToList);
+        app.delete('/list/:listid/items', this.itemController.deleteItemsFromList);
         app.delete('/list/:listid/recipe/:recipeid', this.itemController.deleteRecipeFromList);
     }
 

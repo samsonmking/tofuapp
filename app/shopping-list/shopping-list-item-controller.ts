@@ -38,4 +38,13 @@ export class ShoppingListItemController {
         }
     }
 
+    deleteItemsFromList = async(req: Request, res: Response, next: NextFunction) => {
+        try {
+            const deleted = await this.repo.removeItemsFromList(req.params.listid);
+            res.json(deleted);
+        } catch (e) {
+            next(e);
+        }
+    }
+
 }
