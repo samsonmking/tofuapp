@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ShoppingListFacade } from 'src/app/core-data/state/shopping-list/shopping-list.facade';
 import { Observable } from 'rxjs';
 import { ShoppingList } from 'src/app/core-data/models/shopping-list/shopping-list';
-import { map, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-list-selection',
@@ -20,7 +19,7 @@ export class ListSelectionComponent implements OnInit {
     this.listFacade.getAllShoppingLists();
     this.defaultListId$ = this.listFacade.currentListId$;
   }
-  
+
   deleteList(id: number) {
     this.listFacade.deleteShoppingList(id);
   }

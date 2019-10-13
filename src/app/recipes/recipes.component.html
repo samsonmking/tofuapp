@@ -1,16 +1,19 @@
-<mat-sidenav-container>
-    <mat-sidenav-content>
-        <div class="float">
-            <button mat-fab (click)="addNewRecipe()"><i class="material-icons">add</i></button>
-          </div>
-          <div fxLayout="row column" fxLayoutGap="10px">
-            <div *ngFor="let recipe of recipes$ | async">
-              <app-recipe-thumb [recipe]="recipe"></app-recipe-thumb>
-            </div>
-          </div>
-    </mat-sidenav-content>
-    <mat-sidenav mode="side" opened style="width: 300px">
+<mat-sidenav-container class="tp-container">
+    <mat-sidenav mode="side" opened class="default-list">
         <app-default-shopping-list></app-default-shopping-list>
-    </mat-sidenav>
-</mat-sidenav-container>
+      </mat-sidenav>
+
+    <mat-sidenav-content class="recipe-thumbs">
+      <div class="float">
+        <button mat-fab (click)="addNewRecipe()"><i class="material-icons">add</i></button>
+      </div>
+      <div fxLayout="row column" fxLayoutGap="10px" style="margin-left:10px">
+        <div *ngFor="let recipe of recipes$ | async">
+          <app-recipe-thumb [recipe]="recipe"></app-recipe-thumb>
+        </div>
+      </div>
+    </mat-sidenav-content>
+
+  </mat-sidenav-container>
+
 <router-outlet></router-outlet>

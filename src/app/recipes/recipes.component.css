@@ -4,3 +4,17 @@
     bottom: 1rem;
     z-index: 9;
 }
+
+.recipe-thumbs {
+    background-color: white;
+}
+
+.default-list {
+    width: 300px;
+}
+
+.tp-container {
+    position: absolute;
+    top: 64px;
+    bottom: 0;
+ }
