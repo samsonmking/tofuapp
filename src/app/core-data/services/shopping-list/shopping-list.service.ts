@@ -22,4 +22,8 @@ export class ShoppingListService {
     updateShoppingList(list: ShoppingList) {
         return this.http.put<ShoppingList>(`http://localhost:3000/list/${list.id}`, list);
     }
+
+    deleteShoppingList(id: number) {
+        return this.http.delete<number>(`http://localhost:3000/list/${id}`);
+    }
 }

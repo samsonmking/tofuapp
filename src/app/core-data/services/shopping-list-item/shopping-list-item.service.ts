@@ -24,4 +24,8 @@ export class ShoppingListItemService {
     public deleteRecipeFromList(listId: number, recipeId: number) {
         return this.http.delete<number[]>(`http://localhost:3000/list/${listId}/recipe/${recipeId}`);
     }
+
+    public deleteItemsFromList(listId: number) {
+        return this.http.delete<number[]>(`http://localhost:3000/list/${listId}/items`);
+    }
 }

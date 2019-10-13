@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Effect, Actions } from '@ngrx/effects';
+import { Effect, Actions, ofType } from '@ngrx/effects';
 import { DataPersistence } from '@nrwl/nx';
 import { UserState } from './user.reducer';
 import { UserService } from '../../services/user/user.service';
-import { UserActionTypes, GetUserRequest, GetUserComplete, UpdateUserRequest, UpdateUserComplete } from './user.actions';
-import { map } from 'rxjs/operators';
-import { ShoppingListActionTypes, CreateDefaultListComplete } from '../shopping-list/shopping-list.actions';
-import { AppState } from '..';
+import { UserActionTypes, GetUserRequest, GetUserComplete, UpdateUserRequest, UpdateUserComplete, SetDefaultListRequest, SetDefaultListComplete } from './user.actions';
+import { map, withLatestFrom, mergeMap } from 'rxjs/operators';
+import { ShoppingListActionTypes, CreateDefaultListComplete, DeleteShoppingListRequest } from '../shopping-list/shopping-list.actions';
+import { AppState, selectUser } from '..';
+import { Store, select } from '@ngrx/store';
 
 @Injectable({providedIn: 'root'})
 export class UserEffects {
@@ -14,7 +15,8 @@ export class UserEffects {
     constructor(
         private actions$: Actions,
         private dataPersistence: DataPersistence<AppState>,
-        private service: UserService
+        private service: UserService,
+        private store: Store<AppState>
     ) {}
 
     @Effect()
@@ -49,6 +51,15 @@ export class UserEffects {
         onError: (action: CreateDefaultListComplete, error) => {
             console.log('Error', error);
         }
-    })
+    });
+
+
+    @Effect()
+    setDefaultUser = this.actions$.pipe(
+        ofType<SetDefaultListRequest>(UserActionTypes.SetDefaultListRequest),
+        withLatestFrom(this.store.pipe(select(selectUser))),
+        mergeMap(([action, user]) => this.service.updateUser({ ...user, default_list_id: action.listId })),
+        map(user => new SetDefaultListComplete(user.default_list_id))
+    );
 
 }

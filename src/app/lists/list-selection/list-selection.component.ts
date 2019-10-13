@@ -18,4 +18,8 @@ export class ListSelectionComponent implements OnInit {
     this.listFacade.getAllShoppingLists();
   }
 
+  deleteList(id: number) {
+    this.listFacade.deleteShoppingList(id);
+  }
+
 }

@@ -7,6 +7,7 @@ import { AppState } from './core-data/state';
 import { Store, select } from '@ngrx/store';
 import { RecipeFacade } from './core-data/state/recipe/recipes.facade';
 import { map } from 'rxjs/operators';
+import { Actions } from '@ngrx/effects';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +23,8 @@ export class AppComponent implements OnInit {
     private readonly userFacade: UserFacade,
     private readonly listFacade: ShoppingListFacade,
     private readonly recipeFacade: RecipeFacade,
-    private readonly store: Store<AppState>) {
+    private readonly store: Store<AppState>,
+    private readonly actions$: Actions) {
     
   }
 
@@ -36,7 +38,9 @@ export class AppComponent implements OnInit {
     this.listFacade.getAllShoppingLists();
     this.recipeFacade.getAllRecipes();
 
-    // this.store.subscribe(console.log);
+    this.store.subscribe(console.log);
+    this.actions$.subscribe(console.log);
+    
   }
 
 }

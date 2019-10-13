@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AppState, selectAllLists, selectShoppingListState } from '..';
 import { Store, select } from '@ngrx/store';
-import { GetListsComplete, GetListsRequest, CreateDefaultListRequest, UpdateShoppingListRequest } from './shopping-list.actions';
+import { GetListsRequest, 
+    CreateDefaultListRequest,
+    UpdateShoppingListRequest,
+    DeleteShoppingListRequest } from './shopping-list.actions';
 import { filter, map } from 'rxjs/operators';
 import { ShoppingList } from '../../models/shopping-list/shopping-list';
 
@@ -28,5 +31,9 @@ export class ShoppingListFacade {
 
     public updateShoppingList(list: ShoppingList) {
         this.store.dispatch(new UpdateShoppingListRequest(list));
+    }
+
+    public deleteShoppingList(id: number) {
+        this.store.dispatch(new DeleteShoppingListRequest(id));
     }
 }
