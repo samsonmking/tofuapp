@@ -24,7 +24,6 @@ export class SaveListComponent implements OnInit {
       .subscribe(list => {
       const name = list.name;
       if (this.saveListForm.value.name !== name) {
-        console.log('setting value');
         this.saveListForm.setValue({ name });
       }
     });
@@ -37,7 +36,6 @@ export class SaveListComponent implements OnInit {
     nameInput$.pipe(withLatestFrom(this.listFacade.currentList$))
       .subscribe(([name, list]) => {
         if (name !== list.name) {
-          console.log('updating value');
           this.listFacade.updateShoppingList({ ...list, name })          
         }
       });

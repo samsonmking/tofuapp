@@ -47,8 +47,6 @@ export class ListDetailComponent implements OnInit {
      })
     );
 
-    listItems$.subscribe(console.log);
-
     this.sortedItems$ = combineLatest(listItems$, this.sort$).pipe(
       map(([items, sort]) => sortData(items, sort))
     )

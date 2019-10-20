@@ -3,7 +3,9 @@
     <span class="title">TOFU</span>
     <ul class="nav" fxFlex="1 1 auto">
       <li><a routerLink="recipes" routerLinkActive="active" #rla="routerLinkActive">Recipe Collection</a></li>
-      <li><a [routerLink]="selectedList$ | async" routerLinkActive="active" #rla="routerLinkActive">Shopping Lists</a></li>
+      <li>
+        <a [routerLink]="selectedList$ | async" [class.active]="listSelected$ | async">Shopping Lists</a>
+      </li>
     </ul>
     <span *ngIf="$user | async as user">{{user.id}}</span>
 </mat-toolbar>

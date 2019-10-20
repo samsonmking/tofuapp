@@ -6,8 +6,9 @@ import { ShoppingListFacade } from './core-data/state/shopping-list/shopping-lis
 import { AppState } from './core-data/state';
 import { Store, select } from '@ngrx/store';
 import { RecipeFacade } from './core-data/state/recipe/recipes.facade';
-import { map } from 'rxjs/operators';
+import { map, filter } from 'rxjs/operators';
 import { Actions } from '@ngrx/effects';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -18,14 +19,13 @@ export class AppComponent implements OnInit {
   title = 'tofu';
   $user: Observable<UserState>;
   selectedList$: Observable<string>;
+  listSelected$: Observable<boolean>;
 
   constructor(
     private readonly userFacade: UserFacade,
     private readonly listFacade: ShoppingListFacade,
     private readonly recipeFacade: RecipeFacade,
-    private readonly store: Store<AppState>,
-    private readonly actions$: Actions) {
-    
+    private readonly route: Router) {
   }
 
   ngOnInit(): void {
@@ -34,6 +34,11 @@ export class AppComponent implements OnInit {
 
     this.selectedList$ = this.listFacade.currentList$.pipe(
       map(list => list ? `lists/${list.id}` : `lists`));
+
+    this.listSelected$ = this.route.events.pipe(
+      filter(e => e instanceof NavigationEnd),
+      map((end: NavigationEnd) => end.url.includes('/lists'))
+    );
 
     this.listFacade.getAllShoppingLists();
     this.recipeFacade.getAllRecipes();
