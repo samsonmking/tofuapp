@@ -14,14 +14,13 @@ import { ShoppingListActionTypes,
     DeleteShoppingListRequest, 
     DeleteShoppingListComplete } from './shopping-list.actions';
 import { map, filter, withLatestFrom, switchMap, mergeMap, tap } from 'rxjs/operators';
-import { UserActionTypes, GetUserComplete, ResetDefaultOnDeleteRequest, ResetDefaultOnDeleteComplete } from '../user/user.actions';
 import { RouterNavigatedAction, ROUTER_NAVIGATED } from '@ngrx/router-store';
 import { RouterStateUrl } from '../custom-route-serializer';
 import { AppState } from '..';
 import { Store } from '@ngrx/store';
 import { ShoppingListItemsActionTypes, RemoveItemsFromListRequest, RemoveItemsFromListComplete } from '../shopping-list-item/shopping-list-items.actions';
-import { zip, empty, of, EMPTY } from 'rxjs';
-import { Router, ActivatedRoute } from '@angular/router';
+import { of, EMPTY } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({providedIn: 'root'})
 export class ShoppingListEffects {
@@ -31,9 +30,7 @@ export class ShoppingListEffects {
         private dataPersisence: DataPersistence<ShoppingListState>,
         private readonly service: ShoppingListService,
         private readonly store: Store<AppState>,
-        private readonly router: Router,
-        private route: ActivatedRoute
-    ) {}
+        private readonly router: Router) {}
     
     @Effect()
     getShoppingLists$ = this.dataPersisence.pessimisticUpdate(ShoppingListActionTypes.GetListsRequest, {
@@ -43,17 +40,6 @@ export class ShoppingListEffects {
             );
         },
         onError: (action: GetListsRequest, error) => {
-            console.log('Error', error);
-        }
-    });
-
-    @Effect()
-    getUser$ = this.dataPersisence.pessimisticUpdate(UserActionTypes.GetUserComplete, {
-        run: (action: GetUserComplete, state) => {
-            return action.user.default_list_id ? 
-             new SetDefaultList(action.user.default_list_id) : new CreateDefaultListRequest();
-        },
-        onError: (action, error) => {
             console.log('Error', error);
         }
     });
@@ -118,36 +104,30 @@ export class ShoppingListEffects {
     @Effect()
     deleteShoppingList$ = this.actions$.pipe(
         ofType<DeleteShoppingListRequest>(ShoppingListActionTypes.DeleteShoppingListRequest),
-        switchMap(action => [
-                new RemoveItemsFromListRequest(action.id), 
-                new ResetDefaultOnDeleteRequest(action.id)
-            ]
-        )
+        map(action => new RemoveItemsFromListRequest(action.id))
     );
 
     @Effect()
     updateDefaultList$ = this.actions$.pipe(
-        ofType<DeleteShoppingListComplete>(ShoppingListActionTypes.DeleteShoppingListComplete),
+        ofType(ShoppingListActionTypes.DeleteShoppingListComplete, ShoppingListActionTypes.GetListsComplete),
         withLatestFrom(this.store),
         mergeMap(([action, store]) => {
-            if (!store.user.default_list_id) {
-                return of(new CreateDefaultListRequest())
-            } else if(store.shoppingLists.defaultListId === action.id) {
-                return of(new SetDefaultList(store.user.default_list_id));
-            } else {
+            if (store.shoppingLists.defaultListId) { // selected list was not deleted => nothing to do
                 return EMPTY;
+            }
+            const listIds = store.shoppingLists.ids;
+            if (listIds.length > 0) { // other lists available => set default to highest id
+                return of(new SetDefaultList(Math.max(...listIds as number[])))
+            } else {
+                return of(new CreateDefaultListRequest())
             }
         })
     );
 
-    deletePreReq$ = zip(
-        this.actions$.pipe(ofType<RemoveItemsFromListComplete>(ShoppingListItemsActionTypes.RemoveItemsFromListComplete)),
-        this.actions$.pipe(ofType<ResetDefaultOnDeleteComplete>(UserActionTypes.ResetDefaultOnDeleteComplete))
-    );
-
     @Effect()
-    deletePreReqComplete$ = this.deletePreReq$.pipe(
-        mergeMap(([removeItems]) => this.service.deleteShoppingList(removeItems.listId)),
+    deletePreReqComplete$ = this.actions$.pipe(
+        ofType<RemoveItemsFromListComplete>(ShoppingListItemsActionTypes.RemoveItemsFromListComplete),
+        mergeMap((removeItems) => this.service.deleteShoppingList(removeItems.listId)),
         map(id => new DeleteShoppingListComplete(id))
     );
 }

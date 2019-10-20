@@ -1,14 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Effect, Actions, ofType } from '@ngrx/effects';
+import { Effect, Actions } from '@ngrx/effects';
 import { DataPersistence } from '@nrwl/nx';
-import { UserState } from './user.reducer';
 import { UserService } from '../../services/user/user.service';
-import { UserActionTypes, GetUserRequest, GetUserComplete, UpdateUserRequest, UpdateUserComplete, ResetDefaultOnDeleteRequest, ResetDefaultOnDeleteComplete } from './user.actions';
-import { map, withLatestFrom, mergeMap } from 'rxjs/operators';
-import { ShoppingListActionTypes, CreateDefaultListComplete, DeleteShoppingListRequest } from '../shopping-list/shopping-list.actions';
-import { AppState, selectUser } from '..';
-import { Store, select } from '@ngrx/store';
-import { of } from 'rxjs';
+import { UserActionTypes, GetUserRequest, GetUserComplete, UpdateUserRequest, UpdateUserComplete } from './user.actions';
+import { map } from 'rxjs/operators';
+import { AppState } from '..';
+import { Store } from '@ngrx/store';
 
 @Injectable({providedIn: 'root'})
 export class UserEffects {
@@ -43,27 +40,5 @@ export class UserEffects {
             console.log('Error', error)
         }
     });
-
-    @Effect()
-    defaultListCreated$ = this.dataPersistence.pessimisticUpdate(ShoppingListActionTypes.CreateDefaultListComplete, {
-        run: (action: CreateDefaultListComplete, state) => {
-            return new UpdateUserRequest({ ...state.user, default_list_id: action.list.id })
-        },
-        onError: (action: CreateDefaultListComplete, error) => {
-            console.log('Error', error);
-        }
-    });
-
-
-    @Effect()
-    setDefaultUser = this.actions$.pipe(
-        ofType<ResetDefaultOnDeleteRequest>(UserActionTypes.ResetDefaultOnDeleteRequest),
-        withLatestFrom(this.store.pipe(select(selectUser))),
-        mergeMap(([action, user]) => action.listToDeleteId === user.default_list_id ? 
-            this.service.updateUser({ ...user, default_list_id: null }) :
-            of(user)
-        ),
-        map(user => new ResetDefaultOnDeleteComplete(user.default_list_id))
-    );
 
 }

@@ -36,7 +36,8 @@ export function shoppingListReducer(state: ShoppingListState = initialState, act
         }
         case ShoppingListActionTypes.DeleteShoppingListComplete:
             const deleted = action as DeleteShoppingListComplete;
-            return adapter.removeOne(deleted.id, state);
+            const updatedDefault = (state.defaultListId === deleted.id) ? null : state.defaultListId
+            return { ...adapter.removeOne(deleted.id, state), defaultListId: updatedDefault };
         default:
             return state;
     }

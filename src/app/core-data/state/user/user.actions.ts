@@ -5,9 +5,7 @@ export enum UserActionTypes {
     GetUserRequest = '[User] Get user request',
     GetUserComplete = '[User] Get user complete',
     UpdateUserRequest = '[User] Update user request',
-    UpdateUserComplete = '[User] Update user complete',
-    ResetDefaultOnDeleteRequest = '[User] Reset default list on delete request',
-    ResetDefaultOnDeleteComplete = '[User] Reset default list on delete complete'
+    UpdateUserComplete = '[User] Update user complete'
 }
 
 export class GetUserRequest implements Action {
@@ -30,20 +28,8 @@ export class UpdateUserComplete implements Action {
     constructor(public user: User) {}
 } 
 
-export class ResetDefaultOnDeleteRequest implements Action {
-    type: string = UserActionTypes.ResetDefaultOnDeleteRequest;
-    constructor(public listToDeleteId: number) {}
-}
-
-export class ResetDefaultOnDeleteComplete implements Action {
-    type = UserActionTypes.ResetDefaultOnDeleteComplete;
-    constructor(public updatedDefaultId: number) {}
-}
-
 export type UserActions = 
     GetUserRequest |
     GetUserComplete |
     UpdateUserRequest |
-    UpdateUserComplete |
-    ResetDefaultOnDeleteRequest |
-    ResetDefaultOnDeleteComplete;
+    UpdateUserComplete;
