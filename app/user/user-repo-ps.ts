@@ -13,18 +13,13 @@ export class UserRepoPS implements UserRepo {
 
     public async getUser(id: string): Promise<User> {
         const result = await query(
-            `SELECT id, default_list_id 
+            `SELECT id 
             FROM users 
             WHERE id=$1`, [id]);
         return result.rows[0];
     }    
     
     public async updateUser(payload: User): Promise<User> {
-        const result = await query(
-            `UPDATE users 
-            SET default_list_id=$2
-            WHERE id=$1 
-            RETURNING id, default_list_id`, [payload.id, payload.default_list_id]);
-        return result.rows[0];
+        return { ...payload };
     }
 }
