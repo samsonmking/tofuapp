@@ -13,7 +13,7 @@ import { Injectable } from '@angular/core';
 import { AppState, selectRecipeIdsInCurrentList, selectIngredients } from '..';
 import { Store, select } from '@ngrx/store';
 import { GetItemsForListComplete, ShoppingListItemsActionTypes } from '../shopping-list-item/shopping-list-items.actions';
-import { empty } from 'rxjs';
+import { EMPTY } from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 export class IngredientEffects {
@@ -53,7 +53,7 @@ export class IngredientEffects {
         withLatestFrom(this.store.pipe(select(selectIngredients))),
         mergeMap(([action, ingredients]) => {
             const inStore = ingredients.findIndex(i => i.recipe_id === action.recipeId) > -1;
-            return inStore ? empty() : this.ingredientService.getIngredientForRecipe(action.recipeId).pipe(
+            return inStore ? EMPTY : this.ingredientService.getIngredientForRecipe(action.recipeId).pipe(
                 map(i => new GetIngredientsForRecipeComplete(i))
             )
         })
