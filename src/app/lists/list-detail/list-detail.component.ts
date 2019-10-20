@@ -13,7 +13,7 @@ import { Sort } from '@angular/material/sort';
 })
 export class ListDetailComponent implements OnInit {
   sortedItems$: Observable<DisplayListItem[]>;
-  sort$ = new BehaviorSubject<Sort>({ active: 'ingredient', direction:'asc'});
+  sort$ = new BehaviorSubject<Sort>({ active: 'recipe', direction:'asc'});
 
   constructor(
     private readonly listItemsFacade: ShoppingListItemFacade,
