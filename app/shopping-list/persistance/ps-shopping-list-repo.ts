@@ -28,7 +28,7 @@ export class ShoppingListPSRepo implements ShoppingListRepo {
     
     public async updateShoppingList(list: ShoppingList): Promise<ShoppingList> {
         const updated = await query(`
-            UPDATE shopping_lists\
+            UPDATE shopping_lists
             SET name=$2 
             WHERE id=$1 
             RETURNING id, name`, [list.id, list.name]);

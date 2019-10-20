@@ -58,7 +58,8 @@ export async function createDatabase() {
     )`;
     await newDb.query(shoppingListItemSchema);
     const userSchema = `CREATE TABLE IF NOT EXISTS users (
-        id text primary key
+        id text primary key,
+        password text not null
     )`;
     await newDb.query(userSchema);
     await newDb.end();

@@ -1,5 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { UserRepo } from "./user-repo";
+import boom from 'boom';
+import { signToken } from "../auth";
 
 export class UserController {
     constructor(private readonly repo: UserRepo) {
@@ -8,8 +10,8 @@ export class UserController {
 
     getUser = async(req: Request, res: Response, next: NextFunction) => {
         try {
-            const user = await this.repo.getUser(req.params.id);
-            res.json(user);
+            const user = await this.repo.getUser(req.params.userId);
+            res.json({ id: user.id });
         } catch (e) {
             next(e);
         }
@@ -18,7 +20,28 @@ export class UserController {
     updateUser = async(req: Request, res: Response, next: NextFunction) => {
         try {
             const user = await this.repo.updateUser(req.body);
-            res.json(user);
+            res.json({ id: user.id });
+        } catch (e) {
+            next(e);
+        }
+    }
+
+    login = async(req: Request, res: Response, next: NextFunction) => {
+        try {
+            const username = req.body.username;
+            const password = req.body.password;
+
+            if(username && password) {
+                const user = await this.repo.getUser(username);
+                if (user.password === password) {
+                    const token = signToken(username);
+                    res.json({ token });
+                } else {
+                    next(boom.unauthorized('Incorrect password'));
+                }
+            } else {
+                next(boom.unauthorized('Login failed'));
+            }
         } catch (e) {
             next(e);
         }
