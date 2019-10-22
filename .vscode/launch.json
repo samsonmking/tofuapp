@@ -10,8 +10,15 @@
             "request": "launch",
             "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
             "args": ["-r", "ts-node/register", "${relativeFile}"],
+            "runtimeArgs": [
+                "-r",
+                "dotenv/config"
+            ],
             "cwd": "${workspaceRoot}",
-            "protocol": "inspector"
+            "protocol": "inspector",
+            "env": {
+                "DOTENV_CONFIG_PATH": "./test/test.env"
+            }
         },
         {
             "name": "TSNode Server",

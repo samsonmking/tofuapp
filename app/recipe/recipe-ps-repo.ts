@@ -3,14 +3,14 @@ import { ShortRecipe } from "./models/short-recipe";
 import { Recipe } from ".";
 import { NewRecipe } from "./models/new-recipe";
 import { query } from "../db";
-import { RecipeIngredient } from "../ingredient/recipe-ingredient";
-
 
 export class RecipePSRepo implements RecipeRepo {
 
-
-    public async getRecipes(): Promise<ShortRecipe[]> {
-        const result = await query('SELECT id, name, url from recipes');
+    public async getRecipes(userId: string): Promise<ShortRecipe[]> {
+        const result = await query(`
+            SELECT id, name, url from recipes
+            WHERE user_id=$1`,
+            [userId]);
         return result.rows;
     }
 
@@ -38,10 +38,10 @@ export class RecipePSRepo implements RecipeRepo {
 
     public async addRecipe(recipe: NewRecipe): Promise<ShortRecipe> {
         const result = await query(`
-            INSERT into recipes (name, url) 
-            VALUES($1, $2) 
-            RETURNING *`, 
-            [recipe.name, recipe.url]);
+            INSERT into recipes (name, url, user_id) 
+            VALUES($1, $2, $3) 
+            RETURNING id, name, url`, 
+            [recipe.name, recipe.url, recipe.user_id]);
         return result.rows[0];
     }
 

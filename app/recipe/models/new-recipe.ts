@@ -1,6 +1,5 @@
-import { RecipeIngredient } from "../../ingredient/recipe-ingredient";
-
 export interface NewRecipe {
-    name: String,
-    url: String
+    name: string;
+    url: string;
+    user_id: string;
 }

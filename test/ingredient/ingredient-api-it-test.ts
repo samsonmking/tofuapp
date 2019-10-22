@@ -7,20 +7,29 @@ import { Units } from "../../app/ingredient/Units";
 import { RecipeIngredient } from "../../app/ingredient/recipe-ingredient";
 import { expect } from "chai";
 import { IngredientPSRepo } from "../../app/ingredient/persistance/ingredient-ps-repo";
+import { userScaffold } from "../../app/user";
 
-describe('ingredient-api-it', function() {
-    before(async function() {
+describe('ingredient-api-it', function () {
+    let user: string;
+
+    const addRecipe = async () => {
+        const recipeRepo = new RecipePSRepo();
+        return await recipeRepo.addRecipe({ name: 'temp', url: 'http://something.com', user_id: user });
+    }
+
+    before(async function () {
         await dropDatabase();
         await createDatabase();
+        user = await userScaffold.createDefaultUser();
     });
 
-    after(async function() {
+    after(async function () {
         await dropDatabase();
     });
 
     const app = buildApp([getIngredientRoutes()], []);
 
-    it('#POST /recipe/:recipeid/ingredient adds new ingredient', async function() {
+    it('#POST /recipe/:recipeid/ingredient adds new ingredient', async function () {
         const recipe = await addRecipe();
         const payload = {
             recipe_id: recipe.id,
@@ -36,7 +45,7 @@ describe('ingredient-api-it', function() {
         expect(ingredient).to.contain(payload);
     });
 
-    it('#GET /recipe/:recipeid/ingredients gets all ingredients for recipe', async function() {
+    it('#GET /recipe/:recipeid/ingredients gets all ingredients for recipe', async function () {
         const recipe = await addRecipe();
         const cheese: RecipeIngredient = {
             recipe_id: recipe.id,
@@ -62,8 +71,3 @@ describe('ingredient-api-it', function() {
         expect(ingredients).to.deep.equal(expectedIngredients);
     });
 });
-
-async function addRecipe() {
-    const recipeRepo = new RecipePSRepo();
-    return await recipeRepo.addRecipe({ name: 'temp', url: 'http://something.com' });
-}

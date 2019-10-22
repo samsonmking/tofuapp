@@ -16,7 +16,7 @@ export class RecipeController {
 
     getRecipies = async(req: Request, res: Response, next: NextFunction) => {
         try {
-            const recipies = await this.repo.getRecipes();
+            const recipies = await this.repo.getRecipes(req.params.userId);
             res.json(recipies);
         } catch (e) {
             next(e);
@@ -60,6 +60,7 @@ export class RecipeController {
             const newRecipe = await this.repo.addRecipe({
                 name: name,
                 url: url,
+                user_id: req.params.userId
             });
 
             await this.imageConverter.saveImage(newRecipe.id, imageSource);

@@ -3,7 +3,7 @@ import { NewRecipe } from "./models/new-recipe";
 import { ShortRecipe } from "./models/short-recipe";
 
 export interface RecipeRepo {
-    getRecipes(): Promise<ShortRecipe[]>;
+    getRecipes(userId: string): Promise<ShortRecipe[]>;
     getRecipeWithIngredients(id: number): Promise<Recipe>;
     addRecipe(recipe: NewRecipe): Promise<ShortRecipe>;
     addRecipes(recipes: NewRecipe[]): Promise<ShortRecipe>;

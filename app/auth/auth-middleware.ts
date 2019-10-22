@@ -22,6 +22,9 @@ export function checkToken(req: Request, res: Response, next: NextFunction) {
 function getTokenFromHeader(req: Request) {
     const token = req.headers['x-access-token'] || req.headers['authorization'];
     const strToken: string = (isArray(token)) ? token[0] : token as string;
-    const bearer = 'Bearer ';
-    return strToken.startsWith(bearer) ? strToken.slice(bearer.length, strToken.length) : strToken;
+    if(strToken) {
+        const bearer = 'Bearer ';
+        return strToken.startsWith(bearer) ? strToken.slice(bearer.length, strToken.length) : strToken;
+    }
+    return ''; 
 }

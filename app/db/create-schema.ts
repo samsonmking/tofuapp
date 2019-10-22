@@ -1,8 +1,4 @@
-import { Client, Pool } from 'pg';
-import { RecipePSRepo } from '../recipe/recipe-ps-repo';
-import { IngredientPSRepo } from '../ingredient/persistance/ingredient-ps-repo';
-import { Recipe } from '../recipe';
-import fs from 'fs';
+import { Client } from 'pg';
 import { dispose } from '.';
 const { PGHOST, PGDATABASE, PGUSER, PGPASSWORD, PGPORT } = process.env;
 
@@ -30,8 +26,14 @@ export async function createDatabase() {
     await postgres.end();
 
     const newDb = await connect(PGDATABASE);
+    const userSchema = `CREATE TABLE IF NOT EXISTS users (
+        id text primary key,
+        password text not null
+    )`;
+    await newDb.query(userSchema);
     const recipeSchema = `CREATE TABLE IF NOT EXISTS recipes (
         id serial primary key,
+        user_id text references users(id) not null,
         name text not null,
         url text not null
     )`;
@@ -57,33 +59,7 @@ export async function createDatabase() {
         unique (ingredient_id, shopping_list_id)
     )`;
     await newDb.query(shoppingListItemSchema);
-    const userSchema = `CREATE TABLE IF NOT EXISTS users (
-        id text primary key,
-        password text not null
-    )`;
-    await newDb.query(userSchema);
     await newDb.end();
-}
-
-export async function importDataFromFile(path: string) {
-    const payload: string = fs.readFileSync(path).toString();
-    await importData(payload);
-}
-
-export async function importData(payload: string) {
-    const recipeRepo = new RecipePSRepo();
-    const ingredientRepo = new IngredientPSRepo();
-
-    const recipes: Recipe[] = JSON.parse(payload);
-    for (const recipe of recipes) {
-        const dbRecipe = await recipeRepo.addRecipe({
-            name: recipe.name,
-            url: recipe.url
-        });
-        const recipeId = dbRecipe.id;
-        const ingredients = recipe.ingredients.map(i => ({ ...i, recipe_id: recipeId }));
-        await ingredientRepo.addIngredients(ingredients);
-    }   
 }
 
 export async function dropDatabase() {
@@ -92,4 +68,3 @@ export async function dropDatabase() {
     await postgres.query(`DROP DATABASE IF EXISTS ${PGDATABASE}`);
     await postgres.end();
 }
-

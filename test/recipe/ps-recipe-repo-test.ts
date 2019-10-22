@@ -1,11 +1,14 @@
 import { expect } from 'chai';
 import { RecipePSRepo } from '../../app/recipe/recipe-ps-repo';
-import { createDatabase, dropDatabase } from '../../app/db/create-schema'
+import { dropDatabase, createDatabase } from '../../app/db/create-schema';
+import { userScaffold } from '../../app/user';
 
 describe('ps-recipe-repo', function() {
+    let user: string;
     before(async function() {
         await dropDatabase();
         await createDatabase();
+       user = await userScaffold.createDefaultUser();
     });
 
     after(async function() {
@@ -17,6 +20,7 @@ describe('ps-recipe-repo', function() {
         const newEntry = await firstRepo.addRecipe({
            name: "pizza",
            url: "http://somedomain.com",
+           user_id: user
         });
 
         const testee = new RecipePSRepo();
