@@ -8,8 +8,10 @@ import { RecipeIngredient } from "../../app/ingredient/recipe-ingredient";
 import { expect } from "chai";
 import { IngredientPSRepo } from "../../app/ingredient/persistance/ingredient-ps-repo";
 import { userScaffold } from "../../app/user";
+import { createToken } from "../mocks/token";
 
 describe('ingredient-api-it', function () {
+    let token: string;
     let user: string;
 
     const addRecipe = async () => {
@@ -21,6 +23,7 @@ describe('ingredient-api-it', function () {
         await dropDatabase();
         await createDatabase();
         user = await userScaffold.createDefaultUser();
+        token = createToken(user);
     });
 
     after(async function () {
@@ -39,6 +42,7 @@ describe('ingredient-api-it', function () {
         };
         const result = await request(app)
             .post(`/recipe/${recipe.id}/ingredients`)
+            .set('Authorization', `Bearer ${token}`)
             .send(payload);
         const ingredient = result.body as RecipeIngredient;
         expect(ingredient.id).to.not.be.null;
@@ -64,6 +68,7 @@ describe('ingredient-api-it', function () {
 
         const result = await request(app)
             .get(`/recipe/${recipe.id}/ingredients`)
+            .set('Authorization', `Bearer ${token}`)
             .send();
 
         const ingredients = result.body as RecipeIngredient[];
