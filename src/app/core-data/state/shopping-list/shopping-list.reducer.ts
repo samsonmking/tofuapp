@@ -1,6 +1,12 @@
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { ShoppingList } from '../../models/shopping-list/shopping-list';
-import { ShoppingListActions, ShoppingListActionTypes, GetListsComplete, CreateDefaultListComplete, SetDefaultList, UpdateShoppingListComplete, DeleteShoppingListComplete } from './shopping-list.actions';
+import { ShoppingListActions, 
+    ShoppingListActionTypes, 
+    GetListsComplete, 
+    CreateDefaultListComplete, 
+    SetDefaultList, 
+    UpdateShoppingListComplete, 
+    DeleteShoppingListComplete } from './shopping-list.actions';
 
 export interface ShoppingListState extends EntityState<ShoppingList> {
     defaultListId?: number;
@@ -11,7 +17,7 @@ export const initialState: ShoppingListState = adapter.getInitialState( {
     defaultListId: null
 });
 
-const { selectAll, selectIds, selectEntities } = adapter.getSelectors();
+const { selectAll, selectEntities } = adapter.getSelectors();
 export const selectAllLists = selectAll;
 export const selectListEntities = selectEntities;
 
@@ -38,6 +44,9 @@ export function shoppingListReducer(state: ShoppingListState = initialState, act
             const deleted = action as DeleteShoppingListComplete;
             const updatedDefault = (state.defaultListId === deleted.id) ? null : state.defaultListId
             return { ...adapter.removeOne(deleted.id, state), defaultListId: updatedDefault };
+        case ShoppingListActionTypes.RemoveListsFromStore: {
+            return { ...adapter.removeAll(state), defaultListId: null };
+        }
         default:
             return state;
     }

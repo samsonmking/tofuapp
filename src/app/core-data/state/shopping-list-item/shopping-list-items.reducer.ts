@@ -31,6 +31,9 @@ export function listItemsReducer(state: ListItemsState = initialState, action: L
             const deleteItems = action as RemoveItemsFromListComplete;
             return adapter.removeMany(deleteItems.ids, state);
         }
+        case ShoppingListItemsActionTypes.RemoveListItemsFromStore: {
+            return adapter.removeAll(state);
+        }
         default:
             return state;
     }

@@ -24,6 +24,9 @@ export function ingredientReducer(state: IngredientState = initialState, action:
             const ingredientsForList = action as GetIngredientsForCurrentListComplete;
             return adapter.upsertMany(ingredientsForList.payload, state);
         }
+        case IngredientActionsType.RemoveIngredientsFromStore: {
+            return adapter.removeAll(state);
+        }
         default:
             return state;
     }

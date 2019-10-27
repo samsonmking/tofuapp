@@ -1,4 +1,4 @@
-import { UserActions, UserActionTypes, LoginComplete, LogoutComplete, } from './user.actions';
+import { UserActions, UserActionTypes, LoginComplete, LogoutComplete, LoadUserComplete, } from './user.actions';
 import { User } from '../../models/user/user';
 import { Auth } from '../../models/user/auth';
 
@@ -21,6 +21,11 @@ export function userReducer(state: UserState = { loggedIn: false }, action: User
 
         case UserActionTypes.LogoutComplete: {
             return { loggedIn: false }
+        }
+
+        case UserActionTypes.LoadUserComplete: {
+            const loadAction = action as LoadUserComplete;
+            return { ...state, ...loadAction.userData, loggedIn: true }
         }
 
         default:

@@ -11,7 +11,8 @@ export enum ShoppingListItemsActionTypes {
     RemoveRecipeFromList = '[List Items] Remove recipe from list',
     RemoveRecipeFromListComplete = '[List Items] Remove recipe from list complete',
     RemoveItemsFromListRequest = '[List Items] Remove items from list',
-    RemoveItemsFromListComplete = '[List Items] Remove items from list complete'
+    RemoveItemsFromListComplete = '[List Items] Remove items from list complete',
+    RemoveListItemsFromStore = '[List Items] Remove list items from store'
 }
 
 export class GetItemsForListRequest implements Action {
@@ -59,6 +60,11 @@ export class RemoveItemsFromListComplete implements Action {
     constructor(public listId: number, public ids: number[]) {}
 }
 
+export class RemoveListItemsFromStore implements Action {
+    type = ShoppingListItemsActionTypes.RemoveListItemsFromStore;
+    constructor() {}
+}
+
 export type ListItemActions = 
     GetItemsForListRequest |
     GetItemsForListComplete |
@@ -68,4 +74,5 @@ export type ListItemActions =
     RemoveRecipeFromList |
     RemoveRecipeFromListComplete |
     RemoveItemsFromListRequest |
-    RemoveItemsFromListComplete;
+    RemoveItemsFromListComplete |
+    RemoveListItemsFromStore;

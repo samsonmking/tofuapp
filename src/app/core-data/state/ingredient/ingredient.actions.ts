@@ -7,7 +7,8 @@ export enum IngredientActionsType {
     GetIngredientsForRecipeInList = '[Ingredients] Get ingredients for recipe in list',
     GetIngredientsForRecipeInListComplete = '[Ingredients] Get ingredients for recipe in list complete',
     GetIngredientsForCurrentListRequest = '[Ingredients] Get ingredients for current list',
-    GetIngredientsForCurrentListComplete = '[Ingredients] Get ingredients for current list complete'
+    GetIngredientsForCurrentListComplete = '[Ingredients] Get ingredients for current list complete',
+    RemoveIngredientsFromStore = '[Ingredients] Remove ingredients from store'
 }
 
 export class GetIngredientsForRecipeRequest implements Action {
@@ -40,8 +41,14 @@ export class GetIngredientsForCurrentListComplete implements Action {
     constructor(public payload: RecipeIngredient[]) {}
 }
 
+export class RemoveIngredientsFromStore implements Action {
+    type = IngredientActionsType.RemoveIngredientsFromStore;
+    constructor() { }
+}
+
 export type IngredientActions = 
     GetIngredientsForRecipeComplete |
     GetIngredientsForRecipeRequest |
     GetIngredientsForCurrentListRequest |
-    GetIngredientsForCurrentListComplete;
+    GetIngredientsForCurrentListComplete |
+    RemoveIngredientsFromStore;

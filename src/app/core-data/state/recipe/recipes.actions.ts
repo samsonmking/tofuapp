@@ -4,7 +4,8 @@ import { Recipe } from '../../models/recipe/recipe';
 
 export enum RecipesActionTypes {
     GetAllRequest = '[Recipes] Get all recipies request',
-    GetAllComplete = '[Recipes] Get all reciplies complete'
+    GetAllComplete = '[Recipes] Get all recipes complete',
+    RemoveRecipesFromStore = '[Recipes] Remove all from store'
 }
 
 export class GetAllRequest implements Action {
@@ -17,6 +18,12 @@ export class GetAllComplete implements Action {
     constructor(public payload: DisplayRecipe[]) {}
 }
 
+export class RemoveRecipesFromStore implements Action {
+    type: string = RecipesActionTypes.RemoveRecipesFromStore;
+    constructor() { }
+}
+
 export type RecipesActions =
     GetAllRequest |
-    GetAllComplete;
+    GetAllComplete |
+    RemoveRecipesFromStore;

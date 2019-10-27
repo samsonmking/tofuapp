@@ -9,6 +9,7 @@ import { RecipeFacade } from './core-data/state/recipe/recipes.facade';
 import { map, filter } from 'rxjs/operators';
 import { Actions } from '@ngrx/effects';
 import { Router, NavigationEnd } from '@angular/router';
+import { LoadUserRequest } from './core-data/state/user/user.actions';
 
 @Component({
   selector: 'app-root',
@@ -24,7 +25,6 @@ export class AppComponent implements OnInit {
   constructor(
     private readonly userFacade: UserFacade,
     private readonly listFacade: ShoppingListFacade,
-    private readonly recipeFacade: RecipeFacade,
     private readonly route: Router,
     private readonly store: Store<AppState>,
     private readonly actions$: Actions
@@ -32,23 +32,19 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.store.dispatch(new LoadUserRequest());
     this.user$ = this.userFacade.user$;
-    // this.userFacade.getUser('sam');
 
-    // this.selectedList$ = this.listFacade.currentList$.pipe(
-    //   map(list => list ? `lists/${list.id}` : `lists`));
+    this.selectedList$ = this.listFacade.currentList$.pipe(
+      map(list => list ? `lists/${list.id}` : `lists`));
 
-    // this.listSelected$ = this.route.events.pipe(
-    //   filter(e => e instanceof NavigationEnd),
-    //   map((end: NavigationEnd) => end.url.includes('/lists'))
-    // );
-
-    // this.listFacade.getAllShoppingLists();
-    // this.recipeFacade.getAllRecipes();
+    this.listSelected$ = this.route.events.pipe(
+      filter(e => e instanceof NavigationEnd),
+      map((end: NavigationEnd) => end.url.includes('/lists'))
+    );
 
     this.store.subscribe(console.log);
     this.actions$.subscribe(console.log);
-    
   }
 
   logout() {

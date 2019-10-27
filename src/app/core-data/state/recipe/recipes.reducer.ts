@@ -18,6 +18,9 @@ export function recipesReducer(state: RecipesState = initialState, action: Recip
             const getAllAction = action as GetAllComplete;
             return adapter.upsertMany(getAllAction.payload, state);
         }
+        case RecipesActionTypes.RemoveRecipesFromStore: {
+            return adapter.removeAll(state);
+        }
         default:
             return state;
     }

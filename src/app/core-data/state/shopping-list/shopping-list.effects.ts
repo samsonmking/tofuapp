@@ -21,6 +21,7 @@ import { Store } from '@ngrx/store';
 import { ShoppingListItemsActionTypes, RemoveItemsFromListRequest, RemoveItemsFromListComplete } from '../shopping-list-item/shopping-list-items.actions';
 import { of, EMPTY } from 'rxjs';
 import { Router } from '@angular/router';
+import { UserActionTypes } from '../user/user.actions';
 
 @Injectable({providedIn: 'root'})
 export class ShoppingListEffects {
@@ -122,6 +123,12 @@ export class ShoppingListEffects {
                 return of(new CreateDefaultListRequest())
             }
         })
+    );
+
+    @Effect()
+    loggedIn$ = this.actions$.pipe(
+        ofType(UserActionTypes.LoginComplete, UserActionTypes.LoadUserComplete),
+        map(_ => new GetListsRequest)
     );
 
     @Effect()

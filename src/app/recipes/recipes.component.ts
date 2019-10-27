@@ -18,7 +18,6 @@ export class RecipesComponent implements OnInit {
 
   ngOnInit() {
     this.recipes$ = this.fascade.recipes$;
-    this.fascade.getAllRecipes();
   }
 
   addNewRecipe() {
