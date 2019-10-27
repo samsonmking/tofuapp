@@ -4,11 +4,14 @@ import { RecipesComponent } from './recipes/recipes.component';
 import { RecipeDetailComponent } from './recipes/recipe-detail/recipe-detail.component';
 import { ListsComponent } from './lists/lists.component';
 import { ListDetailComponent } from './lists/list-detail/list-detail.component';
+import { LoggedInGuard } from './auth/logged-in-guard';
+import { LoginComponent } from './auth/login/login.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'recipes', pathMatch: 'full' },
   {
     path: 'recipes',
+    canActivate: [LoggedInGuard],
     component: RecipesComponent,
     children: [
       { path: ':id', component: RecipeDetailComponent }
@@ -16,10 +19,15 @@ export const routes: Routes = [
   },
   {
     path: 'lists',
+    canActivate: [LoggedInGuard],
     component: ListsComponent,
     children: [
       { path: ':id', component: ListDetailComponent }
     ]
+  },
+  {
+    path: 'login',
+    component: LoginComponent
   },
   { path: '**', redirectTo: '', pathMatch: 'full' }
 ];

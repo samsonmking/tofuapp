@@ -1,35 +1,43 @@
 import { Action } from '@ngrx/store';
 import { User } from '../../models/user/user';
+import { Auth } from '../../models/user/auth';
 
 export enum UserActionTypes {
-    GetUserRequest = '[User] Get user request',
-    GetUserComplete = '[User] Get user complete',
-    UpdateUserRequest = '[User] Update user request',
-    UpdateUserComplete = '[User] Update user complete'
+    LoginRequest = '[User] Login Request',
+    LoginComplete = '[User] Login Complete',
+    LoginFailed = '[User] Login Failed',
+    LogoutRequest = '[User] Logout Request',
+    LogoutComplete = '[User] Logout Complete'
 }
 
-export class GetUserRequest implements Action {
-    type: string = UserActionTypes.GetUserRequest;
-    constructor(public user: string) {}
+export class LoginRequest implements Action {
+    type = UserActionTypes.LoginRequest;
+    constructor(public username: string, public password: string) {}
 }
 
-export class GetUserComplete implements Action {
-    type: string = UserActionTypes.GetUserComplete;
-    constructor(public user: User) {}
+export class LoginComplete implements Action {
+    type = UserActionTypes.LoginComplete;
+    constructor(public user: User, public auth: Auth) { }
 }
 
-export class UpdateUserRequest implements Action {
-    type: string = UserActionTypes.UpdateUserRequest;
-    constructor(public user: User) {}
+export class LoginFailed implements Action {
+    type = UserActionTypes.LoginFailed;
+    constructor() { }
 }
 
-export class UpdateUserComplete implements Action {
-    type: string = UserActionTypes.UpdateUserComplete;
-    constructor(public user: User) {}
-} 
+export class LogoutRequest implements Action {
+    type = UserActionTypes.LogoutRequest;
+    constructor() { }
+}
+
+export class LogoutComplete implements Action {
+    type = UserActionTypes.LogoutComplete;
+    constructor() { }
+}
 
 export type UserActions = 
-    GetUserRequest |
-    GetUserComplete |
-    UpdateUserRequest |
-    UpdateUserComplete;
+LoginRequest |
+LoginComplete |
+LoginFailed |
+LogoutRequest |
+LogoutComplete;

@@ -10,6 +10,9 @@ import { CoreDataModule } from './core-data/core-data.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { RecipesModule } from './recipes/recipes.module';
 import { ListsModule } from './lists/lists.module';
+import { AuthModule } from './auth/auth.module';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './auth/auth-interceptor';
 
 @NgModule({
   declarations: [
@@ -24,9 +27,16 @@ import { ListsModule } from './lists/lists.module';
     CoreDataModule,
     FlexLayoutModule,
     RecipesModule,
-    ListsModule
+    ListsModule,
+    AuthModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

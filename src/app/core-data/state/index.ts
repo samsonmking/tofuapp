@@ -112,4 +112,4 @@ export const selectRecipeIdsInCurrentList = createSelector(
 );
 
 // Router Selectors
-const selectRouterState = createFeatureSelector<RouterReducerState>('router');
+export const selectRouterState = createFeatureSelector<RouterReducerState<RouterStateUrl>>('router');

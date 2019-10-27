@@ -1,44 +1,57 @@
 import { Injectable } from '@angular/core';
-import { Effect, Actions } from '@ngrx/effects';
-import { DataPersistence } from '@nrwl/nx';
+import { Effect, Actions, ofType } from '@ngrx/effects';
 import { UserService } from '../../services/user/user.service';
-import { UserActionTypes, GetUserRequest, GetUserComplete, UpdateUserRequest, UpdateUserComplete } from './user.actions';
-import { map } from 'rxjs/operators';
-import { AppState } from '..';
-import { Store } from '@ngrx/store';
+import { UserActionTypes, LoginRequest, LoginComplete, LoginFailed, LogoutRequest, LogoutComplete } from './user.actions';
+import { map, switchMap, tap, withLatestFrom, catchError } from 'rxjs/operators';
+import { Store, select } from '@ngrx/store';
+import { Router } from '@angular/router';
+import { selectRouterState, AppState } from '..';
+import { of } from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 export class UserEffects {
 
     constructor(
         private actions$: Actions,
-        private dataPersistence: DataPersistence<AppState>,
         private service: UserService,
-        private store: Store<AppState>
+        private store: Store<AppState>,
+        private readonly router: Router
     ) {}
 
     @Effect()
-    getUser$ = this.dataPersistence.pessimisticUpdate(UserActionTypes.GetUserRequest, {
-        run: (action: GetUserRequest, state) => {
-            return this.service.getUser(action.user).pipe(
-                map(user => new GetUserComplete(user))
-            );
-        },
-        onError: (action: GetUserRequest, error) => {
-            console.log('Error', error);
-        }
-    });
+    loginRequest$ = this.actions$.pipe(
+        ofType<LoginRequest>(UserActionTypes.LoginRequest),
+        switchMap(request => {
+            return this.service.login(request.username, request.password).pipe(
+                map((login: any) => new LoginComplete(login.user, login.auth)),
+                catchError(err => of(new LoginFailed()))
+            )
+        }),
+    );
+
+    @Effect({ dispatch: false })
+    loginComplete$ = this.actions$.pipe(
+        ofType<LoginComplete>(UserActionTypes.LoginComplete),
+        withLatestFrom(this.store.pipe(select(selectRouterState))),
+        tap(([action, router]) => {
+            const routerState = router.state;
+            if(routerState && routerState.queryParams["return"]) {
+                this.router.navigate([routerState.queryParams["return"]]);
+            } else {
+                this.router.navigate(["/"]);
+            }
+        })
+    );
 
     @Effect()
-    updateUser$ = this.dataPersistence.pessimisticUpdate(UserActionTypes.UpdateUserRequest, {
-        run: (action: UpdateUserRequest, state) => {
-            return this.service.updateUser(action.user).pipe(
-                map(user => new UpdateUserComplete(user))
-            );
-        },
-        onError: (action: UpdateUserRequest, error) => {
-            console.log('Error', error)
-        }
-    });
+    logoutRequest$ = this.actions$.pipe(
+        ofType<LogoutRequest>(UserActionTypes.LogoutRequest),
+        map(logout => new LogoutComplete())
+    );
 
+    @Effect({ dispatch: false })
+    logoutComplete$ = this.actions$.pipe(
+        ofType<LogoutComplete>(UserActionTypes.LogoutComplete),
+        tap(_ => this.router.navigate(['/login']))
+    );
 }

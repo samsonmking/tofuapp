@@ -1,4 +1,4 @@
-<mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="start center">
+<mat-toolbar *ngIf="(user$ | async) as userState" color="primary" fxLayout="row" fxLayoutAlign="start center">
     <img src="assets/img/tofu.png" style="width: 48px; height: 48px;">
     <span class="title">TOFU</span>
     <ul class="nav" fxFlex="1 1 auto">
@@ -7,7 +7,8 @@
         <a [routerLink]="selectedList$ | async" [class.active]="listSelected$ | async">Shopping Lists</a>
       </li>
     </ul>
-    <span *ngIf="$user | async as user">{{user.id}}</span>
+    <span *ngIf="userState.user as user">{{user.id}}</span>
+    <span *ngIf="userState.loggedIn" (click)="logout()" >logout</span>
 </mat-toolbar>
 <div>
     <router-outlet></router-outlet>
