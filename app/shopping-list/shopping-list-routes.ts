@@ -2,6 +2,7 @@ import { Route } from "../route";
 import express from 'express';
 import { ShoppingListController } from "./shopping-list-controller";
 import { ShoppingListItemController } from "./shopping-list-item-controller";
+import { checkToken } from "../auth";
 
 export class ShoppingListRoutes implements Route {
     constructor(
@@ -11,16 +12,16 @@ export class ShoppingListRoutes implements Route {
         }
 
     contributeRoutes(app: express.Application): void {
-        app.get('/list', this.listController.getShoppingLists);
-        app.post('/list', this.listController.addShoppingList);
-        app.get('/list/:id', this.listController.getShoppingList);
-        app.put('/list/:id', this.listController.updateShoppingList);
-        app.delete('/list/:id', this.listController.deleteShoppingList);
+        app.get('/list', checkToken, this.listController.getShoppingLists);
+        app.post('/list', checkToken, this.listController.addShoppingList);
+        app.get('/list/:id', checkToken, this.listController.getShoppingList);
+        app.put('/list/:id', checkToken, this.listController.updateShoppingList);
+        app.delete('/list/:id', checkToken, this.listController.deleteShoppingList);
 
-        app.get('/list/:listid/items', this.itemController.getItemsForList);
-        app.post('/list/:listid/items', this.itemController.addItemsToList);
-        app.delete('/list/:listid/items', this.itemController.deleteItemsFromList);
-        app.delete('/list/:listid/recipe/:recipeid', this.itemController.deleteRecipeFromList);
+        app.get('/list/:listid/items', checkToken, this.itemController.getItemsForList);
+        app.post('/list/:listid/items', checkToken, this.itemController.addItemsToList);
+        app.delete('/list/:listid/items', checkToken, this.itemController.deleteItemsFromList);
+        app.delete('/list/:listid/recipe/:recipeid', checkToken, this.itemController.deleteRecipeFromList);
     }
 
 }

@@ -8,7 +8,7 @@ export class ShoppingListController {
 
     addShoppingList = async(req: Request, res: Response, next: NextFunction) => {
         try {
-            const list = await this.repo.addShoppingList(req.body);
+            const list = await this.repo.addShoppingList(req.params.userId, req.body);
             res.json(list);
         } catch (e) {
             next(e);
@@ -17,7 +17,7 @@ export class ShoppingListController {
 
     getShoppingLists = async(req: Request, res: Response, next: NextFunction) => {
         try {
-            const shoppingLists = await this.repo.getShoppingLists();
+            const shoppingLists = await this.repo.getShoppingLists(req.params.userId);
             res.json(shoppingLists);
         } catch (e) {
             next(e);

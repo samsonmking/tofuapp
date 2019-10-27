@@ -5,6 +5,7 @@ import { Recipe } from "../app/recipe";
 import { RecipePSRepo } from "../app/recipe/recipe-ps-repo";
 import { IngredientPSRepo } from "../app/ingredient/persistance/ingredient-ps-repo";
 import { userScaffold } from "../app/user";
+import { createUser } from "../app/user/scaffold";
 const { PGDATABASE } = process.env;
 
 async function importDataFromFile(userId: string, path: string) {
@@ -36,12 +37,13 @@ dropDatabase()
     .then(() => console.log(`[INFO] Database ${PGDATABASE} dropped`))
     .then(() => createDatabase())
     .then(() => console.log(`[INFO] Database ${PGDATABASE} created`))
-    .then(() => userScaffold.createDefaultUser())
+    .then(() => userScaffold.createUser())
     .then(user => { 
         console.log(`[INFO] Default user '${user}' created`); 
         return user; 
     })
     .then(user => importDataFromFile(user, seed))    
     .then(() => console.log(`[INFO] Database ${PGDATABASE} seeded with data from ${seed}`))
+    .then(() => createUser('user@gmail.com', 'password'))
     .then(() => dispose())
     .catch(e => console.log(`[ERROR] ${e}`));

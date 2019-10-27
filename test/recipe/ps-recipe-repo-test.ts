@@ -8,7 +8,7 @@ describe('ps-recipe-repo', function() {
     before(async function() {
         await dropDatabase();
         await createDatabase();
-       user = await userScaffold.createDefaultUser();
+       user = await userScaffold.createUser();
     });
 
     after(async function() {

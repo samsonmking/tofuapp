@@ -15,7 +15,7 @@ describe('recipe-api-it', function() {
     before(async function() {
         await dropDatabase();
         await createDatabase();
-        const user = await userScaffold.createDefaultUser();
+        const user = await userScaffold.createUser();
         token = createToken(user);
     });
 

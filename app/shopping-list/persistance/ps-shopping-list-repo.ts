@@ -3,10 +3,11 @@ import { ShoppingList } from "../models/shopping-list";
 import { query } from "../../db";
 
 export class ShoppingListPSRepo implements ShoppingListRepo {
-    public async getShoppingLists(): Promise<ShoppingList[]> {
+    public async getShoppingLists(userId: string): Promise<ShoppingList[]> {
         const result = await query(`
             SELECT id, name 
-            FROM shopping_lists`);
+            FROM shopping_lists
+            WHERE user_id=$1`, [userId]);
         return result.rows;
     }    
     
@@ -18,11 +19,11 @@ export class ShoppingListPSRepo implements ShoppingListRepo {
         return result.rows[0];
     }
 
-    public async addShoppingList(list: ShoppingList): Promise<ShoppingList> {
+    public async addShoppingList(userId: string, list: ShoppingList): Promise<ShoppingList> {
         const result = await query(`
-            INSERT INTO shopping_lists (name)
-            VALUES ($1) 
-            RETURNING id, name`, [list.name]);
+            INSERT INTO shopping_lists (name, user_id)
+            VALUES ($1, $2) 
+            RETURNING id, name`, [list.name, userId]);
         return result.rows[0];
     }
     

@@ -22,7 +22,7 @@ describe('ingredient-api-it', function () {
     before(async function () {
         await dropDatabase();
         await createDatabase();
-        user = await userScaffold.createDefaultUser();
+        user = await userScaffold.createUser();
         token = createToken(user);
     });
 

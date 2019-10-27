@@ -35,7 +35,10 @@ export class UserController {
                 const user = await this.repo.getUser(username);
                 if (user.password === password) {
                     const token = signToken(username);
-                    res.json({ token });
+                    res.json({ 
+                        user: { id: user.id },
+                        auth: { token }
+                    });
                 } else {
                     next(boom.unauthorized('Incorrect password'));
                 }
