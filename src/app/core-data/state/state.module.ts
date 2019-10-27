@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { reducers } from '.';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { ManualEntryEffects } from './manual-entry/manual-entry.effects';
 import { NxModule } from '@nrwl/nx';
 import { ServicesModule } from '../services/services.module';
 import { RecipesEffects } from './recipe/recipes.effects';
@@ -25,7 +24,6 @@ import { CustomSerializer } from './custom-route-serializer';
       serializer: CustomSerializer
     }),
     EffectsModule.forRoot([
-      ManualEntryEffects,
       RecipesEffects,
       IngredientEffects,
       UserEffects,

@@ -1,4 +1,3 @@
-import * as fromManualEntry from './manual-entry/manual-entry.reducer';
 import * as fromRecipe from './recipe/recipes.reducer';
 import * as fromIngredients from './ingredient/ingredient.reducer';
 import * as fromUsers from './user/user.reducer';
@@ -8,10 +7,8 @@ import { ActionReducerMap, createFeatureSelector, createSelector } from '@ngrx/s
 import { Recipe } from '../models/recipe/recipe';
 import { routerReducer, RouterReducerState } from '@ngrx/router-store';
 import { RouterStateUrl } from './custom-route-serializer';
-import { RouterState } from '@angular/router';
 
 export interface AppState {
-    manualRecipeEntry: fromManualEntry.ManualRecipeEntryState;
     recipes: fromRecipe.RecipesState;
     ingredients: fromIngredients.IngredientState;
     user: fromUsers.UserState;
@@ -22,7 +19,6 @@ export interface AppState {
 
 // Recipe Selectors
 export const reducers: ActionReducerMap<AppState> =  {
-    manualRecipeEntry: fromManualEntry.manualEntryReducer,
     recipes: fromRecipe.recipesReducer,
     ingredients: fromIngredients.ingredientReducer,
     user: fromUsers.userReducer,
@@ -30,11 +26,6 @@ export const reducers: ActionReducerMap<AppState> =  {
     shoppingListItems: fromShoppingListItems.listItemsReducer,
     router: routerReducer
 };
-export const selectManualEntryState = createFeatureSelector<fromManualEntry.ManualRecipeEntryState>('manualRecipeEntry');
-export const selectRecipeCreated = createSelector(
-    selectManualEntryState,
-    (state: fromManualEntry.ManualRecipeEntryState) => state.recipeId
-);
 export const selectRecipeState = createFeatureSelector<fromRecipe.RecipesState>('recipes');
 export const selectAllRecipes = createSelector(
     selectRecipeState,

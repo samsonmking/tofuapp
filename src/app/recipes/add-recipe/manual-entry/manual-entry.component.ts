@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ManualEntryFacade } from 'src/app/core-data/state/manual-entry/manual-entry.facade';
 import { MatDialogRef } from '@angular/material';
+import { RecipeFacade } from 'src/app/core-data/state/recipe/recipes.facade';
 
 @Component({
   selector: 'app-manual-entry',
@@ -18,11 +18,11 @@ export class ManualEntryComponent implements OnInit {
 
   constructor(
     private dialogRef: MatDialogRef<ManualEntryComponent>,
-    private entryFacade: ManualEntryFacade) {
+    private readonly recipeFacade: RecipeFacade) {
   }
 
   ngOnInit() {
-    this.entryFacade.recipeCreated$.subscribe(id => {
+    this.recipeFacade.recipeCreated$.subscribe(id => {
       if (id) {
         this.newRecipeForm.reset();
       }
@@ -30,7 +30,7 @@ export class ManualEntryComponent implements OnInit {
   }
 
   onRecipeSubmit() {
-    this.entryFacade.submitRecipe(this.newRecipeForm.value);
+    this.recipeFacade.submitRecipe(this.newRecipeForm.value);
   }
 
 }
