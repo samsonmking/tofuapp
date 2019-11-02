@@ -13,10 +13,12 @@ import { ListsModule } from './lists/lists.module';
 import { AuthModule } from './auth/auth.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth/auth-interceptor';
+import { ToolbarComponent } from './toolbar/toolbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    ToolbarComponent,
   ],
   imports: [
     BrowserModule,

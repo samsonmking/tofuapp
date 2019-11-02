@@ -17,15 +17,8 @@ import { LoadUserRequest } from './core-data/state/user/user.actions';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'tofu';
-  user$: Observable<UserState>;
-  selectedList$: Observable<string>;
-  listSelected$: Observable<boolean>;
 
   constructor(
-    private readonly userFacade: UserFacade,
-    private readonly listFacade: ShoppingListFacade,
-    private readonly route: Router,
     private readonly store: Store<AppState>,
     private readonly actions$: Actions
     ) {
@@ -33,22 +26,8 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(new LoadUserRequest());
-    this.user$ = this.userFacade.user$;
-
-    this.selectedList$ = this.listFacade.currentList$.pipe(
-      map(list => list ? `lists/${list.id}` : `lists`));
-
-    this.listSelected$ = this.route.events.pipe(
-      filter(e => e instanceof NavigationEnd),
-      map((end: NavigationEnd) => end.url.includes('/lists'))
-    );
 
     this.store.subscribe(console.log);
     this.actions$.subscribe(console.log);
   }
-
-  logout() {
-    this.userFacade.logout();
-  }
-
 }
