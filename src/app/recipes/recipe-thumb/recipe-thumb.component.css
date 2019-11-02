@@ -1,3 +1,19 @@
-.recipethumb {
-    margin-top: 10px;
+.recipe-thumb {
+    margin: 10px 10px 0 0px;
+}
+.recipe-thumb img {
+    width: 100%;
+    height: auto;
+}
+
+mat-card-title {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+    overflow: hidden;
+    font-size:1.3em;
+}
+
+.recipe-actions{
+    margin-top: 5px;
 }

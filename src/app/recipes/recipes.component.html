@@ -8,13 +8,16 @@
     <div class="float">
       <button mat-fab (click)="addNewRecipe()"><i class="material-icons">add</i></button>
     </div>
-    <div fxLayout="row column" fxLayoutGap="10px" style="margin-left:10px">
-      <div *ngFor="let recipe of recipes$ | async">
-        <app-recipe-thumb [recipe]="recipe"></app-recipe-thumb>
-      </div>
+    <div fxLayout="row wrap" class="recipe-thumb-container">
+        <app-recipe-thumb
+          fxFlex.lg="25%"
+          fxFlex.md="50%"
+          fxFlex.xs="100%" 
+          *ngFor="let recipe of recipes$ | async" 
+          [recipe]="recipe">
+        </app-recipe-thumb>
     </div>
   </mat-sidenav-content>
-
 </mat-sidenav-container>
 
 <router-outlet></router-outlet>

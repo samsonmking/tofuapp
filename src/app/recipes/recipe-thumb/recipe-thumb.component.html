@@ -1,16 +1,12 @@
-<mat-card class="recipethumb">
-  <mat-card-header>
-    <mat-card-title>{{recipe.name}}</mat-card-title>
-  </mat-card-header>
+<mat-card class="recipe-thumb" fxLayout="column" fxLayoutAlign="stretch">
+  <mat-card-title class="recipe-title">{{recipe.name}}</mat-card-title>
   <mat-card-content>
-    <img src={{recipe.imageUrl}} >
-    <div fxLayout="row" fxLayoutAlign="end end" fxLayoutGap="10px">
+    <img src={{recipe.imageUrl}}>
+    <div class="recipe-actions"fxLayout="row" fxLayoutAlign="end end" fxLayoutGap="10px">
       <a routerLink="/recipes/{{recipe.id}}" mat-mini-fab><i class="material-icons">launch</i></a>
-      <button mat-mini-fab 
-        (click)="addRecipeToList()" 
-        [disabled]="disabled$ | async">
-          <i class="material-icons">shopping_basket</i>
-        </button>
+      <button mat-mini-fab (click)="addRecipeToList()" [disabled]="disabled$ | async">
+        <i class="material-icons">shopping_basket</i>
+      </button>
     </div>
   </mat-card-content>
 </mat-card>

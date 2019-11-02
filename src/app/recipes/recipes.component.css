@@ -9,12 +9,7 @@
     background-color: white;
 }
 
-.default-list {
-    width: 300px;
+.recipe-thumb-container {
+    margin: 0 0 0 10px;
+    padding: 0;
 }
-
-.tp-container {
-    position: absolute;
-    top: 64px;
-    bottom: 0;
- }
