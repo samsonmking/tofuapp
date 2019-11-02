@@ -6,7 +6,8 @@ import { ShoppingListActions,
     CreateDefaultListComplete, 
     SetDefaultList, 
     UpdateShoppingListComplete, 
-    DeleteShoppingListComplete } from './shopping-list.actions';
+    DeleteShoppingListComplete, 
+    CreateNewListComplete} from './shopping-list.actions';
 
 export interface ShoppingListState extends EntityState<ShoppingList> {
     defaultListId?: number;
@@ -27,8 +28,9 @@ export function shoppingListReducer(state: ShoppingListState = initialState, act
             const listsComplete = action as GetListsComplete;
             return adapter.upsertMany(listsComplete.lists, state);
         }
+        case ShoppingListActionTypes.CreateNewListComplete:
         case ShoppingListActionTypes.CreateDefaultListComplete: {
-            const newDefault = action as CreateDefaultListComplete;
+            const newDefault = action as CreateDefaultListComplete | CreateNewListComplete;
             const newList = newDefault.list;
             return { ...adapter.upsertOne(newList, state), defaultListId: newList.id }
         }

@@ -1,6 +1,19 @@
-<app-save-list></app-save-list>
-<ul>
-  <li *ngFor="let recipe of recipesInList$ | async">
-    {{recipe.name}}
-    <button (click)="removeFromList(recipe.id)">X</button></li>
-</ul>
+<div fxFlexFill fxLayout="column" fxLayoutAlign="stretch" class="current-list-container">
+  <div class="current-list-header" fxLayout="row" fxLayoutAlign="start center">
+    <i class="material-icons">list</i>
+    {{currentListName$ | async}}
+  </div>
+  <mat-list fxFlex="1 0" fxLayout="column" fxLayoutAlign="stretch">
+    <mat-list-item *ngFor="let recipe of recipesInList$ | async">
+      <div fxFlexFill fxLayout="row" fxLayoutAlign="start center">
+        <div fxFlex="1 0">{{recipe.name}}</div>
+        <div fxFlex="0 0 30px">
+          <button mat-icon-button (click)="removeFromList(recipe.id)">
+            <i class="material-icons">remove_circle</i>
+          </button>
+        </div>
+      </div>
+    </mat-list-item>
+  </mat-list>
+  <button mat-flat-button color="accent" (click)="createNewList()"><i class="material-icons">add_circle</i>Add new list</button>
+</div>

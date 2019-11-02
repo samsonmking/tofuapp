@@ -4,7 +4,8 @@ import { Store, select } from '@ngrx/store';
 import { GetListsRequest, 
     CreateDefaultListRequest,
     UpdateShoppingListRequest,
-    DeleteShoppingListRequest } from './shopping-list.actions';
+    DeleteShoppingListRequest, 
+    CreateNewListRequest} from './shopping-list.actions';
 import { filter, map } from 'rxjs/operators';
 import { ShoppingList } from '../../models/shopping-list/shopping-list';
 
@@ -32,6 +33,10 @@ export class ShoppingListFacade {
 
     public createNewDefaultList() {
         this.store.dispatch(new CreateDefaultListRequest());
+    }
+
+    public createNewList(name: string) {
+        this.store.dispatch(new CreateNewListRequest(name));
     }
 
     public updateShoppingList(list: ShoppingList) {

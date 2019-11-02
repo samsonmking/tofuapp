@@ -11,7 +11,9 @@ export enum ShoppingListActionTypes {
     UpdateShoppingListComplete = '[List] Update shopping list complete',
     DeleteShoppingListRequest = '[List] Delete shopping list',
     DeleteShoppingListComplete = '[List] Delete shopping list complete',
-    RemoveListsFromStore = '[List] Remove lists from store'
+    RemoveListsFromStore = '[List] Remove lists from store',
+    CreateNewListRequest = '[List] Create new list',
+    CreateNewListComplete = '[List] Create new list complete'
 }
 
 export class GetListsRequest implements Action {
@@ -36,6 +38,16 @@ export class CreateDefaultListRequest implements Action {
 
 export class CreateDefaultListComplete implements Action {
     type = ShoppingListActionTypes.CreateDefaultListComplete;
+    constructor(public list: ShoppingList) {}
+}
+
+export class CreateNewListRequest implements Action {
+    type = ShoppingListActionTypes.CreateNewListRequest;
+    constructor(public name: string) {}
+}
+
+export class CreateNewListComplete implements Action {
+    type = ShoppingListActionTypes.CreateNewListComplete;
     constructor(public list: ShoppingList) {}
 }
 
@@ -74,4 +86,6 @@ export type ShoppingListActions =
     UpdateShoppingListComplete |
     DeleteShoppingListRequest |
     DeleteShoppingListComplete |
-    RemoveListsFromStore;
+    RemoveListsFromStore |
+    CreateNewListRequest |
+    CreateNewListComplete;

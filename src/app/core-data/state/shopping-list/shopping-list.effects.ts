@@ -12,7 +12,9 @@ import { ShoppingListActionTypes,
     UpdateShoppingListRequest, 
     UpdateShoppingListComplete, 
     DeleteShoppingListRequest, 
-    DeleteShoppingListComplete } from './shopping-list.actions';
+    DeleteShoppingListComplete, 
+    CreateNewListRequest,
+    CreateNewListComplete} from './shopping-list.actions';
 import { map, filter, withLatestFrom, switchMap, mergeMap, tap } from 'rxjs/operators';
 import { RouterNavigatedAction, ROUTER_NAVIGATED } from '@ngrx/router-store';
 import { RouterStateUrl } from '../custom-route-serializer';
@@ -48,7 +50,7 @@ export class ShoppingListEffects {
     @Effect()
     createDefaultList$ = this.dataPersisence.pessimisticUpdate(ShoppingListActionTypes.CreateDefaultListRequest, {
         run: (action, state) => {
-            return this.service.addShoppingList({ name: 'New List' }).pipe(
+            return this.service.addShoppingList({ name: 'New Shopping List' }).pipe(
                 map(list => new CreateDefaultListComplete(list))
             );
         },
@@ -56,6 +58,14 @@ export class ShoppingListEffects {
             console.log('Error', error);
         }
     });
+
+    @Effect()
+    createNewList$ = this.actions$.pipe(
+        ofType<CreateNewListRequest>(ShoppingListActionTypes.CreateNewListRequest),
+        switchMap(action => this.service.addShoppingList({ name: action.name }).pipe(
+            map(list => new CreateNewListComplete(list))
+        ))
+    );
 
     @Effect()
     routerNavigationToLists$ = this.actions$.pipe(

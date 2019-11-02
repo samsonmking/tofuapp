@@ -1,0 +1,28 @@
+.current-list-container {
+    background-color: darkgray;
+}
+
+.current-list-header {
+    background-color: gray;
+    padding: 10px 5px 10px 5px;
+}
+
+.mat-list-base .mat-list-item {
+    width: auto;
+}
+
+.mat-list-item {
+    border: 2px solid;
+    border-radius: 5px;
+    margin: 0 5px 5px 5px;
+    background-color: white;
+}
+
+.mat-list-item-content {
+    padding: 0;
+    margin: 0;
+}
+
+button .material-icons {
+    margin-right: 5px;
+}

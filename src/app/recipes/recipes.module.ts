@@ -9,8 +9,8 @@ import { RecipeDetailComponent } from './recipe-detail/recipe-detail.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { RecipeDetailDialogComponent } from './recipe-detail-dialog/recipe-detail-dialog.component';
 import { DefaultShoppingListComponent } from './default-shopping-list/default-shopping-list.component';
-import { SaveListComponent } from './default-shopping-list/save-list/save-list.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +19,6 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     RecipeDetailComponent,
     RecipeDetailDialogComponent,
     DefaultShoppingListComponent,
-    SaveListComponent
   ],
   entryComponents: [
     RecipeDetailDialogComponent
@@ -35,7 +34,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     FlexLayoutModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
   ]
 })
 export class RecipesModule { }
