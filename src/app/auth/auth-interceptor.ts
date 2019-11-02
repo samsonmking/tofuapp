@@ -22,7 +22,7 @@ export class AuthInterceptor implements HttpInterceptor {
             }),
             catchError((error) => {
                 if (error instanceof HttpErrorResponse && error.status === 401) {
-
+                    this.userFacade.logout();
                 }
                 throw error;
             })
