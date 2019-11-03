@@ -1,10 +1,10 @@
 <div fxFlexFill fxLayout="column" fxLayoutAlign="stretch" class="current-list-container">
-  <div class="current-list-header" fxLayout="row" fxLayoutAlign="start center">
+  <div class="list-header" fxLayout="row" fxLayoutAlign="start center">
     <i class="material-icons">list</i>
     {{currentListName$ | async}}
   </div>
   <mat-list fxFlex="1 0" fxLayout="column" fxLayoutAlign="stretch">
-    <mat-list-item *ngFor="let recipe of recipesInList$ | async">
+    <mat-list-item  class="sidebar-list-item" *ngFor="let recipe of recipesInList$ | async">
       <div fxFlexFill fxLayout="row" fxLayoutAlign="start center">
         <div fxFlex="1 0">{{recipe.name}}</div>
         <div fxFlex="0 0 30px">
