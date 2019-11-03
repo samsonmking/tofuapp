@@ -5,7 +5,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule, MatListModule, MatSidenavModule, MatSortModule } from '@angular/material';
+import { MatDialogModule, MatListModule, MatSidenavModule, MatSortModule, MatTableModule } from '@angular/material';
+import { CdkTableModule } from '@angular/cdk/table';
 
 
 @NgModule({
@@ -21,6 +22,8 @@ import { MatDialogModule, MatListModule, MatSidenavModule, MatSortModule } from 
     MatListModule,
     MatSidenavModule,
     MatSortModule,
+    MatTableModule,
+    CdkTableModule
   ],
   exports: [
     MatGridListModule,
@@ -32,7 +35,9 @@ import { MatDialogModule, MatListModule, MatSidenavModule, MatSortModule } from 
     MatDialogModule,
     MatListModule,
     MatSidenavModule,
-    MatSortModule
+    MatSortModule,
+    MatTableModule,
+    CdkTableModule
   ]
 })
 export class MaterialModule { }

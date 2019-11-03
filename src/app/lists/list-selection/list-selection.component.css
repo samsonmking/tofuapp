@@ -1,8 +1,16 @@
-.inactive {
-    background-color: white;
+.active {
+    background-color: #FF5722;
 }
 
+.mat-list-base .mat-list-item {
+    width: auto;
+}
 
-.active {
-    background-color: lightblue;
+.mat-list-item-content {
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-list-item {
+    cursor: pointer;
 }

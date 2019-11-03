@@ -1,14 +1,20 @@
-<table matSort (matSortChange)="sort$.next($event)">
-  <tr>
-    <td mat-sort-header="ingredient">Ingredient</td>
-    <td mat-sort-header="quantity">Quantity</td>
-    <td mat-sort-header="unit">Unit</td>
-    <td mat-sort-header="recipe">Recipe</td>
-  </tr>
-  <tr *ngFor="let listItem of sortedItems$ | async">
-    <td>{{listItem.ingredientName}}</td>
-    <td>{{listItem.ingredientQuantity}}</td>
-    <td>{{listItem.ingredientUnit}}</td>
-    <td>{{listItem.recipeName}}</td>
-  </tr>
+<table mat-table [dataSource]="(sortedItems$ | async)" matSort (matSortChange)="sort$.next($event)">
+  <ng-container matColumnDef="ingredient">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header="ingredient">Ingredient</th>
+    <td mat-cell *matCellDef="let element">{{element.ingredientName}}</td>
+  </ng-container>
+  <ng-container matColumnDef="quantity">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header="quantity">Quantity</th>
+    <td mat-cell *matCellDef="let element">{{element.ingredientQuantity}}</td>
+  </ng-container>
+  <ng-container matColumnDef="unit">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header="unit">Unit</th>
+    <td mat-cell *matCellDef="let element">{{element.ingredientUnit}}</td>
+  </ng-container>
+  <ng-container matColumnDef="recipe">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header="recipe">Recipe</th>
+    <td mat-cell *matCellDef="let element">{{element.recipeName}}</td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>

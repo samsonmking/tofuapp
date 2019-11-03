@@ -1,7 +1,9 @@
-<div fxLayout="row">
-    <app-list-selection fxFlex="30%"></app-list-selection>
-    <div fxFlex="70%">
-        <router-outlet></router-outlet>
-    </div>
-</div>
+<mat-sidenav-container fxFlexFill fxLayout="row">
+    <mat-sidenav fxFlex="0 0 300px" mode="side" opened>
+        <app-list-selection></app-list-selection>
+    </mat-sidenav>
 
+    <mat-sidenav-content fxFlex="1 0" class="recipe-thumbs">
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>

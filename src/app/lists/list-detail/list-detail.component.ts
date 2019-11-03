@@ -14,6 +14,7 @@ import { Sort } from '@angular/material/sort';
 export class ListDetailComponent implements OnInit {
   sortedItems$: Observable<DisplayListItem[]>;
   sort$ = new BehaviorSubject<Sort>({ active: 'recipe', direction:'asc'});
+  displayedColumns: string[] = ['ingredient', 'quantity', 'unit', 'recipe'];
 
   constructor(
     private readonly listItemsFacade: ShoppingListItemFacade,
