@@ -16,3 +16,7 @@
 .nav li a.active{
     font-weight: bold;
 }
+
+.mat-icon-button {
+    margin-right: 10px;
+}

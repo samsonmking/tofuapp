@@ -5,7 +5,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule, MatListModule, MatSidenavModule, MatSortModule, MatTableModule } from '@angular/material';
+import { MatDialogModule, MatListModule, MatSidenavModule, MatSortModule, MatTableModule, MatMenuModule } from '@angular/material';
 import { CdkTableModule } from '@angular/cdk/table';
 
 
@@ -23,7 +23,8 @@ import { CdkTableModule } from '@angular/cdk/table';
     MatSidenavModule,
     MatSortModule,
     MatTableModule,
-    CdkTableModule
+    CdkTableModule,
+    MatMenuModule
   ],
   exports: [
     MatGridListModule,
@@ -37,7 +38,8 @@ import { CdkTableModule } from '@angular/cdk/table';
     MatSidenavModule,
     MatSortModule,
     MatTableModule,
-    CdkTableModule
+    CdkTableModule,
+    MatMenuModule
   ]
 })
 export class MaterialModule { }
