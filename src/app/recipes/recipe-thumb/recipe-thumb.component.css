@@ -1,9 +1,11 @@
 .recipe-thumb {
     margin: 10px 10px 0 0px;
+    height: 315px;
 }
 .recipe-thumb img {
     width: 100%;
-    height: auto;
+    height: 200px;
+    object-fit: cover;
 }
 
 mat-card-title {

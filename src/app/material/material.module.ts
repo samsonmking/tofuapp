@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule, MatListModule, MatSidenavModule, MatSortModule, MatTableModule, MatMenuModule } from '@angular/material';
 import { CdkTableModule } from '@angular/cdk/table';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { CdkTableModule } from '@angular/cdk/table';
     MatSortModule,
     MatTableModule,
     CdkTableModule,
-    MatMenuModule
+    MatMenuModule,
+    ScrollingModule
   ],
   exports: [
     MatGridListModule,
@@ -39,7 +41,8 @@ import { CdkTableModule } from '@angular/cdk/table';
     MatSortModule,
     MatTableModule,
     CdkTableModule,
-    MatMenuModule
+    MatMenuModule,
+    ScrollingModule
   ]
 })
 export class MaterialModule { }

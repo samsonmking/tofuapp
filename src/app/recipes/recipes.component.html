@@ -8,15 +8,13 @@
     <div class="float">
       <button mat-fab (click)="addNewRecipe()"><i class="material-icons">add</i></button>
     </div>
-    <div fxLayout="row wrap" class="recipe-thumb-container">
-        <app-recipe-thumb
-          fxFlex.lg="25%"
-          fxFlex.md="50%"
-          fxFlex.xs="100%" 
-          *ngFor="let recipe of recipes$ | async" 
+    <cdk-virtual-scroll-viewport fxFlexFill [itemSize]="325" fxLayout="column">
+      <div fxLayout="row wrap" class="recipe-thumb-container" *cdkVirtualFor="let recipeChunk of recipes$ | async; trackBy: hashRecipeIds">
+        <app-recipe-thumb thumb fxFlex.lg="25%" fxFlex.md="50%" fxFlex.xs="100%" *ngFor="let recipe of recipeChunk"
           [recipe]="recipe">
         </app-recipe-thumb>
-    </div>
+      </div>
+    </cdk-virtual-scroll-viewport>
   </mat-sidenav-content>
 </mat-sidenav-container>
 
