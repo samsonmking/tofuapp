@@ -1,10 +1,12 @@
 import { Component, OnInit, AfterViewInit, ViewChildren, QueryList, ElementRef, ChangeDetectionStrategy } from '@angular/core';
 import { RecipeFacade } from '../core-data/state/recipe/recipes.facade';
-import { Observable } from 'rxjs';
+import { Observable, combineLatest } from 'rxjs';
 import { DisplayRecipe } from '../core-data/models/recipe/display-recipe';
 import { MatDialog } from '@angular/material';
 import { ManualEntryComponent } from './add-recipe/manual-entry/manual-entry.component';
-import { map } from 'rxjs/operators';
+import { map, filter, mergeAll, distinctUntilChanged } from 'rxjs/operators';
+import { MediaChange, MediaObserver } from '@angular/flex-layout';
+
 
 @Component({
   selector: 'app-recipes',
@@ -17,17 +19,41 @@ export class RecipesComponent implements OnInit {
   recipesPerRow = 4;
 
   constructor(private fascade: RecipeFacade,
-              private dialog: MatDialog) { }
+    private dialog: MatDialog,
+    private readonly mediaObserver: MediaObserver) {
+    const chunkSize$ = this.mediaObserver.asObservable().pipe(
+      mergeAll(),
+      map(mq => mq.mqAlias),
+      filter(alias => alias.length === 2),
+      map(alias => {
+        switch(alias) {
+          case 'xs':
+          case 'sm':
+            return 1;
+          case 'md':
+            return 2;
+          default:
+            return 4;
+        }
+      }),
+      distinctUntilChanged()
+    );
 
-  ngOnInit() {
-    this.recipes$ = this.fascade.recipes$.pipe(
-      map(recipes => this.chunk(recipes, this.recipesPerRow))
+    this.recipes$ = combineLatest(this.fascade.recipes$, chunkSize$).pipe(
+      map(([recipes, size]) => this.chunk(recipes, size))
     )
   }
 
+  ngOnInit() {
+  }
+
   chunk<T>(arr: Array<T>, chunkSize: number) {
-    return Array.from({ length: Math.ceil(arr.length / chunkSize) }, (v, i) => 
+    return Array.from({ length: Math.ceil(arr.length / chunkSize) }, (v, i) =>
       arr.slice(i * chunkSize, i * chunkSize + chunkSize));
+  }
+
+  private flat<T>(arr: Array<Array<T>>) {
+    return arr.reduce((acc, curr) => [...acc, ...curr], []);
   }
 
   addNewRecipe() {

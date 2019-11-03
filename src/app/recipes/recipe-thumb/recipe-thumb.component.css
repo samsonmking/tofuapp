@@ -1,6 +1,7 @@
 .recipe-thumb {
     margin: 10px 10px 0 0px;
     height: 315px;
+    width: auto;
 }
 .recipe-thumb img {
     width: 100%;
