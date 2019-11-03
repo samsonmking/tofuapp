@@ -10,3 +10,19 @@ table {
 .mat-cell {
   padding: 3px 3px 3px 0;
 }
+
+.mat-column-ingredient {
+    width: 40%;
+}
+
+.mat-column-quantity {
+    width: 10%;
+}
+
+.mat-column-unit {
+    width: 15%;
+}
+
+.mat-column-recipe {
+    width: 35%;
+}
