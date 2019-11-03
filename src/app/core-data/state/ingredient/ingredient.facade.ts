@@ -17,8 +17,4 @@ export class IngredientFacade {
         return this.store.pipe(select(selectIngredientsForRecipe(recipeId)));
     }
 
-    getIngredientsForCurrentList() {
-        this.store.dispatch(new GetIngredientsForCurrentListRequest());
-    }
-
 }
