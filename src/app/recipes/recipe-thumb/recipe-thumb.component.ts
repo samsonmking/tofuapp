@@ -12,13 +12,18 @@ import { map } from 'rxjs/operators';
 export class RecipeThumbComponent implements OnInit {
   @Input() recipe: DisplayRecipe;
   disabled$: Observable<boolean>;
+  flag: boolean;
 
-  constructor(private readonly listItems: ShoppingListItemFacade) { }
-
-  ngOnInit() {
+  constructor(
+    private readonly listItems: ShoppingListItemFacade) {
     this.disabled$ = this.listItems.recipeIdsInCurrentList$.pipe(
       map(ids => ids.has(this.recipe.id))
     );
+
+  }
+
+  ngOnInit() {
+
   }
 
   addRecipeToList() {

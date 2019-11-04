@@ -1,11 +1,11 @@
-import { Component, OnInit, AfterViewInit, ViewChildren, QueryList, ElementRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { RecipeFacade } from '../core-data/state/recipe/recipes.facade';
 import { Observable, combineLatest } from 'rxjs';
 import { DisplayRecipe } from '../core-data/models/recipe/display-recipe';
 import { MatDialog } from '@angular/material';
 import { ManualEntryComponent } from './add-recipe/manual-entry/manual-entry.component';
 import { map, filter, mergeAll, distinctUntilChanged } from 'rxjs/operators';
-import { MediaChange, MediaObserver } from '@angular/flex-layout';
+import { MediaObserver } from '@angular/flex-layout';
 
 
 @Component({
@@ -16,35 +16,34 @@ import { MediaChange, MediaObserver } from '@angular/flex-layout';
 })
 export class RecipesComponent implements OnInit {
   recipes$: Observable<DisplayRecipe[][]>;
-  recipesPerRow = 4;
+  viewChange$:Observable<any>;
 
   constructor(private fascade: RecipeFacade,
     private dialog: MatDialog,
     private readonly mediaObserver: MediaObserver) {
-    const chunkSize$ = this.mediaObserver.asObservable().pipe(
-      mergeAll(),
-      map(mq => mq.mqAlias),
-      filter(alias => alias.length === 2),
-      map(alias => {
-        switch(alias) {
-          case 'xs':
-          case 'sm':
-            return 1;
-          case 'md':
-            return 2;
-          default:
-            return 4;
-        }
-      }),
-      distinctUntilChanged()
+
+      const chunkSize$ = this.mediaObserver.asObservable().pipe(
+        mergeAll(),
+        map(mq => mq.mqAlias),
+        filter(alias => alias.length === 2),
+        map(alias => {
+            switch (alias) {
+                case 'xs':
+                case 'sm':
+                    return 1;
+                case 'md':
+                    return 2;
+                default:
+                    return 4;
+            }
+        }),
+        distinctUntilChanged()
     );
 
     this.recipes$ = combineLatest(this.fascade.recipes$, chunkSize$).pipe(
-      map(([recipes, size]) => this.chunk(recipes, size))
-    )
-  }
-
-  ngOnInit() {
+        map(([recipes, size]) => this.chunk(recipes, size))
+    );
+   
   }
 
   chunk<T>(arr: Array<T>, chunkSize: number) {
@@ -52,8 +51,7 @@ export class RecipesComponent implements OnInit {
       arr.slice(i * chunkSize, i * chunkSize + chunkSize));
   }
 
-  private flat<T>(arr: Array<Array<T>>) {
-    return arr.reduce((acc, curr) => [...acc, ...curr], []);
+  ngOnInit() {
   }
 
   addNewRecipe() {
@@ -64,3 +62,4 @@ export class RecipesComponent implements OnInit {
     return ":".concat(...item.map(i => `${i.id}:`));
   }
 }
+

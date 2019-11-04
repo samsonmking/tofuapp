@@ -10,14 +10,14 @@
     </div>
     <cdk-virtual-scroll-viewport fxFlexFill [itemSize]="325" fxLayout="column">
       <div fxLayout="row wrap" class="recipe-thumb-container"
-        *cdkVirtualFor="let recipeChunk of recipes$ | async; trackBy: hashRecipeIds">
-        <app-recipe-thumb thumb fxFlex.lg="25%" fxFlex.md="50%" fxFlex.xs="100%" *ngIf="recipeChunk[0] as recipe" [recipe]="recipe">
+        *cdkVirtualFor="let recipeChunk of recipes$; trackBy: hashRecipeIds; templateCacheSize:0;">
+        <app-recipe-thumb fxFlex.lg="25%" fxFlex.md="50%" fxFlex.xs="100%" *ngIf="recipeChunk[0] as recipe" [recipe]="recipe">
         </app-recipe-thumb>
-        <app-recipe-thumb thumb fxFlex.lg="25%" fxFlex.md="50%" fxFlex.xs="100%" *ngIf="recipeChunk[1] as recipe" [recipe]="recipe">
+        <app-recipe-thumb fxFlex.lg="25%" fxFlex.md="50%" fxFlex.xs="100%" *ngIf="recipeChunk[1] as recipe" [recipe]="recipe">
         </app-recipe-thumb>
-        <app-recipe-thumb thumb fxFlex.lg="25%" fxFlex.md="50%" fxFlex.xs="100%" *ngIf="recipeChunk[2] as recipe" [recipe]="recipe">
+        <app-recipe-thumb fxFlex.lg="25%" fxFlex.md="50%" fxFlex.xs="100%" *ngIf="recipeChunk[2] as recipe" [recipe]="recipe">
         </app-recipe-thumb>
-        <app-recipe-thumb thumb fxFlex.lg="25%" fxFlex.md="50%" fxFlex.xs="100%" *ngIf="recipeChunk[3] as recipe" [recipe]="recipe">
+        <app-recipe-thumb fxFlex.lg="25%" fxFlex.md="50%" fxFlex.xs="100%" *ngIf="recipeChunk[3] as recipe" [recipe]="recipe">
         </app-recipe-thumb>
       </div>
     </cdk-virtual-scroll-viewport>
