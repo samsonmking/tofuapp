@@ -1,7 +1,7 @@
 <mat-card class="recipe-thumb" fxLayout="column" fxLayoutAlign="stretch">
   <mat-card-title class="recipe-title">{{recipe.name}}</mat-card-title>
   <mat-card-content>
-    <img src={{recipe.imageUrl}}>
+    <img src={{recipe.imageUrl}} class="thumb-img">
     <div class="recipe-actions"fxLayout="row" fxLayoutAlign="end end" fxLayoutGap="10px">
       <a routerLink="/recipes/{{recipe.id}}" mat-mini-fab><i class="material-icons">launch</i></a>
       <button mat-mini-fab (click)="addRecipeToList()" [disabled]="(disabled$ | async)">

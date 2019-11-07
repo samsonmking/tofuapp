@@ -20,3 +20,7 @@ mat-card-title {
 .recipe-actions{
     margin-top: 5px;
 }
+
+.thumb-img {
+    background-color: lightgray;
+}
