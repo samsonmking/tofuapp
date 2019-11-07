@@ -52,8 +52,7 @@ export class ListDetailComponent implements OnInit {
       ofType<GetIngredientsForCurrentListComplete>(IngredientActionsType.GetIngredientsForCurrentListComplete),
       switchMap(_ => {
         return combineLatest(listItems$, this.sort$).pipe(
-          map(([items, sort]) => sortData(items, sort)),
-          first()
+          map(([items, sort]) => sortData(items, sort))
         );
       })
     );
@@ -75,10 +74,10 @@ function sortData(items: DisplayListItem[], sort: Sort) {
     const isAsc = sort.direction === 'asc';
     switch (sort.active) {
       case 'checked': return compare(a.checked, b.checked, isAsc);
-      case 'ingredient': return compare(a.ingredientName, b.ingredientName, isAsc);
+      case 'ingredient': return compare(a.ingredientName.toLowerCase(), b.ingredientName.toLowerCase(), isAsc);
       case 'quantity': return compare(a.ingredientQuantity, b.ingredientQuantity, isAsc);
-      case 'unit': return compare(a.ingredientUnit, b.ingredientUnit, isAsc);
-      case 'recipe': return compare(a.recipeName, b.recipeName, isAsc);
+      case 'unit': return compare(a.ingredientUnit.toLowerCase(), b.ingredientUnit.toLowerCase(), isAsc);
+      case 'recipe': return compare(a.recipeName.toLowerCase(), b.recipeName.toLowerCase(), isAsc);
       default: return 0;
     }
   });
