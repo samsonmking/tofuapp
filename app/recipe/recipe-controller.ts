@@ -8,13 +8,13 @@ import { IngredientRepo } from "../ingredient/persistance/ingredient-repo";
 export class RecipeController {
     constructor(
         private repo: RecipeRepo,
-        private ingredientRepo: IngredientRepo, 
+        private ingredientRepo: IngredientRepo,
         private parser: IngredientParser,
         private imageConverter: RecipeImageConverter
-        ) { 
+    ) {
     }
 
-    getRecipies = async(req: Request, res: Response, next: NextFunction) => {
+    getRecipies = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const recipies = await this.repo.getRecipes(req.params.userId);
             res.json(recipies);
@@ -23,8 +23,8 @@ export class RecipeController {
         }
     };
 
-    getRecipe = async(req: Request, res: Response, next: NextFunction) => {
-        try{
+    getRecipe = async (req: Request, res: Response, next: NextFunction) => {
+        try {
             const recipe = await this.repo.getRecipeWithIngredients(parseInt(req.params.id));
             res.json(recipe);
         } catch (e) {
@@ -32,29 +32,32 @@ export class RecipeController {
         }
     }
 
-    addNewRecipe = async(req: Request, res: Response, next: NextFunction) => {
+    addNewRecipe = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const name = req.body.name;
             if (!name) {
                 return next(boom.badRequest('missing name'));
             }
             const url = req.body.url;
-            if(!url) {
+            if (!url) {
                 return next(boom.badRequest('missing url'));
             }
             const ingredientRaw = req.body.ingredients;
-            if(!ingredientRaw) {
+            if (!ingredientRaw) {
                 return next(boom.badRequest('missing ingredients'));
             }
             const imageSource = req.body.imageUrl;
-            if(!imageSource) {
+            if (!imageSource) {
                 return next(boom.badRequest('missing image source'));
             }
 
             const ingredientSource = (<string>ingredientRaw).split(/\r?\n/);
             const parseResults = await this.parser.parse(ingredientSource);
-            if(parseResults.error.length > 0) {
-                return next(boom.badData('failed to parse ingredients'));
+            if (parseResults.error.length > 0) {
+                const error = boom.badData('failed to parse ingredients');
+                error.reformat();
+                (error.output.payload as any).parseErrors = parseResults.error;
+                return next(error);
             }
 
             const newRecipe = await this.repo.addRecipe({
@@ -64,7 +67,7 @@ export class RecipeController {
             });
 
             await this.imageConverter.saveImage(newRecipe.id, imageSource);
-            const newIngredients = parseResults.recipeIngredients.map((i) => 
+            const newIngredients = parseResults.recipeIngredients.map((i) =>
                 ({ recipe_id: newRecipe.id, ...i }));
             const createdIngredients = await this.ingredientRepo.addIngredients(newIngredients);
             res.json({ ...newRecipe, ingredients: createdIngredients });
@@ -73,7 +76,7 @@ export class RecipeController {
         }
     };
 
-    updateRecipe = async(req: Request, res: Response, next: NextFunction) => {
+    updateRecipe = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const updatedRecipe = await this.repo.updateRecipe(req.body);
             res.json(updatedRecipe);
