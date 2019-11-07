@@ -28,4 +28,8 @@ export class ShoppingListItemService {
     public deleteItemsFromList(listId: number) {
         return this.http.delete<number[]>(`http://localhost:3000/list/${listId}/items`);
     }
+
+    public updateShoppingListItem(payload: ShoppingListItem) {
+        return this.http.put<ShoppingListItem>(`http://localhost:3000/item/${payload.id}`, payload);
+    }
 }

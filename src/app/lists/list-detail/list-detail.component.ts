@@ -16,7 +16,7 @@ import { GetIngredientsForCurrentListComplete, IngredientActionsType } from 'src
 export class ListDetailComponent implements OnInit {
   sortedItems$: Observable<DisplayListItem[]>;
   sort$ = new BehaviorSubject<Sort>({ active: 'recipe', direction: 'asc' });
-  displayedColumns: string[] = ['ingredient', 'quantity', 'unit', 'recipe'];
+  displayedColumns: string[] = ['checked', 'ingredient', 'quantity', 'unit', 'recipe'];
 
   constructor(
     private readonly listItemsFacade: ShoppingListItemFacade,
@@ -38,6 +38,7 @@ export class ListDetailComponent implements OnInit {
           const ingredient = ingredients.entities[curr.ingredient_id];
             return {
               itemId: curr.id,
+              checked: curr.checked,
               ingredientName: ingredient.ingredient,
               ingredientQuantity: ingredient.quantity,
               ingredientUnit: ingredient.unit,
@@ -57,6 +58,11 @@ export class ListDetailComponent implements OnInit {
       })
     );
   }
+
+  itemChecked(id: number, isChecked: boolean) {
+    this.listItemsFacade.checkListItem(id, isChecked);
+  }
+
 }
 
 function sortData(items: DisplayListItem[], sort: Sort) {
@@ -68,6 +74,7 @@ function sortData(items: DisplayListItem[], sort: Sort) {
   return data.sort((a, b) => {
     const isAsc = sort.direction === 'asc';
     switch (sort.active) {
+      case 'checked': return compare(a.checked, b.checked, isAsc);
       case 'ingredient': return compare(a.ingredientName, b.ingredientName, isAsc);
       case 'quantity': return compare(a.ingredientQuantity, b.ingredientQuantity, isAsc);
       case 'unit': return compare(a.ingredientUnit, b.ingredientUnit, isAsc);
@@ -77,12 +84,13 @@ function sortData(items: DisplayListItem[], sort: Sort) {
   });
 }
 
-function compare(a: number | string, b: number | string, isAsc: boolean) {
+function compare(a: number | string | boolean, b: number | string | boolean, isAsc: boolean) {
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }
 
 interface DisplayListItem {
   itemId: number;
+  checked: boolean;
   ingredientName: string;
   ingredientQuantity: number;
   ingredientUnit: string;

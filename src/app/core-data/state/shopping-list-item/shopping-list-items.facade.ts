@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AppState, selectRecipesInCurrentList, selectRecipeIdsInCurrentList, selectItemsInCurrentList } from '..';
 import { Store, select } from '@ngrx/store';
-import { AddRecipeToList, RemoveRecipeFromList } from './shopping-list-items.actions';
+import { AddRecipeToList, RemoveRecipeFromList, CheckShoppingListItemRequest } from './shopping-list-items.actions';
 import { take } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
@@ -20,5 +20,9 @@ export class ShoppingListItemFacade {
 
     public removeRecipeFromList(recipeId: number) {
         this.store.dispatch(new RemoveRecipeFromList(recipeId));
+    }
+
+    public checkListItem(id: number, isChecked: boolean) {
+        return this.store.dispatch(new CheckShoppingListItemRequest(id, isChecked));
     }
 }

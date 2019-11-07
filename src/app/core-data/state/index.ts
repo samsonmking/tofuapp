@@ -67,8 +67,10 @@ export const selectAllLists = createSelector(
 );
 
 // Shopping List Item Selectors
+export const selectShoppingListItemsState = createFeatureSelector<fromShoppingListItems.ListItemsState>('shoppingListItems');
+
 export const selectShoppingListItems = createSelector(
-    createFeatureSelector<fromShoppingListItems.ListItemsState>('shoppingListItems'),
+    selectShoppingListItemsState,
     fromShoppingListItems.selectAllListItems
 );
 export const selectItemsInCurrentList = createSelector(

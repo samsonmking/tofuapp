@@ -26,3 +26,7 @@ table {
 .mat-column-recipe {
     width: 35%;
 }
+
+.mat-checkbox {
+    margin-right: 10px;
+}

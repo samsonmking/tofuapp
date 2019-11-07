@@ -5,7 +5,15 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule, MatListModule, MatSidenavModule, MatSortModule, MatTableModule, MatMenuModule } from '@angular/material';
+import { 
+  MatDialogModule,
+  MatListModule,
+  MatSidenavModule,
+  MatSortModule,
+  MatTableModule,
+  MatMenuModule,
+  MatCheckboxModule
+} from '@angular/material';
 import { CdkTableModule } from '@angular/cdk/table';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 
@@ -26,7 +34,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     MatTableModule,
     CdkTableModule,
     MatMenuModule,
-    ScrollingModule
+    ScrollingModule,
+    MatCheckboxModule
   ],
   exports: [
     MatGridListModule,
@@ -42,7 +51,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     MatTableModule,
     CdkTableModule,
     MatMenuModule,
-    ScrollingModule
+    ScrollingModule,
+    MatCheckboxModule
   ]
 })
 export class MaterialModule { }

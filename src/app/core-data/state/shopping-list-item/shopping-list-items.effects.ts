@@ -3,13 +3,13 @@ import { Effect, Actions, ofType } from '@ngrx/effects';
 import { DataPersistence } from '@nrwl/nx';
 import { ListItemsState } from './shopping-list-items.reducer';
 import { ShoppingListItemService } from '../../services/shopping-list-item/shopping-list-item.service';
-import { AddRecipeToList, ShoppingListItemsActionTypes, AddItemsToList, AddItemsToListComplete, GetItemsForListRequest, GetItemsForListComplete, RemoveRecipeFromList, RemoveRecipeFromListComplete, RemoveItemsFromListRequest, RemoveItemsFromListComplete } from './shopping-list-items.actions';
-import { mergeMap, switchMap, map } from 'rxjs/operators';
+import { AddRecipeToList, ShoppingListItemsActionTypes, AddItemsToList, AddItemsToListComplete, GetItemsForListRequest, GetItemsForListComplete, RemoveRecipeFromList, RemoveRecipeFromListComplete, RemoveItemsFromListRequest, RemoveItemsFromListComplete, CheckShoppingListItemRequest, CheckShoppingListItemComplete } from './shopping-list-items.actions';
+import { mergeMap, switchMap, map, withLatestFrom, catchError } from 'rxjs/operators';
 import { GetIngredientsForRecipeInList, GetIngredientsForRecipeComplete, GetIngredientsForRecipeInListComplete, IngredientActionsType } from '../ingredient/ingredient.actions';
-import { of, zip, empty } from 'rxjs';
+import { of, zip, empty, EMPTY } from 'rxjs';
 import { ShoppingListActionTypes, SetDefaultList } from '../shopping-list/shopping-list.actions';
 import { ShoppingListItem } from '../../models/shopping-list-item/shopping-list-item';
-import { AppState } from '..';
+import { AppState, selectShoppingListItems, selectShoppingListState, selectShoppingListItemsState } from '..';
 import { Store, select } from '@ngrx/store';
 
 @Injectable({providedIn: 'root'})
@@ -19,6 +19,7 @@ export class ShoppingListItemEffects {
         private actions$: Actions,
         private dataPersistence: DataPersistence<AppState>,
         private service: ShoppingListItemService,
+        private store: Store<AppState>
     ) {}
 
     @Effect()
@@ -55,7 +56,7 @@ export class ShoppingListItemEffects {
         run: (action: AddItemsToList, state) => {
             const listId = state.shoppingLists.defaultListId;
             const listItems: ShoppingListItem[] = action.items.map(ri => 
-                ({ shopping_list_id: listId, ingredient_id: ri.id, recipe_id: ri.recipe_id }));
+                ({ shopping_list_id: listId, ingredient_id: ri.id, recipe_id: ri.recipe_id, checked: false }));
             return this.service.addItemsToList(listId, listItems).pipe(
                 map(li => {
                     return new AddItemsToListComplete(li);
@@ -81,6 +82,19 @@ export class ShoppingListItemEffects {
         ofType<RemoveItemsFromListRequest>(ShoppingListItemsActionTypes.RemoveItemsFromListRequest),
         switchMap(action => zip(of(action.listId), this.service.deleteItemsFromList(action.listId))),
         map(([listId, items]) => new RemoveItemsFromListComplete(listId, items))
+    );
+
+    @Effect()
+    checkItemRequest = this.actions$.pipe(
+        ofType<CheckShoppingListItemRequest>(ShoppingListItemsActionTypes.CheckShoppingListItemRequest),
+        withLatestFrom(this.store.pipe(select(selectShoppingListItemsState))),
+        mergeMap(([action, lists]) => {
+            const existingItem = lists.entities[action.id];
+            return this.service.updateShoppingListItem({ ...existingItem, checked: action.isChecked }).pipe(
+                map(item => new CheckShoppingListItemComplete(item)),
+                catchError(e => EMPTY)
+            )
+        })
     );
 
 }
