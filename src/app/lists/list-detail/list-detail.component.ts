@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ShoppingListItemFacade } from 'src/app/core-data/state/shopping-list-item/shopping-list-items.facade';
-import { map, filter, switchMap, first } from 'rxjs/operators';
+import { map, filter, switchMap, first, takeUntil } from 'rxjs/operators';
 import { Observable, combineLatest, BehaviorSubject } from 'rxjs';
 import { IngredientFacade } from 'src/app/core-data/state/ingredient/ingredient.facade';
 import { RecipeFacade } from 'src/app/core-data/state/recipe/recipes.facade';
 import { Sort } from '@angular/material/sort';
 import { Actions, ofType } from '@ngrx/effects';
-import { GetIngredientsForCurrentListComplete, IngredientActionsType } from 'src/app/core-data/state/ingredient/ingredient.actions';
+import { GetIngredientsForCurrentListComplete, IngredientActionsType, GetIngredientsForCurrentListRequest } from 'src/app/core-data/state/ingredient/ingredient.actions';
+import { SetDefaultList, ShoppingListActionTypes } from 'src/app/core-data/state/shopping-list/shopping-list.actions';
 
 @Component({
   selector: 'app-list-detail',
@@ -48,11 +49,16 @@ export class ListDetailComponent implements OnInit {
       })
     );
 
+    const request$ = this.actions$.pipe(
+      ofType<SetDefaultList>(ShoppingListActionTypes.SetDefaultList)
+      );
+
     this.sortedItems$ = this.actions$.pipe(
       ofType<GetIngredientsForCurrentListComplete>(IngredientActionsType.GetIngredientsForCurrentListComplete),
       switchMap(_ => {
         return combineLatest(listItems$, this.sort$).pipe(
-          map(([items, sort]) => sortData(items, sort))
+          map(([items, sort]) => sortData(items, sort)),
+          takeUntil(request$)    
         );
       })
     );

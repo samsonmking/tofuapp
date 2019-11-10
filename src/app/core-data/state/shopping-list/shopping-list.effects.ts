@@ -98,7 +98,7 @@ export class ShoppingListEffects {
         tap(([action, route]) => {
             if(route.payload.routerState.url.includes('lists')) {
                 const params = route.payload.routerState.params;
-                if(action.id && params['id'] && params['id'] !== action.id) {
+                if(action.id) {
                     this.router.navigate([`/lists/${action.id}`]);
                 }
             }
@@ -123,11 +123,11 @@ export class ShoppingListEffects {
         ofType(ShoppingListActionTypes.DeleteShoppingListComplete, ShoppingListActionTypes.GetListsComplete),
         withLatestFrom(this.store),
         mergeMap(([action, store]) => {
-            if (store.shoppingLists.defaultListId) { // selected list was not deleted => nothing to do
+            if (store.shoppingLists.defaultListId) {    // selected list was not deleted => nothing to do
                 return EMPTY;
             }
             const listIds = store.shoppingLists.ids;
-            if (listIds.length > 0) { // other lists available => set default to highest id
+            if (listIds.length > 0) {                   // other lists available => set default to highest id
                 return of(new SetDefaultList(Math.max(...listIds as number[])))
             } else {
                 return of(new CreateDefaultListRequest())

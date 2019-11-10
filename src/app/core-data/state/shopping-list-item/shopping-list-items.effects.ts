@@ -31,8 +31,9 @@ export class ShoppingListItemEffects {
     @Effect()
     getItemsForList$ = this.actions$.pipe(
         ofType<GetItemsForListRequest>(ShoppingListItemsActionTypes.GetItemsForListRequest),
-        switchMap(request => this.service.getItemsForList(request.listId)),
-        map(items => new GetItemsForListComplete(items))
+        switchMap(request => this.service.getItemsForList(request.listId).pipe(
+            map(items => new GetItemsForListComplete(items))
+        ))
     );
 
     @Effect()
