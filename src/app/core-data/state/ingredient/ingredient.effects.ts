@@ -1,6 +1,6 @@
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { DataPersistence } from '@nrwl/nx';
-import { selectAllIngredients } from './ingredient.reducer';
+import { selectAllIngredients, selectIngredientEntities } from './ingredient.reducer';
 import {
     IngredientActionsType,
     GetIngredientsForRecipeRequest,
@@ -13,10 +13,10 @@ import {
 import { IngredientService } from '../../services/ingredient/ingredient-service';
 import { map, switchMap, withLatestFrom, mergeMap, first } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { AppState, selectRecipeIdsInCurrentList, selectIngredients } from '..';
+import { AppState, selectRecipeIdsInCurrentList, selectIngredients, selectRecipeState, selectIngredientState } from '..';
 import { Store, select } from '@ngrx/store';
 import { GetItemsForListComplete, ShoppingListItemsActionTypes } from '../shopping-list-item/shopping-list-items.actions';
-import { EMPTY, zip } from 'rxjs';
+import { EMPTY, zip, of, combineLatest } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class IngredientEffects {
@@ -65,24 +65,32 @@ export class IngredientEffects {
     @Effect()
     getCurrentList = this.actions$.pipe(
         ofType<GetItemsForListComplete>(ShoppingListItemsActionTypes.GetItemsForListComplete),
-        map(_ =>  new GetIngredientsForCurrentListRequest())
+        map(_ => new GetIngredientsForCurrentListRequest())
     );
 
     @Effect()
     getIngredientsForCurrentList$ = this.actions$.pipe(
         ofType<GetIngredientsForCurrentListRequest>(IngredientActionsType.GetIngredientsForCurrentListRequest),
-        switchMap(_ => this.store.pipe(
-            select(selectRecipeIdsInCurrentList),
-            first()
-        )),
-        switchMap(idSet => {
-            const ids = Array.from(idSet);
-            const requests$ = ids.map(id => this.ingredientService.getIngredientForRecipe(id));
-            return zip(...requests$).pipe(
-                map(nested => this.flat(nested)),
-                map(ingredients => new GetIngredientsForCurrentListComplete(ingredients))
-            )
-        })
+        mergeMap(_ => combineLatest(this.store.pipe(select(selectRecipeIdsInCurrentList)), this.store.pipe(select(selectIngredients))).pipe(
+            first(),
+            switchMap(([idSet, ingredients]) => {
+                const ids = Array.from(idSet);
+                const idsNotInStore = ids.reduce<number[]>((acc, curr) => {
+                    if (ingredients.findIndex(i => i.recipe_id === curr) === -1) {
+                        return [...acc, curr];
+                    }
+                    return acc;
+                }, []);
+                if (idsNotInStore.length === 0) {
+                    return of(new GetIngredientsForCurrentListComplete([]));
+                }
+                const requests$ = idsNotInStore.map(id => this.ingredientService.getIngredientForRecipe(id));
+                return zip(...requests$).pipe(
+                    map(nested => this.flat(nested)),
+                    map(ingredients => new GetIngredientsForCurrentListComplete(ingredients))
+                )
+            })
+        ))
     );
 
     private flat<T>(arr: Array<Array<T>>) {

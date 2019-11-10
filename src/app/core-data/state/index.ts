@@ -73,6 +73,12 @@ export const selectShoppingListItems = createSelector(
     selectShoppingListItemsState,
     fromShoppingListItems.selectAllListItems
 );
+
+export const selectShoppingListEntities = createSelector(
+    selectShoppingListItemsState,
+    fromShoppingListItems.selectListEntities
+);
+
 export const selectItemsInCurrentList = createSelector(
     selectShoppingListItems,
     selectShoppingListState,

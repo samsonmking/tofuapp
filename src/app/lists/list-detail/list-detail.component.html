@@ -1,4 +1,4 @@
-<table mat-table [dataSource]="(sortedItems$ | async)" matSort (matSortChange)="sort$.next($event)">
+<table mat-table [dataSource]="(sortedItems$ | async)" matSort (matSortChange)="setSort($event)">
   <ng-container matColumnDef="checked">
     <th mat-header-cell *matHeaderCellDef mat-sort-header="checked"></th>
     <td mat-cell *matCellDef="let element"><mat-checkbox [checked]="element.checked" (change)="itemChecked(element.itemId, !element.checked)"></mat-checkbox></td>

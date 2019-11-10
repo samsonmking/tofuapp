@@ -10,6 +10,7 @@ const initialState = adapter.getInitialState();
 
 const { selectAll, selectIds, selectEntities } = adapter.getSelectors();
 export const selectAllListItems = selectAll;
+export const selectListEntities = selectEntities;
 export const selectListItemEntities = selectEntities;
 
 export function listItemsReducer(state: ListItemsState = initialState, action: ListItemActions): ListItemsState {
