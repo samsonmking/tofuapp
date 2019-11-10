@@ -29,6 +29,15 @@ export class ShoppingListItemController {
         }
     }
 
+    updateItem = async(req: Request, res: Response, next: NextFunction) => {
+        try {
+            const updated = await this.repo.updateItem(req.body);
+            res.json(updated);
+        } catch (e) {
+            next(e);
+        }
+    }
+
     deleteRecipeFromList = async(req: Request, res: Response, next: NextFunction) => {
         try {
             const deleted = await this.repo.removeRecipeFromList(req.params.listid, req.params.recipeid);

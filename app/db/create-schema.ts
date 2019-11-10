@@ -57,6 +57,7 @@ export async function createDatabase() {
         shopping_list_id integer references shopping_lists(id),
         ingredient_id integer references ingredients(id),
         recipe_id integer references recipes(id),
+        checked boolean default 'f',
         unique (ingredient_id, shopping_list_id)
     )`;
     await newDb.query(shoppingListItemSchema);

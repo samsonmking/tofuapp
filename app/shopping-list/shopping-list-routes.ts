@@ -20,6 +20,7 @@ export class ShoppingListRoutes implements Route {
 
         app.get('/list/:listid/items', checkToken, this.itemController.getItemsForList);
         app.post('/list/:listid/items', checkToken, this.itemController.addItemsToList);
+        app.put('/item/:itemid', checkToken, this.itemController.updateItem);
         app.delete('/list/:listid/items', checkToken, this.itemController.deleteItemsFromList);
         app.delete('/list/:listid/recipe/:recipeid', checkToken, this.itemController.deleteRecipeFromList);
     }

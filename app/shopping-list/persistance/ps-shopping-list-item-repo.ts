@@ -5,7 +5,7 @@ import { query } from "../../db";
 export class ShoppingListItemRepoPS implements ShoppingListItemRepo {
     public async getItemsForList(listId: number): Promise<ShoppingListItem[]> {
         const result = await query(`
-            SELECT id, shopping_list_id, ingredient_id, recipe_id  
+            SELECT id, shopping_list_id, ingredient_id, recipe_id, checked  
             FROM shopping_list_items 
             WHERE shopping_list_id=$1`, [listId]);
         return result.rows;
@@ -15,7 +15,7 @@ export class ShoppingListItemRepoPS implements ShoppingListItemRepo {
         const result = await query(`
             INSERT INTO shopping_list_items (shopping_list_id, ingredient_id, recipe_id) 
             VALUES ($1, $2, $3) 
-            RETURNING id, shopping_list_id, ingredient_id, recipe_id`, 
+            RETURNING id, shopping_list_id, ingredient_id, recipe_id, checked`, 
             [payload.shopping_list_id, payload.ingredient_id, payload.recipe_id]);
         return result.rows[0];
     }
@@ -26,8 +26,21 @@ export class ShoppingListItemRepoPS implements ShoppingListItemRepo {
         const result = await query(`
             INSERT INTO shopping_list_items (shopping_list_id, ingredient_id, recipe_id) 
             VALUES ${values} 
-            RETURNING id, shopping_list_id, ingredient_id, recipe_id`);
+            RETURNING id, shopping_list_id, ingredient_id, recipe_id, checked`);
         return result.rows;
+    }
+
+    public async updateItem(payload: ShoppingListItem): Promise<ShoppingListItem> {
+        const result = await query(`
+            UPDATE shopping_list_items
+            SET checked=$2
+            WHERE id=$1
+            RETURNING id, shopping_list_id, ingredient_id, recipe_id, checked`,
+            [
+                payload.id,
+                payload.checked
+            ]);
+        return result.rows[0];
     }
 
     public async removeRecipeFromList(listId: number, recipeId: number): Promise<number[]> {
