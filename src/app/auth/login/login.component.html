@@ -11,7 +11,7 @@
         <mat-form-field>
           <input matInput formControlName="password" placeHolder="Password" type="password">
         </mat-form-field>
-        <button fxFlexAlign="end" mat-raised-button color="primary">Submit</button>
+        <button fxFlexAlign="end" mat-raised-button color="primary" [disabled]="!loginForm.valid">Submit</button>
       </form>
     </mat-card-content>
   </mat-card>

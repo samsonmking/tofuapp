@@ -1,24 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
 import { RecipeFacade } from 'src/app/core-data/state/recipe/recipes.facade';
-
+import * as urlRegex from 'url-regex'
 @Component({
   selector: 'app-manual-entry',
   templateUrl: './manual-entry.component.html',
   styleUrls: ['./manual-entry.component.css']
 })
 export class ManualEntryComponent implements OnInit {
-  newRecipeForm = new FormGroup({
-    name: new FormControl(''),
-    url: new FormControl(''),
-    imageUrl: new FormControl(''),
-    ingredients: new FormControl('')
+  newRecipeForm = this.formBuilder.group({
+    name: ['', Validators.required],
+    url: ['',  Validators.compose([Validators.required, Validators.pattern(urlRegex())])],
+    imageUrl: ['', Validators.compose([Validators.required, Validators.pattern(urlRegex())])],
+    ingredients: ['', Validators.required]
   });
 
   constructor(
     private dialogRef: MatDialogRef<ManualEntryComponent>,
-    private readonly recipeFacade: RecipeFacade) {
+    private readonly recipeFacade: RecipeFacade,
+    private readonly formBuilder: FormBuilder) {
   }
 
   ngOnInit() {

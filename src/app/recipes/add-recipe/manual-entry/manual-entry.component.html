@@ -13,5 +13,5 @@
       <textarea matInput formControlName="ingredients" placeholder="Ingredients" class="ingredient-list"></textarea>
     </mat-form-field>
   </mat-card-content>
-  <button mat-stroked-button type="submit">Submit</button>
+  <button mat-stroked-button type="submit" [disabled]="!newRecipeForm.valid">Submit</button>
 </form>
