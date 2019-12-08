@@ -1,0 +1,49 @@
+{
+  "name": "tofu-backend",
+  "version": "0.0.0",
+  "description": "",
+  "main": "app.ts",
+  "scripts": {
+    "test": "DOTENV_CONFIG_PATH=test/test.env mocha --timeout 10000 --require dotenv/config --require ts-node/register test/**/*.ts",
+    "tsc": "tsc",
+    "dev": "NODE_ENV=dev ts-node-dev -r dotenv/config --respawn --transpileOnly ./app/server.ts dotenv_config_path=./dev.env",
+    "prod": "tsc && node ./build/server.js",
+    "scaffold": "./scaffold/copy_images.sh && NODE_ENV=dev ts-node-dev -r dotenv/config --transpileOnly ./scaffold/scaffold.ts dotenv_config_path=./dev.env"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/boom": "^7.2.1",
+    "@types/chai": "^4.1.7",
+    "@types/cors": "^2.8.5",
+    "@types/dotenv": "^6.1.1",
+    "@types/express": "^4.16.1",
+    "@types/jsonwebtoken": "^8.3.5",
+    "@types/mocha": "^5.2.6",
+    "@types/mock-fs": "^3.6.30",
+    "@types/pg": "^7.4.14",
+    "@types/request-promise-native": "^1.0.15",
+    "@types/sharp": "^0.21.3",
+    "@types/supertest": "^2.0.7",
+    "body-parser": "^1.18.3",
+    "boom": "^7.3.0",
+    "chai": "^4.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.1.0",
+    "express": "^4.16.4",
+    "jsonwebtoken": "^8.5.1",
+    "mocha": "^6.0.1",
+    "mock-fs": "^4.8.0",
+    "pg": "^7.12.0",
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.7",
+    "rxjs": "^6.4.0",
+    "sharp": "^0.21.3",
+    "supertest": "^4.0.2",
+    "ts-node-dev": "^1.0.0-pre.32",
+    "typescript": "^3.3.3333"
+  },
+  "devDependencies": {
+    "tslint": "^5.17.0"
+  }
+}

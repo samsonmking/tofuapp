@@ -1,0 +1,41 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Mocha Current File",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+            "args": ["-r", "ts-node/register", "${relativeFile}"],
+            "runtimeArgs": [
+                "-r",
+                "dotenv/config"
+            ],
+            "cwd": "${workspaceRoot}",
+            "protocol": "inspector",
+            "env": {
+                "DOTENV_CONFIG_PATH": "./test/test.env"
+            }
+        },
+        {
+            "name": "TSNode Server",
+            "type": "node",
+            "request": "launch",
+            "env": {
+                "NODE_ENV":"dev"
+            },
+            "runtimeArgs": [
+                "-r",
+                "ts-node/register",
+                "-r",
+                "dotenv/config"
+            ],
+            "args": ["./app/server.ts", "dotenv_config_path=./dev.env"],
+            "cwd": "${workspaceRoot}",
+            "protocol": "inspector"
+        }
+    ]
+}

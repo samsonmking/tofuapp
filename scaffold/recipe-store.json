@@ -1,0 +1,231 @@
+[
+  {
+    "name": "Easy Vegan BBQ Jackfruit Sandwiches",
+    "url": "https://www.emilieeats.com/easy-vegan-bbq-jackfruit-sandwiches/",
+    "ingredients": [
+      {
+        "ingredient": "green jackfruit in water",
+        "quantity": 2,
+        "unit": "item"
+      },
+      {
+        "ingredient": "onion",
+        "quantity": 1,
+        "unit": "item"
+      },
+      {
+        "ingredient": "garlic",
+        "quantity": 3,
+        "unit": "item"
+      },
+      {
+        "ingredient": "BBQ sauce of choice",
+        "quantity": 1,
+        "unit": "cup"
+      },
+      {
+        "ingredient": "smoked paprika",
+        "quantity": 1,
+        "unit": "teaspoon"
+      },
+      {
+        "ingredient": "garlic powder",
+        "quantity": 0.5,
+        "unit": "teaspoon"
+      },
+      {
+        "ingredient": "onion powder",
+        "quantity": 0.5,
+        "unit": "teaspoon"
+      },
+      {
+        "ingredient": "liquid smoke",
+        "quantity": 0.5,
+        "unit": "teaspoon"
+      },
+      {
+        "ingredient": "Salt and pepper",
+        "quantity": 1,
+        "unit": "item"
+      },
+      {
+        "ingredient": "hamburger buns",
+        "quantity": 6,
+        "unit": "item"
+      },
+      {
+        "ingredient": "lettuce",
+        "quantity": 1,
+        "unit": "item"
+      }
+    ]
+  },
+  {
+    "name": "Cauliflower Pizza Crust",
+    "url": "https://detoxinista.com/the-secret-to-perfect-cauliflower-pizza-crust/",
+    "ingredients": [
+      {
+        "ingredient": "cauliflower florets",
+        "quantity": 2,
+        "unit": "item"
+      },
+      {
+        "ingredient": "egg",
+        "quantity": 1,
+        "unit": "item"
+      },
+      {
+        "ingredient": "goat cheese",
+        "quantity": 0.3333333333333333,
+        "unit": "cup"
+      },
+      {
+        "ingredient": "oregano",
+        "quantity": 1,
+        "unit": "teaspoon"
+      },
+      {
+        "ingredient": "salt",
+        "quantity": 1,
+        "unit": "item"
+      }
+    ]
+  },
+  {
+    "name": "Sesame Tempeh Bowls",
+    "url": "https://www.budgetbytes.com/sesame-tempeh-bowls/",
+    "ingredients": [
+      {
+        "ingredient": "soy sauce",
+        "quantity": 0.25,
+        "unit": "cup"
+      },
+      {
+        "ingredient": "water",
+        "quantity": 2,
+        "unit": "tablespoon"
+      },
+      {
+        "ingredient": "sesame oil",
+        "quantity": 1,
+        "unit": "tablespoon"
+      },
+      {
+        "ingredient": "brown sugar",
+        "quantity": 3,
+        "unit": "tablespoon"
+      },
+      {
+        "ingredient": "rice vinegar",
+        "quantity": 1,
+        "unit": "tablespoon"
+      },
+      {
+        "ingredient": "fresh ginger",
+        "quantity": 1,
+        "unit": "teaspoon"
+      },
+      {
+        "ingredient": "garlic",
+        "quantity": 2,
+        "unit": "item"
+      },
+      {
+        "ingredient": "sesame seeds",
+        "quantity": 1,
+        "unit": "tablespoon"
+      },
+      {
+        "ingredient": "cornstarch",
+        "quantity": 0.5,
+        "unit": "tablespoon"
+      },
+      {
+        "ingredient": "tempeh",
+        "quantity": 8,
+        "unit": "item"
+      },
+      {
+        "ingredient": "green onions",
+        "quantity": 2,
+        "unit": "item"
+      },
+      {
+        "ingredient": "jasmine rice",
+        "quantity": 4,
+        "unit": "cup"
+      },
+      {
+        "ingredient": "frozen broccoli florets",
+        "quantity": 1,
+        "unit": "item"
+      }
+    ]
+  },
+  {
+    "name": "Vegan Tomato Soup",
+    "url": "https://www.blissfulbasil.com/dreamy-vegan-tomato-soup/",
+    "ingredients": [
+      {
+        "ingredient": "extra-virgin olive oil",
+        "quantity": 3,
+        "unit": "tablespoon"
+      },
+      {
+        "ingredient": "garlic",
+        "quantity": 4,
+        "unit": "item"
+      },
+      {
+        "ingredient": "yellow onion",
+        "quantity": 1,
+        "unit": "item"
+      },
+      {
+        "ingredient": "red bell pepper",
+        "quantity": 1,
+        "unit": "item"
+      },
+      {
+        "ingredient": "cans",
+        "quantity": 2,
+        "unit": "item"
+      },
+      {
+        "ingredient": "head cauliflower",
+        "quantity": 1,
+        "unit": "item"
+      },
+      {
+        "ingredient": "oregano",
+        "quantity": 1,
+        "unit": "teaspoon"
+      },
+      {
+        "ingredient": "basil",
+        "quantity": 1,
+        "unit": "teaspoon"
+      },
+      {
+        "ingredient": "red pepper flakes",
+        "quantity": 1,
+        "unit": "item"
+      },
+      {
+        "ingredient": "sea salt",
+        "quantity": 0.5,
+        "unit": "teaspoon"
+      },
+      {
+        "ingredient": "nutritional yeast flakes",
+        "quantity": 3,
+        "unit": "tablespoon"
+      },
+      {
+        "ingredient": "fresh basil",
+        "quantity": 1,
+        "unit": "item"
+      }
+    ]
+  }
+]
