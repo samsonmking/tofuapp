@@ -3,8 +3,8 @@ import { RecipeIngredient } from "./recipe-ingredient";
 import { Units } from "./Units";
 import rp from 'request-promise-native';
 import { IngredientParsingResult } from "./ingredients-parsing-result";
-import { apiKey } from "./config";
 import { ParsedIngredient } from "./parsed-ingredient";
+const { apiKey } = process.env;
 
 export class ZestfulIngredientParser implements IngredientParser {
     async parse(ingredients: string[]): Promise<IngredientParsingResult> {
