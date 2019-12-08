@@ -1,0 +1,17 @@
+<mat-toolbar *ngIf="(user$ | async) as userState" color="primary" fxLayout="row" fxLayoutAlign="start center">
+  <img src="assets/img/tofu.png" style="width: 48px; height: 48px;">
+  <span class="title">TOFU</span>
+  <ul *ngIf="userState.loggedIn" class="nav" fxFlex="1 1 auto">
+    <li><a routerLink="recipes" routerLinkActive="active" #rla="routerLinkActive">Recipe Collection</a></li>
+    <li>
+      <a [routerLink]="selectedList$ | async" [class.active]="listSelected$ | async">Shopping Lists</a>
+    </li>
+  </ul>
+  <mat-menu #userMenu="matMenu">
+    <button mat-menu-item (click)="logout()">Logout</button>
+  </mat-menu>
+  <button mat-icon-button [matMenuTriggerFor]="userMenu" *ngIf="userState.user as user">
+    <i class="material-icons">person</i>
+    {{user.id}}
+  </button>
+</mat-toolbar>

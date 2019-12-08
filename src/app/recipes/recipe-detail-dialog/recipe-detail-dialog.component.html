@@ -1,0 +1,14 @@
+<div *ngIf="fullRecipe$ | async; let recipe">
+  <div mat-dialog-title>{{recipe.name}}</div>
+  <mat-dialog-content>
+    <img src={{recipe.imageUrl}}>
+    <p> </p> 
+    <a href="{{recipe.url}}" >Instructions</a>
+    <mat-list>
+      <mat-list-item *ngFor="let ingredient of (ingredients$ | async)">
+        {{ingredient.quantity}} {{ingredient.unit}} {{ingredient.ingredient}}
+      </mat-list-item>
+    </mat-list>
+  </mat-dialog-content>
+
+</div>

@@ -1,0 +1,15 @@
+html, body {
+    margin: 0;
+    height: 100%;
+}
+
+.list-header {
+    background-color: #A7765E;
+    padding: 10px 5px 10px 5px;
+}
+
+.sidebar-list-item {
+    border: 1px solid gray;
+    border-radius: 5px;
+    margin: 0 5px 5px 5px;
+}
