@@ -1,0 +1,16 @@
+<div fxFlexFill fxLayout="column" fxLayoutAlign="stretch">
+  <mat-list fxFlex="1 0" fxLayout="column" fxLayoutAlign="stretch">
+    <mat-list-item class="sidebar-list-item" *ngFor="let list of lists$ | async"
+      [class.active]="(defaultListId$ | async) === list.id" routerLink="/lists/{{list.id}}">
+      <div fxFlexFill fxLayout="row" fxLayoutAlign="start center">
+        <div fxFlex="1 0">{{list.name}}</div>
+        <div fxFlex="0 0 30px">
+          <button mat-icon-button (click)="deleteList(list.id)">
+            <i class="material-icons">delete</i>
+          </button>
+        </div>
+      </div>
+    </mat-list-item>
+  </mat-list>
+  <button mat-flat-button color="accent" (click)="createNewList()"><i class="material-icons">add_circle</i>Add new list</button>
+</div>

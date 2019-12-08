@@ -1,0 +1,17 @@
+<form [formGroup]="newRecipeForm" (ngSubmit)="onRecipeSubmit()">
+  <mat-card-content>
+    <mat-form-field>
+      <input matInput type="text" formControlName="name" placeholder="Name">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput formControlName="url" placeholder="Recipe URL">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput formControlName="imageUrl" placeholder="Image URL">
+    </mat-form-field>
+    <mat-form-field>
+      <textarea matInput formControlName="ingredients" placeholder="Ingredients" class="ingredient-list"></textarea>
+    </mat-form-field>
+  </mat-card-content>
+  <button mat-stroked-button type="submit" [disabled]="!newRecipeForm.valid">Submit</button>
+</form>

@@ -1,0 +1,27 @@
+<mat-sidenav-container fxFlexFill fxLayout="row">
+
+  <mat-sidenav fxFlex="0 0 300px" mode="side" opened class="default-list">
+    <app-default-shopping-list></app-default-shopping-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content fxFlex="1 0" class="recipe-thumbs">
+    <div class="float">
+      <button mat-fab (click)="addNewRecipe()"><i class="material-icons">add</i></button>
+    </div>
+    <cdk-virtual-scroll-viewport fxFlexFill fxLayout="column" itemSize="325" minBufferPx="650" maxBufferPx="1300">
+      <div fxLayout="row wrap" class="recipe-thumb-container"
+        *cdkVirtualFor="let recipeChunk of recipes$; trackBy: hashRecipeIds; templateCacheSize:0;">
+        <app-recipe-thumb fxFlex.lg="25%" fxFlex.md="50%" fxFlex.xs="100%" *ngIf="recipeChunk[0] as recipe" [recipe]="recipe">
+        </app-recipe-thumb>
+        <app-recipe-thumb fxFlex.lg="25%" fxFlex.md="50%" fxFlex.xs="100%" *ngIf="recipeChunk[1] as recipe" [recipe]="recipe">
+        </app-recipe-thumb>
+        <app-recipe-thumb fxFlex.lg="25%" fxFlex.md="50%" fxFlex.xs="100%" *ngIf="recipeChunk[2] as recipe" [recipe]="recipe">
+        </app-recipe-thumb>
+        <app-recipe-thumb fxFlex.lg="25%" fxFlex.md="50%" fxFlex.xs="100%" *ngIf="recipeChunk[3] as recipe" [recipe]="recipe">
+        </app-recipe-thumb>
+      </div>
+    </cdk-virtual-scroll-viewport>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<router-outlet></router-outlet>

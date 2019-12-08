@@ -1,0 +1,8 @@
+.login-container {
+    background-image: url('/assets/img/background.jpg');
+    background-size: cover;
+}
+
+.mat-card {
+    width: 30%
+}

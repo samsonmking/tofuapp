@@ -1,0 +1,26 @@
+.recipe-thumb {
+    margin: 10px 10px 0 0px;
+    height: 315px;
+    width: auto;
+}
+.recipe-thumb img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+mat-card-title {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+    overflow: hidden;
+    font-size:1.3em;
+}
+
+.recipe-actions{
+    margin-top: 5px;
+}
+
+.thumb-img {
+    background-color: lightgray;
+}
