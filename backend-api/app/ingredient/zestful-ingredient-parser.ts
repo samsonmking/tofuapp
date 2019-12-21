@@ -4,7 +4,7 @@ import { Units } from "./Units";
 import rp from 'request-promise-native';
 import { IngredientParsingResult } from "./ingredients-parsing-result";
 import { ParsedIngredient } from "./parsed-ingredient";
-const { apiKey } = process.env;
+const { ZESTFULAPIKEY } = process.env;
 
 export class ZestfulIngredientParser implements IngredientParser {
     async parse(ingredients: string[]): Promise<IngredientParsingResult> {
@@ -12,7 +12,7 @@ export class ZestfulIngredientParser implements IngredientParser {
             method: 'POST',
             uri: 'https://zestful.p.rapidapi.com/parseIngredients',
             headers: {
-                'X-RapidAPI-Key': apiKey,
+                'X-RapidAPI-Key': ZESTFULAPIKEY,
                 'Content-Type': 'application/json'
             },
             body: {

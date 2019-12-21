@@ -4,10 +4,10 @@ import request from 'request';
 import fs from 'fs';
 import path from 'path';
 import sharp = require("sharp");
-const { imagesRoot } = process.env;
+const { IMAGESROOT } = process.env;
 
 export class FileRecipeImageStore implements RecipeImageStore, RecipeImageConverter {
-    constructor(private outDir = imagesRoot) {
+    constructor(private outDir = IMAGESROOT) {
 
     }
 
