@@ -5,10 +5,10 @@
   "main": "app.ts",
   "scripts": {
     "test": "DOTENV_CONFIG_PATH=test/test.env mocha --timeout 10000 --require dotenv/config --require ts-node/register test/**/*.ts",
-    "tsc": "tsc",
-    "dev": "NODE_ENV=dev ts-node-dev -r dotenv/config --respawn --transpileOnly ./app/server.ts dotenv_config_path=./dev.env",
-    "prod": "tsc && node ./build/server.js",
-    "scaffold": "./scaffold/copy_images.sh && NODE_ENV=dev ts-node-dev -r dotenv/config --transpileOnly ./scaffold/scaffold.ts dotenv_config_path=./dev.env"
+    "dev": "ts-node-dev -r dotenv/config --respawn --transpileOnly ./app/server.ts dotenv_config_path=./dev.env",
+    "dev:scaffold": "./scaffold/copy_images.sh && NODE_ENV=dev ts-node-dev -r dotenv/config --transpileOnly ./scaffold/scaffold.ts dotenv_config_path=./dev.env",
+    "prod": "tsc && node ./build/app/server.js",
+    "prod:scaffold": "tsc && node ./build/scaffold/scaffold.js"
   },
   "author": "",
   "license": "ISC",
