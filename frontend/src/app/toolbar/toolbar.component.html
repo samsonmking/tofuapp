@@ -10,7 +10,7 @@
   <mat-menu #userMenu="matMenu">
     <button mat-menu-item (click)="logout()">Logout</button>
   </mat-menu>
-  <button mat-icon-button [matMenuTriggerFor]="userMenu" *ngIf="userState.user as user">
+  <button mat-button [matMenuTriggerFor]="userMenu" *ngIf="userState.user as user">
     <i class="material-icons">person</i>
     {{user.id}}
   </button>
