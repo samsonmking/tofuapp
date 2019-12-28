@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ServicesModule } from '../services.module';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ShoppingListItem } from '../../models/shopping-list-item/shopping-list-item';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({ providedIn: ServicesModule })
 export class ShoppingListItemService {
@@ -11,25 +12,25 @@ export class ShoppingListItemService {
     }
 
     public addItemsToList(listId: number, items: ShoppingListItem[]) {
-        return this.http.post<ShoppingListItem[]>(`http://localhost:3000/list/${listId}/items`, items, 
+        return this.http.post<ShoppingListItem[]>(`${environment.baseUrl}/list/${listId}/items`, items, 
         { headers: new HttpHeaders({
             'Content-Type':  'application/json',
         })});
     }
 
     public getItemsForList(listId: number) {
-        return this.http.get<ShoppingListItem[]>(`http://localhost:3000/list/${listId}/items`);
+        return this.http.get<ShoppingListItem[]>(`${environment.baseUrl}/list/${listId}/items`);
     }
 
     public deleteRecipeFromList(listId: number, recipeId: number) {
-        return this.http.delete<number[]>(`http://localhost:3000/list/${listId}/recipe/${recipeId}`);
+        return this.http.delete<number[]>(`${environment.baseUrl}/list/${listId}/recipe/${recipeId}`);
     }
 
     public deleteItemsFromList(listId: number) {
-        return this.http.delete<number[]>(`http://localhost:3000/list/${listId}/items`);
+        return this.http.delete<number[]>(`${environment.baseUrl}/list/${listId}/items`);
     }
 
     public updateShoppingListItem(payload: ShoppingListItem) {
-        return this.http.put<ShoppingListItem>(`http://localhost:3000/item/${payload.id}`, payload);
+        return this.http.put<ShoppingListItem>(`${environment.baseUrl}/item/${payload.id}`, payload);
     }
 }

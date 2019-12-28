@@ -7,22 +7,24 @@ services:
       - "5432:5432"
     volumes:
       - $HOME/docker/volumes/postgres:/var/lib/postgresql/data
-  api:
+  app:
+    image: docker.pkg.github.com/samsonmking/tofuapp/app:latest
+    # build: .
     env_file:
       - ./prod.env
     environment:
       - PGHOST=db
-    build: .
     ports: 
       - "3000:3000"
     depends_on:
       - db
-  # frontend:
-  #   build: ./frontend/
-  #   volumes:
-  #     - ./frontend:/usr/src/app
-  #     - /usr/src/app/node_modules/
-  #   ports:
-  #     - "4200:4200"
-  #   depends_on:
-  #     - api
+    volumes:
+      - $HOME/docker/volumes/app_images:/usr/src/app/images
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - app

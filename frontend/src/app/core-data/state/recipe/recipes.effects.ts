@@ -8,6 +8,7 @@ import { DisplayRecipe } from '../../models/recipe/display-recipe';
 import { Recipe } from '../../models/recipe/recipe';
 import { map, switchMap } from 'rxjs/operators';
 import { UserActionTypes } from '../user/user.actions';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({providedIn: 'root'})
 export class RecipesEffects {
@@ -36,10 +37,10 @@ export class RecipesEffects {
     });
 
     private getDisplayRecipe(recipe: Recipe): DisplayRecipe {
-        return Object.assign({}, recipe,
-            {
-                imageUrl: `http://localhost:3000/image/recipe/${recipe.id}.jpg`
-            });
+        return {
+            ...recipe,
+                imageUrl: `${environment.baseUrl}/image/recipe/${recipe.id}.jpg`
+            };
     }
 
     @Effect()

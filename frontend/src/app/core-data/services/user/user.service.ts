@@ -5,13 +5,14 @@ import { ServicesModule } from '../services.module';
 import { take, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { UserData } from '../../models/user/user-data';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({ providedIn: ServicesModule })
 export class UserService {
     constructor(private readonly http: HttpClient) {}
 
     login(username: string, password: string) {
-        return this.http.post<UserData>(`http://localhost:3000/login`, { username, password }).pipe(
+        return this.http.post<UserData>(`${environment.baseUrl}/login`, { username, password }).pipe(
             take(1)
         );
     }
