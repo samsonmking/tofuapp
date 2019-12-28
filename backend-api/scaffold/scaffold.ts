@@ -37,7 +37,7 @@ dropDatabase()
     .then(() => console.log(`[INFO] Database ${PGDATABASE} dropped`))
     .then(() => createDatabase())
     .then(() => console.log(`[INFO] Database ${PGDATABASE} created`))
-    .then(() => userScaffold.createUser())
+    .then(() => userScaffold.createUser(`samson@samsonmking.com`))
     .then(user => { 
         console.log(`[INFO] Default user '${user}' created`); 
         return user; 
