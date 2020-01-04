@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseUrl: 'http://tofuapp.cc'
+  baseUrl: 'https://tofuapp.cc'
 };
