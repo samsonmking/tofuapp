@@ -1,3 +1,12 @@
+<div *ngIf="errors$ | async as errors" class="error-title" fxLayout="column" fxLayoutAlign="stretch">
+  <div class="sans-serif-emphasis">Errors occured while parsing</div>
+  <mat-list fxFlex="1 1 100%" *ngFor="let error of errors">
+    <mat-list-item fxFlex="1 1 100%" class="list-item parse-error">
+      <i class="material-icons error-icon">error</i>{{error}}
+    </mat-list-item>
+  </mat-list>
+</div>
+
 <form [formGroup]="newRecipeForm" (ngSubmit)="onRecipeSubmit()">
   <mat-card-content>
     <mat-form-field>

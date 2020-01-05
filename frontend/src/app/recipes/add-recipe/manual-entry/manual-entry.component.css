@@ -5,3 +5,23 @@ mat-form-field {
 .ingredient-list {
     height: 20em;
 }
+
+.parse-error {
+    height: unset;
+    padding: 5px 5px 5px 5px;
+    background: white;
+    border-color: red;
+}
+
+.error-title {
+    color: red;
+    margin-bottom: 20px;
+    background: #ffcccc;;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.error-icon{
+    color: red;
+    margin-right: 5px;
+}

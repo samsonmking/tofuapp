@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AppState, selectAllRecipes, selectRecipeEntities, selectRecipeById, selectRecipeState } from '..';
 import { ActionsSubject, Store, select } from '@ngrx/store';
-import { GetAllRequest, EntrySubmitted, RecipeCreated, RecipesActionTypes } from './recipes.actions';
+import { GetAllRequest, EntrySubmitted, RecipeCreated, RecipesActionTypes, RecipeCreationError } from './recipes.actions';
 import { NewRecipe } from '../../models/manual-entry/new-recipe';
 import { ofType } from '@ngrx/effects';
 
@@ -12,6 +12,7 @@ export class RecipeFacade {
     recipeState$ = this.store.pipe(select(selectRecipeState));
     recipes$ = this.store.pipe(select(selectAllRecipes));
     recipeCreated$ = this.actions$.pipe(ofType<RecipeCreated>(RecipesActionTypes.RecipeCreated));
+    recipeCreationErrors$ = this.actions$.pipe(ofType<RecipeCreationError>(RecipesActionTypes.RecipeCreationError));
 
     getAllRecipes(): void {
         this.store.dispatch(new GetAllRequest());

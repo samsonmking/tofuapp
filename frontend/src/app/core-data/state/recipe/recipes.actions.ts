@@ -22,6 +22,11 @@ export class RecipeCreated implements Action {
     constructor(public payload: DisplayRecipe) {}
 }
 
+export class RecipeCreationError implements Action {
+    type: string = RecipesActionTypes.RecipeCreationError;
+    constructor(public payload: string[]) {}
+}
+
 export class GetAllRequest implements Action {
     type: string = RecipesActionTypes.GetAllRequest;
     constructor() {}
@@ -42,4 +47,5 @@ export type RecipesActions =
     GetAllComplete |
     RemoveRecipesFromStore |
     EntrySubmitted |
-    RecipeCreated;
+    RecipeCreated |
+    RecipeCreationError;
