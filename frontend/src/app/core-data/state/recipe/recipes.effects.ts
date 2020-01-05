@@ -3,12 +3,13 @@ import { Effect, Actions, ofType } from '@ngrx/effects';
 import { DataPersistence } from '@nrwl/nx';
 import { RecipesState } from './recipes.reducer';
 import { RecipeService } from '../../services/recipies/recipie.service';
-import { RecipesActionTypes, GetAllRequest, GetAllComplete, EntrySubmitted, RecipeCreated } from './recipes.actions';
+import { RecipesActionTypes, GetAllRequest, GetAllComplete, EntrySubmitted, RecipeCreated, RecipeCreationError } from './recipes.actions';
 import { DisplayRecipe } from '../../models/recipe/display-recipe';
 import { Recipe } from '../../models/recipe/recipe';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, catchError } from 'rxjs/operators';
 import { UserActionTypes } from '../user/user.actions';
 import { environment } from '../../../../environments/environment';
+import { of } from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 export class RecipesEffects {
@@ -18,7 +19,8 @@ export class RecipesEffects {
         ofType<EntrySubmitted>(RecipesActionTypes.EntrySubmitted),
         switchMap(entry => this.service.submitNewRecipe(entry.payload).pipe(
             map(res => this.getDisplayRecipe(res)),
-            map(recipe => new RecipeCreated(recipe))
+            map(recipe => new RecipeCreated(recipe)),
+            catchError(e => of(new RecipeCreationError(e.error.parseErrors)))
         ))
     );
 

@@ -1,6 +1,6 @@
 <div fxFlexFill fxLayout="column" fxLayoutAlign="stretch">
   <mat-list fxFlex="1 0" fxLayout="column" fxLayoutAlign="stretch">
-    <mat-list-item class="sidebar-list-item" *ngFor="let list of lists$ | async"
+    <mat-list-item class="list-item" *ngFor="let list of lists$ | async"
       [class.active]="(defaultListId$ | async) === list.id" routerLink="/lists/{{list.id}}">
       <div fxFlexFill fxLayout="row" fxLayoutAlign="start center">
         <div fxFlex="1 0">{{list.name}}</div>

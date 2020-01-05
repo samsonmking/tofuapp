@@ -8,7 +8,7 @@ html, body {
     padding: 10px 5px 10px 5px;
 }
 
-.sidebar-list-item {
+.list-item {
     border: 1px solid gray;
     border-radius: 5px;
     margin: 0 5px 5px 5px;
@@ -16,4 +16,13 @@ html, body {
 
 .scroll-container .cdk-virtual-scroll-content-wrapper {
     position: relative;
+}
+
+.sans-serif-emphasis {
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    font-weight: bold;
+}
+
+.error-title .mat-list-item div.mat-list-item-content {
+    padding: 0px 0px;
 }
