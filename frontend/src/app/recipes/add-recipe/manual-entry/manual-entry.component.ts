@@ -29,7 +29,7 @@ export class ManualEntryComponent implements OnInit, OnDestroy {
       this.errors$ = this.recipeFacade.recipeCreationErrors$.pipe(
         map(errorAction => errorAction.payload),
         merge(this.recipeFacade.recipeCreated$.pipe(
-          map(_=> [])
+          map(_=> null)
         ))
       );
   }
