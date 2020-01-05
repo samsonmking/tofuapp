@@ -6,6 +6,7 @@ import { dropDatabase, createDatabase } from '../../app/db/create-schema';
 import { userScaffold } from '../../app/user';
 import { MockImageConverter } from '../mocks/mock-image-converter';
 import { createToken } from '../mocks/token';
+import { apiPrefix } from '../../app/constants';
 
 describe('recipe-api-it', function() {
     const app = buildApp([getRecipeRoute(new MockImageConverter())], []);
@@ -28,7 +29,7 @@ describe('recipe-api-it', function() {
         const imageUrl = "https://www.tasteofhome.com/wp-content/uploads/2018/01/Homemade-Pizza_EXPS_THcom19_376_C02_14_6b-696x696.jpg";
         const ingredients = "1 cup tomatoe sauce\n2 cups cheese\nflour\n1 teaspoon sugar";
         const result = await request(app)
-            .post('/recipe')
+            .post(`${apiPrefix}/recipe`)
             .set('Authorization', `Bearer ${token}`)
             .send({
                 name: "pizza",
@@ -46,7 +47,7 @@ describe('recipe-api-it', function() {
 
     it('#GET /recipe/:id returns recipe with matching id', async function() {
         const result = await request(app)
-            .get(`/recipe/${newRecipe.id}`)
+            .get(`${apiPrefix}/recipe/${newRecipe.id}`)
             .set('Authorization', `Bearer ${token}`);
         const recipe = result.body as Recipe;
         expect(recipe).to.deep.equal(newRecipe);
@@ -54,7 +55,7 @@ describe('recipe-api-it', function() {
 
     it('#GET /recipe returns all recipes', async function() {
         const result = await request(app)
-            .get('/recipe')
+            .get(`${apiPrefix}/recipe`)
             .set('Authorization', `Bearer ${token}`);
         const recipes = result.body as Recipe[];
         expect(recipes).to.have.lengthOf(1);
@@ -64,13 +65,13 @@ describe('recipe-api-it', function() {
 
     it('#PUT /recipe/:id updates recipe and returns new entity', async function () {
         const result = await request(app)
-            .put(`/recipe/${newRecipe.id}`)
+            .put(`${apiPrefix}/recipe/${newRecipe.id}`)
             .set('Authorization', `Bearer ${token}`)
             .send(Object.assign({}, newRecipe, {name: 'cheese pizza'}));
         const updatedRecipe = result.body as Recipe;
         
         const getUpdate = await request(app)
-            .get(`/recipe/${newRecipe.id}`);
+            .get(`${apiPrefix}/recipe/${newRecipe.id}`);
         const queriedRecipe = result.body as Recipe;
 
         expect(queriedRecipe.name).to.eq('cheese pizza');

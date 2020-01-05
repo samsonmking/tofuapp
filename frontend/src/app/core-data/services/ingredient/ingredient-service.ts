@@ -12,6 +12,6 @@ export class IngredientService {
     constructor(private http: HttpClient) {}
 
     getIngredientForRecipe(recipeId: number): Observable<RecipeIngredient[]> {
-        return this.http.get<RecipeIngredient[]>(`${environment.baseUrl}/recipe/${recipeId}/ingredients`).pipe(first());
+        return this.http.get<RecipeIngredient[]>(`${environment.baseUrl}/api/recipe/${recipeId}/ingredients`).pipe(first());
     }
 }

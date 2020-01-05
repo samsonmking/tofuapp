@@ -3,6 +3,7 @@ import express from 'express';
 import { ShoppingListController } from "./shopping-list-controller";
 import { ShoppingListItemController } from "./shopping-list-item-controller";
 import { checkToken } from "../auth";
+import { apiPrefix } from '../constants';
 
 export class ShoppingListRoutes implements Route {
     constructor(
@@ -12,17 +13,17 @@ export class ShoppingListRoutes implements Route {
         }
 
     contributeRoutes(app: express.Application): void {
-        app.get('/list', checkToken, this.listController.getShoppingLists);
-        app.post('/list', checkToken, this.listController.addShoppingList);
-        app.get('/list/:id', checkToken, this.listController.getShoppingList);
-        app.put('/list/:id', checkToken, this.listController.updateShoppingList);
-        app.delete('/list/:id', checkToken, this.listController.deleteShoppingList);
+        app.get(`${apiPrefix}/list`, checkToken, this.listController.getShoppingLists);
+        app.post(`${apiPrefix}/list`, checkToken, this.listController.addShoppingList);
+        app.get(`${apiPrefix}/list/:id`, checkToken, this.listController.getShoppingList);
+        app.put(`${apiPrefix}/list/:id`, checkToken, this.listController.updateShoppingList);
+        app.delete(`${apiPrefix}/list/:id`, checkToken, this.listController.deleteShoppingList);
 
-        app.get('/list/:listid/items', checkToken, this.itemController.getItemsForList);
-        app.post('/list/:listid/items', checkToken, this.itemController.addItemsToList);
-        app.put('/item/:itemid', checkToken, this.itemController.updateItem);
-        app.delete('/list/:listid/items', checkToken, this.itemController.deleteItemsFromList);
-        app.delete('/list/:listid/recipe/:recipeid', checkToken, this.itemController.deleteRecipeFromList);
+        app.get(`${apiPrefix}/list/:listid/items`, checkToken, this.itemController.getItemsForList);
+        app.post(`${apiPrefix}/list/:listid/items`, checkToken, this.itemController.addItemsToList);
+        app.put(`${apiPrefix}/item/:itemid`, checkToken, this.itemController.updateItem);
+        app.delete(`${apiPrefix}/list/:listid/items`, checkToken, this.itemController.deleteItemsFromList);
+        app.delete(`${apiPrefix}/list/:listid/recipe/:recipeid`, checkToken, this.itemController.deleteRecipeFromList);
     }
 
 }

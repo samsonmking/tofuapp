@@ -13,18 +13,18 @@ export class ShoppingListService {
     }
 
     getAllShoppingLists() {
-        return this.http.get<ShoppingList[]>(`${environment.baseUrl}/list`);
+        return this.http.get<ShoppingList[]>(`${environment.baseUrl}/api/list`);
     }
 
     addShoppingList(list: ShoppingList) {
-        return this.http.post<ShoppingList>(`${environment.baseUrl}/list`, list);
+        return this.http.post<ShoppingList>(`${environment.baseUrl}/api/list`, list);
     }
 
     updateShoppingList(list: ShoppingList) {
-        return this.http.put<ShoppingList>(`${environment.baseUrl}/list/${list.id}`, list);
+        return this.http.put<ShoppingList>(`${environment.baseUrl}/api/list/${list.id}`, list);
     }
 
     deleteShoppingList(id: number) {
-        return this.http.delete<number>(`${environment.baseUrl}/list/${id}`);
+        return this.http.delete<number>(`${environment.baseUrl}/api/list/${id}`);
     }
 }

@@ -9,6 +9,7 @@ import { expect } from "chai";
 import { IngredientPSRepo } from "../../app/ingredient/persistance/ingredient-ps-repo";
 import { userScaffold } from "../../app/user";
 import { createToken } from "../mocks/token";
+import { apiPrefix } from '../../app/constants';
 
 describe('ingredient-api-it', function () {
     let token: string;
@@ -41,7 +42,7 @@ describe('ingredient-api-it', function () {
             unit: Units.Cups
         };
         const result = await request(app)
-            .post(`/recipe/${recipe.id}/ingredients`)
+            .post(`${apiPrefix}/recipe/${recipe.id}/ingredients`)
             .set('Authorization', `Bearer ${token}`)
             .send(payload);
         const ingredient = result.body as RecipeIngredient;
@@ -67,7 +68,7 @@ describe('ingredient-api-it', function () {
         const expectedIngredients = await ingredientRepo.addIngredients([cheese, bread]);
 
         const result = await request(app)
-            .get(`/recipe/${recipe.id}/ingredients`)
+            .get(`${apiPrefix}/recipe/${recipe.id}/ingredients`)
             .set('Authorization', `Bearer ${token}`)
             .send();
 

@@ -8,7 +8,7 @@ fi
 domains=(tofuapp.cc www.tofuapp.cc)
 rsa_key_size=4096
 data_path="$HOME/docker/volumes/certbot"
-email="samson@samsonmking.com" # Adding a valid address is strongly recommended
+email="samson@samsonmking.com"
 staging=0 # Set to 1 if you're testing your setup to avoid hitting request limits
 
 if [ -d "$data_path" ]; then
