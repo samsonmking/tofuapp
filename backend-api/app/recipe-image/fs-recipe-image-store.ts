@@ -18,7 +18,7 @@ export class FileRecipeImageStore implements RecipeImageStore, RecipeImageConver
     saveImage(recipeId: number, uri: string): Promise<ImageConversionResult> {
         return new Promise((resolve, reject) => {
             const fileStream = fs.createWriteStream(this.getImagePathForRecipe(recipeId));
-            const resize = sharp().resize(400, 300);
+            const resize = sharp().resize(800, 600);
             request(uri).pipe(resize);
             resize.pipe(fileStream);
             fileStream.on('finish', () => {

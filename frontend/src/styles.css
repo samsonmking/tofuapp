@@ -13,3 +13,7 @@ html, body {
     border-radius: 5px;
     margin: 0 5px 5px 5px;
 }
+
+.scroll-container .cdk-virtual-scroll-content-wrapper {
+    position: relative;
+}

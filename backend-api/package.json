@@ -6,7 +6,7 @@
   "scripts": {
     "test": "DOTENV_CONFIG_PATH=test/test.env mocha --timeout 10000 --require dotenv/config --require ts-node/register test/**/*.ts",
     "dev": "ts-node-dev -r dotenv/config --respawn --transpileOnly ./app/server.ts dotenv_config_path=./dev.env",
-    "dev:scaffold": "./scaffold/copy_images.sh && NODE_ENV=dev ts-node-dev -r dotenv/config --transpileOnly ./scaffold/scaffold.ts dotenv_config_path=./dev.env",
+    "dev:scaffold": "NODE_ENV=dev ts-node-dev -r dotenv/config --transpileOnly ./scaffold/scaffold.ts dotenv_config_path=./dev.env",
     "build": "tsc",
     "prod": "node ./build/app/server.js",
     "prod:scaffold": "node ./build/scaffold/scaffold-prod.js"
