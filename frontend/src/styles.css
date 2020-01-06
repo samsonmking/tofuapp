@@ -26,3 +26,7 @@ html, body {
 .error-title .mat-list-item div.mat-list-item-content {
     padding: 0px 0px;
 }
+
+.recipe-title {
+    text-transform: capitalize;
+}

@@ -34,19 +34,19 @@ export class RecipeController {
 
     addNewRecipe = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const name = req.body.name;
+            const name: string = req.body.name;
             if (!name) {
                 return next(boom.badRequest('missing name'));
             }
-            const url = req.body.url;
+            const url: string = req.body.url;
             if (!url) {
                 return next(boom.badRequest('missing url'));
             }
-            const ingredientRaw = req.body.ingredients;
+            const ingredientRaw: string = req.body.ingredients;
             if (!ingredientRaw) {
                 return next(boom.badRequest('missing ingredients'));
             }
-            const imageSource = req.body.imageUrl;
+            const imageSource: string = req.body.imageUrl;
             if (!imageSource) {
                 return next(boom.badRequest('missing image source'));
             }
@@ -61,7 +61,7 @@ export class RecipeController {
             }
 
             const newRecipe = await this.repo.addRecipe({
-                name: name,
+                name: name.toLowerCase(),
                 url: url,
                 user_id: req.params.userId
             });

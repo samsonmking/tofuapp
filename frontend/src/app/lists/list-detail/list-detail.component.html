@@ -17,7 +17,7 @@
   </ng-container>
   <ng-container matColumnDef="recipe">
     <th mat-header-cell *matHeaderCellDef mat-sort-header="recipe">Recipe</th>
-    <td mat-cell *matCellDef="let element">{{element.recipeName}}</td>
+    <td mat-cell *matCellDef="let element" class="recipe-title" >{{element.recipeName}}</td>
   </ng-container>
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
