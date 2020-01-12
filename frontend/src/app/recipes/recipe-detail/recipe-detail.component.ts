@@ -1,24 +1,42 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RecipeDetailDialogComponent } from '../recipe-detail-dialog/recipe-detail-dialog.component';
-import { map, filter, take } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
+import { RecipeFacade } from 'src/app/core-data/state/recipe/recipes.facade';
 
 @Component({
   template: ''
 })
 export class RecipeDetailComponent {
+  private dialogRef: MatDialogRef<RecipeDetailDialogComponent>;
   constructor(private route: ActivatedRoute,
               private router: Router,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              private recipeFacade: RecipeFacade) {
     this.route.params
       .pipe(map(params => params.id))
-      .subscribe(id => this.openDialog(id));
+      .subscribe(id => this.openDialog(Number.parseInt(id)));
   }
 
   openDialog(id: number) {
-    const dialogRef = this.dialog.open(RecipeDetailDialogComponent, { data: { recipeId: id } });
-    dialogRef.afterClosed().subscribe(_ => {
+
+    const deleteRecipe = () => {
+      this.recipeFacade.deleteRecipe(id);
+      if(this.dialogRef) {
+        this.dialogRef.close();
+      }
+    }
+
+    this.dialogRef = this.dialog.open(RecipeDetailDialogComponent, 
+      { data: 
+        { 
+          recipeId: id,
+          onDelete: deleteRecipe
+        } 
+      });
+
+    this.dialogRef.afterClosed().subscribe(_ => {
       this.router.navigate(['../'], { relativeTo: this.route });
     });
   }

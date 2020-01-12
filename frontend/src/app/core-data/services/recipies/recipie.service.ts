@@ -21,5 +21,9 @@ export class RecipeService {
         return this.http.post<Recipe>(`${environment.baseUrl}/api/recipe`, payload);
     }
 
+    deleteRecipe(id: number) {
+        return this.http.delete(`${environment.baseUrl}/api/recipe/${id}`);
+    }
+
     constructor(private http: HttpClient) {}
 }

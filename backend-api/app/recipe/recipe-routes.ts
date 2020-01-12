@@ -13,5 +13,6 @@ export class RecipeRoutes implements Route {
         app.get(`${apiPrefix}/recipe/:id`, checkToken, this.recipeController.getRecipe);
         app.post(`${apiPrefix}/recipe`, checkToken, this.recipeController.addNewRecipe);
         app.put(`${apiPrefix}/recipe/:id`, checkToken, this.recipeController.updateRecipe);
+        app.delete(`${apiPrefix}/recipe/:id`, checkToken, this.recipeController.deleteRecipe);
     }
 }

@@ -66,7 +66,12 @@ export class RecipePSRepo implements RecipeRepo {
         return result.rows[0];
     }
 
-    deleteRecipe(id: number): Promise<boolean> {
-        throw new Error("Method not implemented.");
+    public async deleteRecipe(id: number): Promise<boolean> {
+        const result = await query(`
+            DELETE FROM recipes
+            WHERE id = $1
+            RETURNING id`,
+            [id])
+        return result.rowCount === 1;
     }
 }

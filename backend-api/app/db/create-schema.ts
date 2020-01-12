@@ -40,7 +40,7 @@ export async function createDatabase() {
     await newDb.query(recipeSchema);
     const ingredientSchema = `CREATE TABLE IF NOT EXISTS ingredients (
         id serial primary key,
-        recipe_id integer references recipes(id),
+        recipe_id integer references recipes(id) ON DELETE CASCADE,
         ingredient text not null,
         quantity decimal,
         unit text
@@ -55,8 +55,8 @@ export async function createDatabase() {
     const shoppingListItemSchema = `CREATE TABLE IF NOT EXISTS shopping_list_items (
         id serial primary key,
         shopping_list_id integer references shopping_lists(id),
-        ingredient_id integer references ingredients(id),
-        recipe_id integer references recipes(id),
+        ingredient_id integer references ingredients(id) ON DELETE CASCADE,
+        recipe_id integer references recipes(id) ON DELETE CASCADE,
         checked boolean default 'f',
         unique (ingredient_id, shopping_list_id)
     )`;
