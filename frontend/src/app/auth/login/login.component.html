@@ -8,9 +8,17 @@
         <mat-form-field>
           <input matInput formControlName="username" placeholder="Username">
         </mat-form-field>
+        <div *ngIf="usernameControl.errors && usernameControl.errors.invalid" fxLayout="row" fxLayoutAlign="start center" class="form-error">
+          <i class="material-icons error-icon">error</i>
+          Incorrect Username
+        </div>
         <mat-form-field>
           <input matInput formControlName="password" placeHolder="Password" type="password">
         </mat-form-field>
+        <div *ngIf="passwordControl.errors && passwordControl.errors.invalid" fxLayout="row" fxLayoutAlign="start center" class="form-error">
+          <i class="material-icons error-icon">error</i>
+          Incorrect Password
+        </div>
         <button fxFlexAlign="end" mat-raised-button color="primary" [disabled]="!loginForm.valid">Submit</button>
       </form>
     </mat-card-content>

@@ -6,7 +6,8 @@ import { UserData } from '../../models/user/user-data';
 export enum UserActionTypes {
     LoginRequest = '[User] Login Request',
     LoginComplete = '[User] Login Complete',
-    LoginFailed = '[User] Login Failed',
+    LoginUsernameFailed = '[User] Login Username Failed',
+    LoginPasswordFailed = '[User] Login Password Failed',
     LoadUserRequest = '[User] Load user request',
     LoadUserComplete = '[User] Load user complete',
     LoadUserFailed = '[User] Load user failed',
@@ -24,8 +25,13 @@ export class LoginComplete implements Action {
     constructor(public user: User, public auth: Auth) { }
 }
 
-export class LoginFailed implements Action {
-    type = UserActionTypes.LoginFailed;
+export class LoginUsernameFailed implements Action {
+    type = UserActionTypes.LoginUsernameFailed;
+    constructor() { }
+}
+
+export class LoginPasswordFailed implements Action {
+    type = UserActionTypes.LoginPasswordFailed;
     constructor() { }
 }
 
@@ -57,7 +63,8 @@ export class LogoutComplete implements Action {
 export type UserActions = 
 LoginRequest |
 LoginComplete |
-LoginFailed |
+LoginUsernameFailed |
+LoginPasswordFailed |
 LogoutRequest |
 LogoutComplete |
 LoadUserRequest |

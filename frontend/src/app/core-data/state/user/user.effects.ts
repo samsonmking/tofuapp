@@ -1,7 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Effect, Actions, ofType } from '@ngrx/effects';
 import { UserService } from '../../services/user/user.service';
-import { UserActionTypes, LoginRequest, LoginComplete, LoginFailed, LogoutRequest, LogoutComplete, LoadUserRequest, LoadUserComplete, LoadUserFailed } from './user.actions';
+import { 
+    UserActionTypes,
+    LoginRequest,
+    LoginComplete, 
+    LogoutRequest,
+    LogoutComplete,
+    LoadUserRequest,
+    LoadUserComplete,
+    LoadUserFailed,
+    LoginUsernameFailed,
+    LoginPasswordFailed
+} from './user.actions';
 import { map, switchMap, tap, withLatestFrom, catchError } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import { Router } from '@angular/router';
@@ -12,6 +23,7 @@ import { RemoveIngredientsFromStore } from '../ingredient/ingredient.actions';
 import { RemoveListsFromStore } from '../shopping-list/shopping-list.actions';
 import { RemoveListItemsFromStore } from '../shopping-list-item/shopping-list-items.actions';
 import { UserStorage } from '../../services/user/user-storage';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({providedIn: 'root'})
 export class UserEffects {
@@ -30,7 +42,8 @@ export class UserEffects {
         switchMap(request => {
             return this.service.login(request.username, request.password).pipe(
                 map((login) => new LoginComplete(login.user, login.auth)),
-                catchError(err => of(new LoginFailed()))
+                catchError((err: HttpErrorResponse) => 
+                    err.status === 404 ? of(new LoginUsernameFailed()) : of(new LoginPasswordFailed()))
             )
         }),
     );
