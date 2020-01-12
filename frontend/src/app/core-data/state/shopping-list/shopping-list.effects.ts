@@ -63,7 +63,8 @@ export class ShoppingListEffects {
     createNewList$ = this.actions$.pipe(
         ofType<CreateNewListRequest>(ShoppingListActionTypes.CreateNewListRequest),
         switchMap(action => this.service.addShoppingList({ name: action.name }).pipe(
-            map(list => new CreateNewListComplete(list))
+            map(list => new CreateNewListComplete(list)),
+            tap(action =>  this.router.navigate([`/lists/${action.list.id}`]))
         ))
     );
 
