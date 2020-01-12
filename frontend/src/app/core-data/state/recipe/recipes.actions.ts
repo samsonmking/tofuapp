@@ -8,7 +8,10 @@ export enum RecipesActionTypes {
     RecipeCreationError = '[Manual Entry] Recipe creation error',
     GetAllRequest = '[Recipes] Get all recipies request',
     GetAllComplete = '[Recipes] Get all recipes complete',
-    RemoveRecipesFromStore = '[Recipes] Remove all from store'
+    RemoveRecipesFromStore = '[Recipes] Remove all from store',
+    DeleteRequest = '[Recipes] Delete request',
+    DeleteComplete = '[Recipes] Delete complete',
+    DeleteError = '[Recipes] Delete error'
 }
 
 export class EntrySubmitted implements Action {
@@ -42,10 +45,28 @@ export class RemoveRecipesFromStore implements Action {
     constructor() { }
 }
 
+export class DeleteRecipeRequest implements Action {
+    type: string = RecipesActionTypes.DeleteRequest;
+    constructor(public payload: number) { }
+}
+
+export class DeleteRecipeComplete implements Action {
+    type: string = RecipesActionTypes.DeleteComplete;
+    constructor(public payload: number) { }
+}
+
+export class DeleteRecipeError implements Action {
+    type: string = RecipesActionTypes.DeleteError;
+    constructor(public payload: any) { }
+}
+
 export type RecipesActions =
     GetAllRequest |
     GetAllComplete |
     RemoveRecipesFromStore |
     EntrySubmitted |
     RecipeCreated |
-    RecipeCreationError;
+    RecipeCreationError |
+    DeleteRecipeRequest |
+    DeleteRecipeComplete |
+    DeleteRecipeError;

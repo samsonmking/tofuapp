@@ -1,6 +1,6 @@
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { DisplayRecipe } from '../../models/recipe/display-recipe';
-import { RecipesActions, RecipesActionTypes, GetAllComplete, RecipeCreated } from './recipes.actions';
+import { RecipesActions, RecipesActionTypes, GetAllComplete, RecipeCreated, DeleteRecipeComplete } from './recipes.actions';
 
 export interface RecipesState extends EntityState<DisplayRecipe> {
 }
@@ -24,6 +24,10 @@ export function recipesReducer(state: RecipesState = initialState, action: Recip
         case RecipesActionTypes.RecipeCreated: {
             const addAction = action as RecipeCreated;
             return adapter.upsertOne(addAction.payload, state);
+        }
+        case RecipesActionTypes.DeleteComplete: {
+            const deleteAction = action as DeleteRecipeComplete;
+            return adapter.removeOne(deleteAction.payload, state);
         }
         default:
             return state;

@@ -14,14 +14,21 @@ import { RecipeIngredient } from 'src/app/core-data/models/ingredient/recipe-ing
 export class RecipeDetailDialogComponent {
   fullRecipe$: Observable<DisplayRecipe>;
   ingredients$: Observable<RecipeIngredient[]>;
+  private readonly id: number;
+  private readonly onDelete: () => void;
 
   constructor(@Inject(MAT_DIALOG_DATA) private data: any,
               private facade: RecipeFacade,
               private ingredientFacade: IngredientFacade) {
-    const id = Number.parseInt(data.recipeId, 10);
-    if (id) {
-      this.fullRecipe$ = facade.getRecipe(id);
-      this.ingredients$ = ingredientFacade.getIngredientsForRecipe(id);
+    this.id = Number.parseInt(data.recipeId, 10);
+    this.onDelete = data.onDelete
+    if (this.id) {
+      this.fullRecipe$ = facade.getRecipe(this.id);
+      this.ingredients$ = ingredientFacade.getIngredientsForRecipe(this.id);
     }
+  }
+
+  deleteRecipe() {
+    this.onDelete();
   }
 }

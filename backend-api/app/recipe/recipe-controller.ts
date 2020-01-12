@@ -84,4 +84,15 @@ export class RecipeController {
             next(e);
         }
     }
+
+    deleteRecipe = async(req: Request, res: Response, next: NextFunction) => {
+        try {
+            const id = req.params.id;
+            const deleted = await this.repo.deleteRecipe(id);
+            (deleted === true) ? 
+                res.status(204).send() : next(boom.badImplementation(`Failed to delete recipe ${id} from database`));
+        } catch (e) {
+            next(e);
+        }
+    }
 }

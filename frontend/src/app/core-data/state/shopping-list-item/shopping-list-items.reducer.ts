@@ -1,6 +1,15 @@
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
-import { ListItemActions, ShoppingListItemsActionTypes, AddItemsToListComplete, GetItemsForListRequest, GetItemsForListComplete, RemoveRecipeFromListComplete, RemoveItemsFromListComplete, CheckShoppingListItemComplete } from './shopping-list-items.actions';
+import {
+    ShoppingListItemsActionTypes,
+    AddItemsToListComplete,
+    GetItemsForListComplete,
+    RemoveRecipeFromListComplete,
+    RemoveItemsFromListComplete,
+    CheckShoppingListItemComplete
+} from './shopping-list-items.actions';
 import { ShoppingListItem } from '../../models/shopping-list-item/shopping-list-item';
+import { RecipesActionTypes, DeleteRecipeComplete } from '../recipe/recipes.actions';
+import { Action } from '@ngrx/store';
 
 export interface ListItemsState extends EntityState<ShoppingListItem> {
 }
@@ -13,7 +22,7 @@ export const selectAllListItems = selectAll;
 export const selectListEntities = selectEntities;
 export const selectListItemEntities = selectEntities;
 
-export function listItemsReducer(state: ListItemsState = initialState, action: ListItemActions): ListItemsState {
+export function listItemsReducer(state: ListItemsState = initialState, action: Action): ListItemsState {
     switch(action.type) {
         case ShoppingListItemsActionTypes.GetItemsForListComplete: {
             const itemsAction = action as GetItemsForListComplete;
@@ -38,6 +47,10 @@ export function listItemsReducer(state: ListItemsState = initialState, action: L
         case ShoppingListItemsActionTypes.CheckShoppingListItemComplete: {
             const checked = action as CheckShoppingListItemComplete;
             return adapter.upsertOne(checked.payload, state)
+        }
+        case RecipesActionTypes.DeleteComplete :{
+            const deleteRecipe = action as DeleteRecipeComplete;
+            return adapter.removeMany(li => li.recipe_id === deleteRecipe.payload, state);
         }
         default:
             return state;

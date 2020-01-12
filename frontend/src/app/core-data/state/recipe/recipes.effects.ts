@@ -3,7 +3,7 @@ import { Effect, Actions, ofType } from '@ngrx/effects';
 import { DataPersistence } from '@nrwl/nx';
 import { RecipesState } from './recipes.reducer';
 import { RecipeService } from '../../services/recipies/recipie.service';
-import { RecipesActionTypes, GetAllRequest, GetAllComplete, EntrySubmitted, RecipeCreated, RecipeCreationError } from './recipes.actions';
+import { RecipesActionTypes, GetAllRequest, GetAllComplete, EntrySubmitted, RecipeCreated, RecipeCreationError, DeleteRecipeRequest, DeleteRecipeComplete, DeleteRecipeError } from './recipes.actions';
 import { DisplayRecipe } from '../../models/recipe/display-recipe';
 import { Recipe } from '../../models/recipe/recipe';
 import { map, switchMap, catchError } from 'rxjs/operators';
@@ -49,6 +49,18 @@ export class RecipesEffects {
     loggedIn$ = this.actions$.pipe(
         ofType(UserActionTypes.LoginComplete, UserActionTypes.LoadUserComplete),
         map(_ => new GetAllRequest())
+    );
+
+    @Effect()
+    deleted$ = this.actions$.pipe(
+        ofType<DeleteRecipeRequest>(RecipesActionTypes.DeleteRequest),
+        switchMap((action: DeleteRecipeRequest) => {
+            const id = action.payload;
+            return this.service.deleteRecipe(id).pipe(
+                map(_ => new DeleteRecipeComplete(id)),
+                catchError(err => of(new DeleteRecipeError(err)))
+            );
+        })
     );
 
     constructor(
