@@ -42,3 +42,8 @@ html, body {
     font-weight: bold;
     font-size: 0.8em;
 }
+
+.form-error ul {
+    list-style-type: none;
+    padding-inline-start: 10px;
+}

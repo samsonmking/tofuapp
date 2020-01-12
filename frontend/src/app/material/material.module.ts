@@ -16,6 +16,7 @@ import {
 } from '@angular/material';
 import { CdkTableModule } from '@angular/cdk/table';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     CdkTableModule,
     MatMenuModule,
     ScrollingModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatSnackBarModule
   ],
   exports: [
     MatGridListModule,
@@ -52,7 +54,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     CdkTableModule,
     MatMenuModule,
     ScrollingModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatSnackBarModule
   ]
 })
 export class MaterialModule { }
