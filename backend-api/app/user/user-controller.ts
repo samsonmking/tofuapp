@@ -33,6 +33,9 @@ export class UserController {
 
             if(username && password) {
                 const user = await this.repo.getUser(username);
+                if (!user) {
+                    return next(boom.notFound(`Username ${username} does not exist`));
+                }
                 if (user.password === password) {
                     const token = signToken(username);
                     res.json({ 
@@ -43,7 +46,7 @@ export class UserController {
                     next(boom.unauthorized('Incorrect password'));
                 }
             } else {
-                next(boom.unauthorized('Login failed'));
+                next(boom.badRequest('Username or password not supplied'));
             }
         } catch (e) {
             next(e);
