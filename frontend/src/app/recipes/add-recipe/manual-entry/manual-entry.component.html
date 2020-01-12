@@ -1,13 +1,4 @@
-<div *ngIf="errors$ | async as errors" class="error-title" fxLayout="column" fxLayoutAlign="stretch">
-  <div class="sans-serif-emphasis">Errors occured while parsing</div>
-  <mat-list fxFlex="1 1 100%" *ngFor="let error of errors">
-    <mat-list-item fxFlex="1 1 100%" class="list-item parse-error">
-      <i class="material-icons error-icon">error</i>{{error}}
-    </mat-list-item>
-  </mat-list>
-</div>
-
-<form [formGroup]="newRecipeForm" (ngSubmit)="onRecipeSubmit()">
+<form [formGroup]="newRecipeForm" (ngSubmit)="onRecipeSubmit()" #entryFrom="ngForm">
   <mat-card-content>
     <mat-form-field>
       <input matInput type="text" formControlName="name" placeholder="Name">
@@ -21,6 +12,13 @@
     <mat-form-field>
       <textarea matInput formControlName="ingredients" placeholder="Ingredients" class="ingredient-list"></textarea>
     </mat-form-field>
+    <div *ngIf="errors$ | async as errors" class="form-error sans-serif-emphasis">
+        <ul *ngFor="let error of errors">
+          <li fxLayout="row" fxLayoutAlign="start center">
+            <i class="material-icons error-icon">error</i>{{error}}
+          </li>
+        </ul>
+      </div>
   </mat-card-content>
   <button mat-stroked-button type="submit" [disabled]="!newRecipeForm.valid">Submit</button>
 </form>
