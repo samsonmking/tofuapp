@@ -1,9 +1,19 @@
-<mat-sidenav-container fxFlexFill fxLayout="row">
-    <mat-sidenav fxFlex="0 0 300px" mode="side" opened>
-        <app-list-selection></app-list-selection>
-    </mat-sidenav>
+<div fxFill *ngIf="sideNavConfig$ | async as config">
+    <div fxHide.gt-sm="true" class="sub-heading">
+        <button mat-button (click)="sidenav.toggle()">
+            <i class="material-icons">list</i> Lists
+        </button>
+    </div>
+    <mat-sidenav-container fxFlexFill fxLayout="row">
+        <mat-sidenav #sidenav 
+            fxFlex="0 0 20%" fxFlex.xs="0 0 75%" fxFlex.sm="0 0 40%"
+            [mode]="config.mode"
+            [opened]="config.open">
+            <app-list-selection></app-list-selection>
+        </mat-sidenav>
 
-    <mat-sidenav-content fxFlex="1 0" class="recipe-thumbs">
-        <router-outlet></router-outlet>
-    </mat-sidenav-content>
-</mat-sidenav-container>
+        <mat-sidenav-content fxFlex="1 0" class="recipe-thumbs">
+            <router-outlet></router-outlet>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>
