@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { ShoppingList } from 'src/app/core-data/models/shopping-list/shopping-list';
 import { MatDialog } from '@angular/material';
 import { AddListComponent } from 'src/app/shared/add-list/add-list.component';
+import { RenameListComponent } from '../rename-list/rename-list.component';
 
 @Component({
   selector: 'app-list-selection',
@@ -26,6 +27,13 @@ export class ListSelectionComponent implements OnInit {
 
   deleteList(id: number) {
     this.listFacade.deleteShoppingList(id);
+  }
+
+  renameList(list: ShoppingList) {
+    this.matDialog.open(RenameListComponent, {
+      data: { list },
+      width: "400px"
+    });
   }
 
   createNewList(){

@@ -1,0 +1,6 @@
+<form [formGroup]="renameListForm" (ngSubmit)="renameList()" fxLayout="column">
+  <mat-form-field>
+    <input matInput formControlName="name" placeholder="Shopping List Name">
+  </mat-form-field>
+  <button mat-flat-button color="accent" fxFlexAlign="end" [disabled]="!renameListForm.valid">Submit</button>
+</form>

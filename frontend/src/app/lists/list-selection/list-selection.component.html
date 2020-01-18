@@ -5,12 +5,25 @@
       <div fxFlexFill fxLayout="row" fxLayoutAlign="start center">
         <div fxFlex="1 0">{{list.name}}</div>
         <div fxFlex="0 0 30px">
-          <button mat-icon-button (click)="deleteList(list.id)">
-            <i class="material-icons">delete</i>
+          <mat-menu #listMenu="matMenu">
+            <button mat-menu-item (click)="deleteList(list.id)" fxLayout="row" fxLayoutAlign="start center">
+              <i class="material-icons">delete</i>
+              Delete Shopping List
+            </button>
+            <button mat-menu-item (click)="renameList(list)" fxLayout="row" fxLayoutAlign="start center">
+              <i class="material-icons">title</i>
+              Rename Shopping List
+            </button>
+          </mat-menu>
+          <button mat-icon-button [matMenuTriggerFor]="listMenu">
+            <i class="material-icons">more_horiz</i>
           </button>
         </div>
       </div>
     </mat-list-item>
   </mat-list>
-  <button mat-flat-button color="accent" (click)="createNewList()"><i class="material-icons">add_circle</i>Add new list</button>
+  <button mat-flat-button color="accent" (click)="createNewList()">
+    <i class="material-icons">add_circle</i>
+    Add new list
+  </button>
 </div>
