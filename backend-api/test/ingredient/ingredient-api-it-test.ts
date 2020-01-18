@@ -3,7 +3,6 @@ import { buildApp } from "../../app/app";
 import { getIngredientRoutes } from "../../app/ingredient";
 import { RecipePSRepo } from "../../app/recipe/recipe-ps-repo";
 import request from 'supertest';
-import { Units } from "../../app/ingredient/Units";
 import { RecipeIngredient } from "../../app/ingredient/recipe-ingredient";
 import { expect } from "chai";
 import { IngredientPSRepo } from "../../app/ingredient/persistance/ingredient-ps-repo";
@@ -39,7 +38,7 @@ describe('ingredient-api-it', function () {
             recipe_id: recipe.id,
             ingredient: 'cheese',
             quantity: 1,
-            unit: Units.Cups
+            unit: "cups"
         };
         const result = await request(app)
             .post(`${apiPrefix}/recipe/${recipe.id}/ingredients`)
@@ -56,13 +55,13 @@ describe('ingredient-api-it', function () {
             recipe_id: recipe.id,
             ingredient: "cheese",
             quantity: 1,
-            unit: Units.Cups
+            unit: "cups"
         };
         const bread: RecipeIngredient = {
             recipe_id: recipe.id,
             ingredient: "bread",
             quantity: 1,
-            unit: Units.Item
+            unit: "loaf"
         };
         const ingredientRepo = new IngredientPSRepo();
         const expectedIngredients = await ingredientRepo.addIngredients([cheese, bread]);

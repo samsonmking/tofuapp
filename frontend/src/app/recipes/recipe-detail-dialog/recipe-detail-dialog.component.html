@@ -6,7 +6,7 @@
     <a href="{{recipe.url}}" >Instructions</a>
     <mat-list>
       <mat-list-item *ngFor="let ingredient of (ingredients$ | async)">
-        {{ingredient.quantity}} {{ingredient.unit}} {{ingredient.ingredient}}
+        {{ingredient.quantity || ""}} {{ingredient.unit || ""}} {{ingredient.ingredient}}
       </mat-list-item>
     </mat-list>
     <button mat-flat-button color="warn" (click)="deleteRecipe()">Delete Recipe</button>
