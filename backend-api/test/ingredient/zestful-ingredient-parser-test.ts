@@ -1,6 +1,5 @@
 import { ZestfulIngredientParser } from "../../app/ingredient/zestful-ingredient-parser";
 import { expect } from "chai";
-import { Units } from "../../app/ingredient/Units";
 
 describe('zestful-ingredient-parser', function() {
     it('#parse() parses ingredient strings', async function() {
@@ -15,17 +14,17 @@ describe('zestful-ingredient-parser', function() {
         expect(result.recipeIngredients).to.deep.include({
             ingredient: 'baby portobello mushrooms',
             quantity: 2,
-            unit: Units.Cups
+            unit: "cup"
         });
         expect(result.recipeIngredients).to.deep.include({
             ingredient: 'extra-virgin olive oil',
             quantity: 3,
-            unit: Units.Tablespoon
+            unit: "tablespoon"
         });
         expect(result.recipeIngredients).to.deep.include({
             ingredient: 'cinnamon',
             quantity: 1.5,
-            unit: Units.Tablespoon
+            unit: "tablespoon"
         });
     });
     it('#parse() returns error if no ingredient can be parsed', async function() {
@@ -37,7 +36,7 @@ describe('zestful-ingredient-parser', function() {
         expect(result.error).to.have.lengthOf(1);
         expect(result.recipeIngredients).to.have.lengthOf(0);
     });
-    it('#parse() defaults to 1 unit if only the ingredient is specified', async function() {
+    it('#parse() unit and quantity are null if only the ingredient is specified', async function() {
         const testee = new ZestfulIngredientParser();
         const result = await testee.parse([
             "egg"
@@ -46,8 +45,8 @@ describe('zestful-ingredient-parser', function() {
         expect(result.error).to.have.lengthOf(0);
         expect(result.recipeIngredients).to.deep.include({
             ingredient: 'egg',
-            quantity: 1,
-            unit: Units.Item
+            quantity: null,
+            unit: null
         });
     })
 });

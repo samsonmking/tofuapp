@@ -14,7 +14,7 @@
                 "-r",
                 "dotenv/config"
             ],
-            "cwd": "${workspaceRoot}",
+            "cwd": "${workspaceRoot}/backend-api",
             "protocol": "inspector",
             "env": {
                 "DOTENV_CONFIG_PATH": "./test/test.env"
@@ -34,7 +34,7 @@
                 "dotenv/config"
             ],
             "args": ["./app/server.ts", "dotenv_config_path=./dev.env"],
-            "cwd": "${workspaceRoot}",
+            "cwd": "${workspaceRoot}/backend-api",
             "protocol": "inspector"
         }
     ]

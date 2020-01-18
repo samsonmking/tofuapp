@@ -1,6 +1,5 @@
 import { IngredientRepo } from "./ingredient-repo";
 import { RecipeIngredient } from "../recipe-ingredient";
-import { Units } from "../Units";
 import { query } from "../../db";
 
 export class IngredientPSRepo implements IngredientRepo {
@@ -36,8 +35,11 @@ export class IngredientPSRepo implements IngredientRepo {
     }
 
     public async addIngredients(payload: RecipeIngredient[]): Promise<RecipeIngredient[]> {
-        const values = payload.reduce((acc, curr) => 
-            (acc + (acc ? "," : "") + `('${curr.recipe_id}', '${curr.ingredient}', ${curr.quantity}, '${curr.unit}')`), "");
+        const values = payload.reduce((acc, curr) => (acc + (acc ? "," : "") + 
+            `(${curr.recipe_id}, ` + 
+            `'${curr.ingredient}', `+
+            `${curr.quantity || null}, ` +
+            (curr.unit ? `'${curr.unit}')` : 'null)')), "");
             
         const dbResult = await query(`
             INSERT INTO ingredients(recipe_id, ingredient, quantity, unit)

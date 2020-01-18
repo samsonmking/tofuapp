@@ -1,2 +1,2 @@
-[ ] recipe entry invalid after successful submission
-[x] Most websites capitalize recipe title - toLower() on server side
+[ ] Fails url regex validation - https://detoxinista.com/wp-content/uploads/2012/01/cauliflower-pizza-crust.jpg
+[ ] Decimal place formatting
