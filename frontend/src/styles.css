@@ -3,8 +3,11 @@ html, body {
     height: 100%;
 }
 
-.list-header {
+.sub-heading {
     background-color: #A7765E;
+}
+
+.list-header {
     padding: 10px 5px 10px 5px;
 }
 
@@ -46,4 +49,22 @@ html, body {
 .form-error ul {
     list-style-type: none;
     padding-inline-start: 10px;
+}
+
+html {
+    font-size: 18px;
+}
+
+/* sm */
+@media screen and (min-width: 600px) and (max-width: 959px) {
+    html {
+        font-size: 14px;
+    }
+}
+
+/* xs */
+@media screen and (max-width: 599px) {
+    html {
+        font-size: 12px;
+    }
 }

@@ -1,16 +1,21 @@
 .title {
-    font-size: 1.5em;
+    font-size: 1.5rem;
     font-weight: bold;
+}
+
+ul.nav.ng-star-inserted {
+    padding-inline-start: 0.5rem;
 }
 
 .nav li{
     display: inline;
-    margin-left: 30px;
+    margin-left: 1rem;
 }
 
 .nav li a {
     color: white;
     text-decoration: none;
+    font-size: 1rem;
 }
 
 .nav li a.active{
@@ -18,5 +23,9 @@
 }
 
 .mat-icon-button {
-    margin-right: 10px;
+    margin-right: 1rem;
+}
+
+.user-button {
+    margin: 0 0;
 }

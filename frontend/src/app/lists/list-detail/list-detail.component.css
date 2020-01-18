@@ -9,10 +9,11 @@ table {
 
 .mat-cell {
   padding: 3px 3px 3px 0;
+  font-size: 0.8rem;
 }
 
 .mat-column-ingredient {
-    width: 40%;
+    width: 30%;
 }
 
 .mat-column-quantity {
@@ -24,9 +25,32 @@ table {
 }
 
 .mat-column-recipe {
-    width: 35%;
+    width: 45%;
 }
 
 .mat-checkbox {
     margin-right: 10px;
+}
+
+/* xs */
+@media screen and (max-width: 599px) {
+    .mat-column-ingredient {
+        width: 20%;
+    }
+    
+    .mat-column-quantity {
+        width: 10%;
+    }
+    
+    .mat-column-unit {
+        width: 10%;
+    }
+    
+    .mat-column-recipe {
+        width: 60%;
+    }
+    
+    .mat-checkbox {
+        margin-right: 10px;
+    }
 }
