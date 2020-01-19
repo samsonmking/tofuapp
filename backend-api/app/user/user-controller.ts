@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { UserRepo } from "./user-repo";
 import boom from 'boom';
 import { signToken } from "../auth";
+import { verifyPassword } from "./password";
 
 export class UserController {
     constructor(private readonly repo: UserRepo) {
@@ -36,7 +37,8 @@ export class UserController {
                 if (!user) {
                     return next(boom.notFound(`Username ${username} does not exist`));
                 }
-                if (user.password === password) {
+                const correctPassword = await verifyPassword(password, user.password);
+                if (correctPassword) {
                     const token = signToken(username);
                     res.json({ 
                         user: { id: user.id },

@@ -14,6 +14,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/bcryptjs": "^2.4.2",
     "@types/boom": "^7.2.1",
     "@types/chai": "^4.1.7",
     "@types/cors": "^2.8.5",
@@ -26,6 +27,7 @@
     "@types/request-promise-native": "^1.0.15",
     "@types/sharp": "^0.21.3",
     "@types/supertest": "^2.0.7",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "boom": "^7.3.0",
     "chai": "^4.2.0",
