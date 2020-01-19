@@ -57,7 +57,7 @@ export class UserEffects {
             if(routerState && routerState.queryParams["return"]) {
                 this.router.navigate([routerState.queryParams["return"]]);
             } else {
-                this.router.navigate(["/"]);
+                this.router.navigate(["/recipes"]);
             }
         }),
         tap(([action, _]) => this.userStorage.saveUser({ user: action.user, auth: action.auth }))

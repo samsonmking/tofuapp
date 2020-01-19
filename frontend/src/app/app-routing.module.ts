@@ -8,7 +8,7 @@ import { LoggedInGuard } from './auth/logged-in-guard';
 import { LoginComponent } from './auth/login/login.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'recipes', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
     path: 'recipes',
     canActivate: [LoggedInGuard],
