@@ -1,10 +1,10 @@
-<div fxFill *ngIf="sideNavConfig$ | async as config">
+<div fxFill fxLayout="column" *ngIf="sideNavConfig$ | async as config">
     <div fxHide.gt-sm="true" class="sub-heading">
         <button mat-button (click)="sidenav.toggle()">
           <i class="material-icons">restaurant_menu</i> {{currentListName$ | async}}
         </button>
       </div>
-      <mat-sidenav-container fxFlexFill fxLayout="row">
+      <mat-sidenav-container fxFlex="1 0" fxLayout="row">
       
         <mat-sidenav #sidenav
           fxFlex="0 0 20%" fxFlex.xs="0 0 75%" fxFlex.sm="0 0 40%" 
