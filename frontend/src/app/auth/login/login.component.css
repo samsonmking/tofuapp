@@ -6,3 +6,17 @@
 .mat-card {
     width: 30%
 }
+
+/* lt-md */
+@media screen and (max-width: 959px) {
+    .mat-card {
+        width: 50%
+    }
+}
+
+/* lt-sm */
+@media screen and (max-width: 599px) {
+    .mat-card {
+        width: 80%
+    }
+}
