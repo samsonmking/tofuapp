@@ -33,8 +33,9 @@ export class RecipeDetailComponent {
         { 
           recipeId: id,
           onDelete: deleteRecipe
-        } 
-      });
+        },
+        width: "500px"
+    });
 
     this.dialogRef.afterClosed().subscribe(_ => {
       this.router.navigate(['../'], { relativeTo: this.route });
