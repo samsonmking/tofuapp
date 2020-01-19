@@ -68,3 +68,11 @@ html {
         font-size: 12px;
     }
 }
+
+.sub-panel {
+    border: 1px solid gray;
+    border-radius: 5px;
+    background-color: #fafafa;
+    padding: 5px;
+    margin-bottom: 2px;
+}
