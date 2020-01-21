@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef, ViewChild } from '@ang
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { RecipeFacade } from 'src/app/core-data/state/recipe/recipes.facade';
-import * as urlRegex from 'url-regex'
 import { Observable } from 'rxjs';
 import { map, merge } from 'rxjs/operators';
 import { untilDestroyed } from 'ngx-take-until-destroy';
@@ -12,14 +11,15 @@ import { untilDestroyed } from 'ngx-take-until-destroy';
   styleUrls: ['./manual-entry.component.css']
 })
 export class ManualEntryComponent implements OnInit, OnDestroy {
+  private readonly urlRegex: RegExp = /^((((http[s]?):\/{2})?)+(([0-9a-z_-]+\.)+([a-z]{2,3}))(:[0-9]+)?((\/([~0-9a-zA-Z\#\+\%@\.\/_-]+))?(\?[0-9a-zA-Z\+\%@\/&\[\];=_-]+)?)?)/;
+
   @ViewChild('entryFrom') entryForm;
-
   readonly errors$: Observable<string[]>;
-
+  
   newRecipeForm = this.formBuilder.group({
     name: ['', Validators.required],
-    url: ['', Validators.compose([Validators.required, Validators.pattern(urlRegex())])],
-    imageUrl: ['', Validators.compose([Validators.required, Validators.pattern(urlRegex())])],
+    url: ['', Validators.compose([Validators.required, Validators.pattern(this.urlRegex)])],
+    imageUrl: ['', Validators.compose([Validators.required, Validators.pattern(this.urlRegex)])],
     ingredients: ['', Validators.required]
   });
 
