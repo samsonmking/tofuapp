@@ -1,8 +1,8 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ViewChild } from '@angular/core';
 import { RecipeFacade } from '../core-data/state/recipe/recipes.facade';
 import { Observable, combineLatest } from 'rxjs';
 import { DisplayRecipe } from '../core-data/models/recipe/display-recipe';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSidenav, MatDrawer } from '@angular/material';
 import { ManualEntryComponent } from './add-recipe/manual-entry/manual-entry.component';
 import { map, filter, mergeAll, distinctUntilChanged, startWith } from 'rxjs/operators';
 import { MediaObserver } from '@angular/flex-layout';
@@ -16,9 +16,12 @@ import { ShoppingListFacade } from '../core-data/state/shopping-list/shopping-li
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RecipesComponent implements OnInit {
+  @ViewChild('sidenav') sidenav: MatDrawer;
+
   recipes$: Observable<DisplayRecipe[][]>;
   sideNavConfig$: Observable<SideNavConfig>;
   currentListName$: Observable<string>
+  mqAlias$: any;
 
 
   constructor(private fascade: RecipeFacade,
@@ -34,6 +37,8 @@ export class RecipesComponent implements OnInit {
         mergeAll(),
         map(mq => mq.mqAlias)
       );
+
+      this.mqAlias$ = mqAlias$.pipe(filter(alias => alias.length === 2))
 
       const chunkSize$ = mqAlias$.pipe(
         filter(alias => alias.length === 2),
@@ -57,16 +62,18 @@ export class RecipesComponent implements OnInit {
       map(alias => {
         switch(alias) {
           case 'xs':
-            return { open: false, mode: 'over' }
+            return { open: false, mode: 'over', top: 100 }
           case 'sm':
-            return { open: false, mode: 'over' }
+            return { open: false, mode: 'over', top: 100 }
           default:
-            return { open: true, mode: 'side' }
+            return { open: true, mode: 'side', top: 64 }
         }
       }),
       distinctUntilChanged((curr, prev) => 
         curr.mode === prev.mode && curr.open === prev.open)
     );
+
+    this.sideNavConfig$.subscribe(console.log)
 
     this.recipes$ = combineLatest(this.fascade.recipes$, chunkSize$).pipe(
         map(([recipes, size]) => this.chunk(recipes, size))
@@ -88,9 +95,14 @@ export class RecipesComponent implements OnInit {
   hashRecipeIds(index, item: DisplayRecipe[]) {
     return ":".concat(...item.map(i => `${i.id}:`));
   }
+
+  toggle() {
+    this.sidenav.toggle();
+  }
 }
 
 export interface SideNavConfig {
   open: boolean;
   mode: string;
+  top: number;
 }

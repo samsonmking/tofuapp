@@ -1,7 +1,6 @@
 .recipe-thumb {
     margin: 10px 10px 0 0px;
     height: 315px;
-    width: auto;
 }
 .recipe-thumb img {
     width: 100%;
@@ -34,4 +33,8 @@ mat-card-title {
     .recipe-title {
         font-size: 1.25rem;
     }
+}
+
+app-recipe-thumb {
+    flex: "1 1 25%";
 }

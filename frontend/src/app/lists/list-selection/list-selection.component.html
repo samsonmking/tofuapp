@@ -1,29 +1,31 @@
-<div fxFlexFill fxLayout="column" fxLayoutAlign="stretch">
-  <mat-list fxFlex="1 0" fxLayout="column" fxLayoutAlign="stretch">
-    <mat-list-item class="list-item" *ngFor="let list of lists$ | async"
-      [class.active]="(defaultListId$ | async) === list.id" routerLink="/lists/{{list.id}}">
-      <div fxFlexFill fxLayout="row" fxLayoutAlign="start center">
-        <div fxFlex="1 0">{{list.name}}</div>
-        <div fxFlex="0 0 30px">
-          <mat-menu #listMenu="matMenu">
-            <button mat-menu-item (click)="deleteList(list.id)" fxLayout="row" fxLayoutAlign="start center">
-              <i class="material-icons">delete</i>
-              Delete Shopping List
+<div fxLayout="column" fxLayoutAlign="stretch">
+  <div fxFlex="1 1" class="shopping-lists">
+    <button class="menu-button"mat-flat-button (click)="createNewList()">
+      <i class="material-icons">add_circle</i>
+      Add new list
+    </button>
+    <mat-list fxLayout="column" fxLayoutAlign="stretch">
+      <mat-list-item class="list-item" *ngFor="let list of lists$ | async"
+        [class.active]="(defaultListId$ | async) === list.id" routerLink="/lists/{{list.id}}">
+        <div fxFlexFill fxLayout="row" fxLayoutAlign="start center">
+          <div fxFlex="1 0">{{list.name}}</div>
+          <div fxFlex="0 0 30px">
+            <mat-menu #listMenu="matMenu">
+              <button mat-menu-item (click)="deleteList(list.id)" fxLayout="row" fxLayoutAlign="start center">
+                <i class="material-icons">delete</i>
+                Delete Shopping List
+              </button>
+              <button mat-menu-item (click)="renameList(list)" fxLayout="row" fxLayoutAlign="start center">
+                <i class="material-icons">title</i>
+                Rename Shopping List
+              </button>
+            </mat-menu>
+            <button mat-icon-button [matMenuTriggerFor]="listMenu">
+              <i class="material-icons">more_horiz</i>
             </button>
-            <button mat-menu-item (click)="renameList(list)" fxLayout="row" fxLayoutAlign="start center">
-              <i class="material-icons">title</i>
-              Rename Shopping List
-            </button>
-          </mat-menu>
-          <button mat-icon-button [matMenuTriggerFor]="listMenu">
-            <i class="material-icons">more_horiz</i>
-          </button>
+          </div>
         </div>
-      </div>
-    </mat-list-item>
-  </mat-list>
-  <button mat-flat-button color="accent" (click)="createNewList()">
-    <i class="material-icons">add_circle</i>
-    Add new list
-  </button>
+      </mat-list-item>
+    </mat-list>
+  </div>
 </div>

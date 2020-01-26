@@ -1,4 +1,4 @@
-<mat-toolbar *ngIf="(user$ | async) as userState" color="primary" fxLayout="row" fxLayoutAlign="start center">
+<mat-toolbar *ngIf="(user$ | async) as userState" color="primary" fxLayout="row" fxLayoutAlign="start center" class="mat-elevation-z6">
   <img src="assets/img/tofu.png" style="height: 70%;">
   <span class="title">TOFU</span>
   <ul *ngIf="userState.loggedIn" class="nav" fxFlex="1 1 auto">
