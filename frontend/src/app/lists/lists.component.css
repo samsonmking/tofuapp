@@ -1,0 +1,35 @@
+.list-container {
+    height: 100%;
+    width: 100%;
+}
+
+.list-content-container {
+    height: 100%;
+    width: 100%;
+}
+
+mat-sidenav {
+    max-width: 20%;
+    min-width: 20%;
+}
+
+/* md */
+@media screen and (min-width: 960px) and (max-width: 1279px) {
+
+}
+
+/* sm */
+@media screen and (min-width: 600px) and (max-width: 959px) {
+    mat-sidenav {
+        max-width: 40%;
+        min-width: 40%;
+    }
+}
+
+/* xs */
+@media screen and (max-width: 599px) {
+    mat-sidenav {
+        max-width: 75%;
+        min-width: 75%;
+    }
+}

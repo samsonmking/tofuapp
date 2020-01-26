@@ -1,19 +1,23 @@
-<div fxFill fxLayout="column" *ngIf="sideNavConfig$ | async as config">
-    <div fxHide.gt-sm="true" class="sub-heading">
-        <button mat-button (click)="sidenav.toggle()">
-            <i class="material-icons">list</i> Lists
-        </button>
-    </div>
-    <mat-sidenav-container fxFlex="1 0" fxLayout="row">
+<div class="sub-heading sub-heading-fixed">
+    <button mat-button (click)="sidenav.toggle()">
+        <i class="material-icons">list</i> Lists
+    </button>
+</div>
+
+<div class="list-container" *ngIf="sideNavConfig$ | async as config">
+
+    <mat-sidenav-container>
         <mat-sidenav #sidenav 
-            fxFlex="0 0 20%" fxFlex.xs="0 0 75%" fxFlex.sm="0 0 40%"
             [mode]="config.mode"
-            [opened]="config.open">
+            [opened]="config.open" 
+            [fixedInViewport]="true" 
+            [fixedTopGap]="config.top">
             <app-list-selection></app-list-selection>
         </mat-sidenav>
 
-        <mat-sidenav-content fxFlex="1 0" class="recipe-thumbs">
+        <mat-sidenav-content class="list-content-container">
             <router-outlet></router-outlet>
         </mat-sidenav-content>
+
     </mat-sidenav-container>
 </div>

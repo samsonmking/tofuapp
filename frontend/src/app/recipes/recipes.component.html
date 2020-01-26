@@ -1,43 +1,38 @@
-<div fxFill fxLayout="column" *ngIf="sideNavConfig$ | async as config">
-    <div fxHide.gt-sm="true" class="sub-heading">
-        <button mat-button (click)="sidenav.toggle()">
-          <i class="material-icons">restaurant_menu</i> {{currentListName$ | async}}
-        </button>
+<div class="sub-heading sub-heading-fixed">
+  <button mat-button (click)="toggle()">
+    <i class="material-icons">restaurant_menu</i> {{currentListName$ | async}}
+  </button>
+</div>
+<div *ngIf="sideNavConfig$ | async as config" class="recipe-container">
+
+  <mat-sidenav-container>
+
+    <mat-sidenav #sidenav
+      class="default-list"
+      [mode]="config.mode" 
+      [opened]="config.open" 
+      [fixedInViewport]="true"
+      [fixedTopGap]="config.top">
+        <app-default-shopping-list></app-default-shopping-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <div class="float">
+        <button mat-fab (click)="addNewRecipe()"><i class="material-icons">add</i></button>
       </div>
-      <mat-sidenav-container fxFlex="1 0" fxLayout="row">
-      
-        <mat-sidenav #sidenav
-          fxFlex="0 0 20%" fxFlex.xs="0 0 75%" fxFlex.sm="0 0 40%" 
-          [mode]="config.mode" 
-          [opened]="config.open"
-          class="default-list">
-            <app-default-shopping-list></app-default-shopping-list>
-        </mat-sidenav>
-      
-        <mat-sidenav-content fxFlex="1 0" class="recipe-thumbs">
-          <div class="float">
-            <button mat-fab (click)="addNewRecipe()"><i class="material-icons">add</i></button>
-          </div>
-          <cdk-virtual-scroll-viewport class="scroll-container" fxFlexFill fxLayout="column" itemSize="325" minBufferPx="650"
-            maxBufferPx="1300">
-            <div fxLayout="row" class="recipe-thumb-container"
-              *cdkVirtualFor="let recipeChunk of recipes$; trackBy: hashRecipeIds; templateCacheSize:0;">
-              <app-recipe-thumb fxFlex.lg="25%" fxFlex.md="33.3%" fxFlex.sm="50%" fxFlex.xs="100%"
-                *ngIf="recipeChunk[0] as recipe" [recipe]="recipe">
-              </app-recipe-thumb>
-              <app-recipe-thumb fxFlex.lg="25%" fxFlex.md="33.3%" fxFlex.sm="50%" fxFlex.xs="100%"
-                *ngIf="recipeChunk[1] as recipe" [recipe]="recipe">
-              </app-recipe-thumb>
-              <app-recipe-thumb fxFlex.lg="25%" fxFlex.md="33.3%" fxFlex.sm="50%" fxFlex.xs="100%"
-                *ngIf="recipeChunk[2] as recipe" [recipe]="recipe">
-              </app-recipe-thumb>
-              <app-recipe-thumb fxFlex.lg="25%" fxFlex.md="33.3%" fxFlex.sm="50%" fxFlex.xs="100%"
-                *ngIf="recipeChunk[3] as recipe" [recipe]="recipe">
-              </app-recipe-thumb>
-            </div>
-          </cdk-virtual-scroll-viewport>
-        </mat-sidenav-content>
-      </mat-sidenav-container>
+
+      <cdk-virtual-scroll-viewport class="scroll-container" itemSize="325" minBufferPx="650"
+        maxBufferPx="1300">
+        <div class="recipe-thumb-container" *cdkVirtualFor="let recipeChunk of recipes$; trackBy: hashRecipeIds; templateCacheSize:0;">
+          <app-recipe-thumb *ngIf="recipeChunk[0] as recipe" [recipe]="recipe"></app-recipe-thumb>
+          <app-recipe-thumb *ngIf="recipeChunk[1] as recipe" [recipe]="recipe"></app-recipe-thumb>
+          <app-recipe-thumb *ngIf="recipeChunk[2] as recipe" [recipe]="recipe"></app-recipe-thumb>
+          <app-recipe-thumb *ngIf="recipeChunk[3] as recipe" [recipe]="recipe"></app-recipe-thumb>
+        </div>
+      </cdk-virtual-scroll-viewport>
+
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 </div>
 
 <router-outlet></router-outlet>

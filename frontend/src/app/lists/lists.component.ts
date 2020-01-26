@@ -23,11 +23,11 @@ export class ListsComponent implements OnInit {
       map(alias => {
         switch(alias) {
           case 'xs':
-            return { open: false, mode: 'over' }
+            return { open: false, mode: 'over', top: 100 }
           case 'sm':
-            return { open: false, mode: 'over' }
+            return { open: false, mode: 'over', top: 100 }
           default:
-            return { open: true, mode: 'side' }
+            return { open: true, mode: 'side', top: 64 }
         }
       }),
       distinctUntilChanged((curr, prev) => 
@@ -44,4 +44,5 @@ export class ListsComponent implements OnInit {
 export interface SideNavConfig {
   open: boolean;
   mode: string;
+  top: number;
 }

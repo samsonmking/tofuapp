@@ -1,10 +1,34 @@
 html, body {
     margin: 0;
     height: 100%;
+    min-height: 400px;
+    min-width: 200px;
+}
+.sub-heading {
+    background-color: #A7765E;  
 }
 
-.sub-heading {
-    background-color: #A7765E;
+.sub-heading-fixed {
+    position: fixed;
+    display: none;
+    top: 64px;
+    height: 36px;
+    width: 100%;
+    z-index: 2;
+}
+
+/* sm */
+@media screen and (min-width: 600px) and (max-width: 959px) {
+    .sub-heading-fixed {
+        display: block;
+    }
+}
+
+/* xs */
+@media screen and (max-width: 599px) {
+    .sub-heading-fixed {
+        display: block;
+    }
 }
 
 .list-header {
@@ -18,7 +42,9 @@ html, body {
 }
 
 .scroll-container .cdk-virtual-scroll-content-wrapper {
-    position: relative;
+    position: unset;
+    top: unset;
+    left: unset;
 }
 
 .sans-serif-emphasis {
@@ -76,3 +102,20 @@ html {
     padding: 5px;
     margin-bottom: 2px;
 }
+
+button.menu-button {
+    text-align: left;
+    padding-left: 2px;
+}
+
+/* table.mat-table thead {
+    display: block;
+}
+
+table.mat-table tbody {
+    display: block;
+    height: 100%;
+    height: calc(100vh - 180px);
+    overflow-y: scroll;
+    box-sizing: border-box;
+} */

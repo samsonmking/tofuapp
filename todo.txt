@@ -1,2 +1,3 @@
-[ ] Fails url regex validation - https://detoxinista.com/wp-content/uploads/2012/01/cauliflower-pizza-crust.jpg
+[ ] 'Password' missing from login formatting
 [ ] Decimal place formatting
+[ ] West african peanut soup failed to reset form

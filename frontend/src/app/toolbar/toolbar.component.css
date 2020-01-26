@@ -35,3 +35,13 @@ ul.nav.ng-star-inserted {
     background-color: lightgray;
     padding: 0.25rem 0.1rem;
 }
+
+mat-toolbar {
+    top: 0;
+    left: 0;
+    height: 64px;
+    position: fixed;
+    z-index: 2;
+    width: 100%;
+}
+
