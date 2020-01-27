@@ -50,6 +50,10 @@ mat-sidenav {
         max-width: 40%;
         min-width: 40%;
     }
+    .recipe-container {
+        margin-top:36px;
+        height: calc(100% - 36px);
+    }
 }
 
 /* xs */
@@ -60,6 +64,10 @@ mat-sidenav {
     mat-sidenav {
         max-width: 75%;
         min-width: 75%;
+    }
+    .recipe-container {
+        margin-top:36px;
+        height: calc(100% - 36px);
     }
 }
 

@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { MediaObserver } from '@angular/flex-layout';
 import { mergeAll, map, filter, distinctUntilChanged } from 'rxjs/operators';
+import { MatDrawer } from '@angular/material';
 
 @Component({
   selector: 'app-lists',
@@ -9,6 +10,7 @@ import { mergeAll, map, filter, distinctUntilChanged } from 'rxjs/operators';
   styleUrls: ['./lists.component.css']
 })
 export class ListsComponent implements OnInit {
+  @ViewChild('sidenav') sidenav: MatDrawer;
   sideNavConfig$: Observable<SideNavConfig>;
 
   constructor(private readonly mediaObserver: MediaObserver) {
@@ -37,6 +39,10 @@ export class ListsComponent implements OnInit {
    }
 
   ngOnInit() {
+  }
+
+  toggle() {
+    this.sidenav.toggle();
   }
 
 }
