@@ -1,56 +1,68 @@
-table {
-    padding: 10px;
-    width: 100%;
+.list-detail-container {
+    position: fixed;
+    contain: content;
+    overflow-y: scroll;
+    width: 80%;
+    height: calc(100% - 64px);
+    box-sizing: border-box;
 }
 
-.mat-row {
-  height: auto;
+.shopping-list-item {
+    display: flex;
+    flex-flow: row wrap;
+    
 }
 
-.mat-cell {
-  padding: 3px 3px 3px 0;
-  font-size: 0.8rem;
+.shopping-list-item .list-component {
+    font-size: 0.8rem;
 }
 
-.mat-column-ingredient {
-    width: 30%;
+.list-name {
+    flex: 1 1 35%;
+    font-weight: bold;
 }
 
-.mat-column-quantity {
-    width: 10%;
+.list-quantity {
+    flex: 1 1 25%;
 }
 
-.mat-column-unit {
-    width: 15%;
+.list-recipe {
+    flex: 1 1 40%;
+    color: gray;
 }
 
-.mat-column-recipe {
-    width: 45%;
+/* md */
+@media screen and (min-width: 960px) and (max-width: 1279px) {
+
 }
 
-.mat-checkbox {
-    margin-right: 10px;
+/* sm */
+@media screen and (min-width: 600px) and (max-width: 959px) {
+    .shopping-list-item .list-component {
+        font-size: 0.9rem;
+    }
+    .list-detail-container {
+        width: 100%;
+        height: calc(100% - 100px);
+    }
 }
 
 /* xs */
 @media screen and (max-width: 599px) {
-    .mat-column-ingredient {
-        width: 20%;
+    .shopping-list-item .list-component {
+        font-size: 1rem;
     }
-    
-    .mat-column-quantity {
-        width: 10%;
+    .list-detail-container {
+        width: 100%;
+        height: calc(100% - 100px);
     }
-    
-    .mat-column-unit {
-        width: 10%;
-    }
-    
-    .mat-column-recipe {
-        width: 60%;
-    }
-    
-    .mat-checkbox {
-        margin-right: 10px;
+    .list-name {
+        flex: 1 1 70%;
+    }  
+    .list-quantity {
+        flex: 1 1 30%;
+    }  
+    .list-recipe {
+        flex: 1 1 100%;
     }
 }

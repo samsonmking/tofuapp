@@ -9,11 +9,3 @@
     overflow: hidden;
     overscroll-behavior-y: none;
 }
-
-/* lt-md */
-@media screen and (max-width: 959px) {
-    .app-router-outlet {
-        margin-top: 100px; 
-    }
-    
-}

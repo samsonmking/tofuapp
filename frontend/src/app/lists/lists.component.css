@@ -2,6 +2,10 @@
     height: 100%;
     width: 100%;
 }
+mat-sidenav-container{
+    height: 100%;
+    width: 100%;
+}
 
 .list-content-container {
     height: 100%;
@@ -11,6 +15,7 @@
 mat-sidenav {
     max-width: 20%;
     min-width: 20%;
+    flex: 0 0;
 }
 
 /* md */
@@ -24,6 +29,10 @@ mat-sidenav {
         max-width: 40%;
         min-width: 40%;
     }
+    .list-content-container {
+        margin-top:36px;
+        height: calc(100% - 36px);
+    }
 }
 
 /* xs */
@@ -31,5 +40,9 @@ mat-sidenav {
     mat-sidenav {
         max-width: 75%;
         min-width: 75%;
+    }
+    .list-content-container {
+        margin-top:36px;
+        height: calc(100% - 36px);
     }
 }
