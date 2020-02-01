@@ -12,7 +12,9 @@ import {
   MatSortModule,
   MatTableModule,
   MatMenuModule,
-  MatCheckboxModule
+  MatCheckboxModule,
+  MatOptionModule,
+  MatSelectModule
 } from '@angular/material';
 import { CdkTableModule } from '@angular/cdk/table';
 import { ScrollingModule } from '@angular/cdk/scrolling';
@@ -37,7 +39,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatMenuModule,
     ScrollingModule,
     MatCheckboxModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatOptionModule,
+    MatSelectModule
   ],
   exports: [
     MatGridListModule,
@@ -55,7 +59,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatMenuModule,
     ScrollingModule,
     MatCheckboxModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatOptionModule,
+    MatSelectModule
   ]
 })
 export class MaterialModule { }

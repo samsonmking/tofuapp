@@ -33,6 +33,7 @@ html, body {
 
 .list-header {
     padding: 10px 5px 10px 5px;
+    font-size: 0.8rem;
 }
 
 .list-item {
@@ -107,15 +108,3 @@ button.menu-button {
     text-align: left;
     padding-left: 2px;
 }
-
-/* table.mat-table thead {
-    display: block;
-}
-
-table.mat-table tbody {
-    display: block;
-    height: 100%;
-    height: calc(100vh - 180px);
-    overflow-y: scroll;
-    box-sizing: border-box;
-} */

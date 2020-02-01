@@ -1,5 +1,15 @@
 <div fxLayout="column" fxLayoutAlign="stretch">
   <div fxFlex="1 1" class="shopping-lists">
+  <div class="sub-heading list-header sans-serif-emphasis">LIST ITEMS</div>
+  <mat-form-field class="sort-select">
+      <mat-label>Sort</mat-label>
+      <mat-select (selectionChange)="setSort($event)" [(value)]="selectedSort">
+        <mat-option value="checked">Checked</mat-option>
+        <mat-option value="ingredient">Ingredient</mat-option>
+        <mat-option value="recipe">Recipe</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="sub-heading list-header sans-serif-emphasis">SHOPPING LISTS</div>
     <button class="menu-button"mat-flat-button (click)="createNewList()">
       <i class="material-icons">add_circle</i>
       Add new list
