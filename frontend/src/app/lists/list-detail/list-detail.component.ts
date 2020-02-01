@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ShoppingListItemFacade } from 'src/app/core-data/state/shopping-list-item/shopping-list-items.facade';
 import { Observable } from 'rxjs';
-import { Sort } from '@angular/material/sort';
 import { DisplayListItem } from 'src/app/core-data/models/shopping-list-item/display-list-item';
 import { ListSortService } from './list-sort-service';
-import { MatSelectionListChange } from '@angular/material';
+import { MatSelectionListChange} from '@angular/material';
 
 @Component({
   selector: 'app-list-detail',
@@ -13,7 +12,6 @@ import { MatSelectionListChange } from '@angular/material';
 })
 export class ListDetailComponent implements OnInit {
   sortedItems$: Observable<DisplayListItem[]>;
-  displayedColumns: string[] = ['checked', 'ingredient', 'quantity', 'unit', 'recipe'];
 
   constructor(private readonly listSortService: ListSortService,
     private readonly listItemsFacade: ShoppingListItemFacade) {
@@ -21,10 +19,6 @@ export class ListDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-  }
-
-  setSort(sort: Sort) {
-    this.listSortService.sort$.next(sort);
   }
 
   itemChecked(id: number, isChecked: boolean) {

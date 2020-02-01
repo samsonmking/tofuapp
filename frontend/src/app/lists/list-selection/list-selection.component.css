@@ -14,3 +14,9 @@
 .list-item {
     cursor: pointer;
 }
+
+.sort-select {
+    margin: 5px;
+    width: 95%;
+    box-sizing: border-box;
+}
