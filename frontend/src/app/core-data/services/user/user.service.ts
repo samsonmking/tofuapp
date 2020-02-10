@@ -1,19 +1,30 @@
 import { User } from '../../models/user/user';
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ServicesModule } from '../services.module';
-import { take, catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
-import { UserData } from '../../models/user/user-data';
-import { environment } from '../../../../environments/environment';
+import { catchError, map } from 'rxjs/operators';
+import { Observable, from, of, throwError } from 'rxjs';
+import * as firebase from 'firebase/app';
 
 @Injectable({ providedIn: ServicesModule })
 export class UserService {
-    constructor(private readonly http: HttpClient) {}
-
-    login(username: string, password: string) {
-        return this.http.post<UserData>(`${environment.baseUrl}/api/login`, { username, password }).pipe(
-            take(1)
-        );
+    login(username: string, password: string): Observable<User> {
+        return from(
+            firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+                .then(() => firebase.auth().signInWithEmailAndPassword(username, password))).pipe(
+                    map(fbUser => {
+                        return { id: fbUser.user.email } as User;
+                    }),
+                    catchError(e => {
+                        return throwError({ code: e.code } as LoginError)
+                    })
+                );
     }
+
+    logout() {
+        return from(firebase.auth().signOut())
+    }
+}
+
+export interface LoginError extends Error {
+    code: 'auth/invalid-email' | 'auth/user-disabled' | 'auth/user-not-found' | 'auth/wrong-password'
 }

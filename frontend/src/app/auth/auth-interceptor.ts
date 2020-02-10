@@ -2,14 +2,13 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse
 import { Observable, EMPTY, of } from 'rxjs';
 import { UserFacade } from '../core-data/state/user/user.facade';
 import { Injectable } from '@angular/core';
-import { map, switchMap, take, catchError } from 'rxjs/operators';
+import { switchMap, take, catchError } from 'rxjs/operators';
 import { AuthModule } from './auth.module';
-import { Router } from '@angular/router';
 
 @Injectable({ providedIn: AuthModule })
 export class AuthInterceptor implements HttpInterceptor {
     constructor(
-        private readonly userFacade: UserFacade,
+        private readonly userFacade: UserFacade
         ) {
 
     }
@@ -18,7 +17,13 @@ export class AuthInterceptor implements HttpInterceptor {
         return this.userFacade.user$.pipe(
             take(1),
             switchMap(user => {
-                return user.loggedIn ? next.handle(this.addToken(req, user.auth.token)) : next.handle(req)
+                if(user.loggedIn) {
+                    return this.userFacade.getAuth().pipe(
+                        switchMap(token => next.handle(this.addToken(req, token)))
+                    );
+                } else {
+                    return next.handle(req);
+                }
             }),
             catchError((error) => {
                 if (error instanceof HttpErrorResponse && error.status === 401) {

@@ -1,14 +1,12 @@
 import { expect } from 'chai';
 import { RecipePSRepo } from '../../app/recipe/recipe-ps-repo';
 import { dropDatabase, createDatabase } from '../../app/db/create-schema';
-import { userScaffold } from '../../app/user';
 
 describe('ps-recipe-repo', function() {
-    let user: string;
+    let user = 'DUMMY_USER';
     before(async function() {
         await dropDatabase();
         await createDatabase();
-       user = await userScaffold.createUser();
     });
 
     after(async function() {

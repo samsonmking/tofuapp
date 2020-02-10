@@ -1,10 +1,8 @@
 import { UserActions, UserActionTypes, LoginComplete, LogoutComplete, LoadUserComplete, } from './user.actions';
 import { User } from '../../models/user/user';
-import { Auth } from '../../models/user/auth';
 
 export interface UserState {
     loggedIn: boolean;
-    auth?: Auth;
     user?: User;
 }
 
@@ -14,8 +12,7 @@ export function userReducer(state: UserState = { loggedIn: false }, action: User
             const loginAction = action as LoginComplete;
             return { ...state,
                 loggedIn: true, 
-                user: loginAction.user, 
-                auth: loginAction.auth 
+                user: loginAction.user,
             };
         }
 

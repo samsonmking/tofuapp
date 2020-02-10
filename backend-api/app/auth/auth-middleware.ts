@@ -1,30 +1,34 @@
 import { Request, Response, NextFunction } from 'express';
 import { isArray } from 'util';
 import boom from 'boom';
-import jwt from 'jsonwebtoken'
-import { DecodedToken } from './decoded-token';
-const { JWTSECRET } = process.env;
+import * as admin from 'firebase-admin';
 
-export function checkToken(req: Request, res: Response, next: NextFunction) {
+admin.initializeApp({
+    credential: admin.credential.applicationDefault(),
+    databaseURL: "https://tofu-app-fb.firebaseio.com"
+});
+
+export async function checkToken(req: Request, res: Response, next: NextFunction) {
     const token = getTokenFromHeader(req);
-    if(!token) {
-        return next(boom.unauthorized('Auth token not supplied'));
-    }
-    jwt.verify(token, JWTSECRET as string, (err, decoded) => {
-        if(err) {
-            return next(boom.unauthorized(err.message));
-        }
-        req.params.userId = (decoded as DecodedToken).username;
+
+    try {
+        const user = await admin.auth().verifyIdToken(token);
+        req.params.userId = user.uid;
         next();
-    });
+        if (!token) {
+            return next(boom.unauthorized('Auth token not supplied'));
+        }
+    } catch (ex) {
+        next(boom.unauthorized(ex.message))
+    }
 }
 
 function getTokenFromHeader(req: Request) {
     const token = req.headers['x-access-token'] || req.headers['authorization'];
     const strToken: string = (isArray(token)) ? token[0] : token as string;
-    if(strToken) {
+    if (strToken) {
         const bearer = 'Bearer ';
         return strToken.startsWith(bearer) ? strToken.slice(bearer.length, strToken.length) : strToken;
     }
-    return ''; 
+    return '';
 }

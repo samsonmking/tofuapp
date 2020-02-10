@@ -6,13 +6,12 @@ import request from 'supertest';
 import { RecipeIngredient } from "../../app/ingredient/recipe-ingredient";
 import { expect } from "chai";
 import { IngredientPSRepo } from "../../app/ingredient/persistance/ingredient-ps-repo";
-import { userScaffold } from "../../app/user";
-import { createToken } from "../mocks/token";
+import { dummyCheckToken } from "../mocks/token";
 import { apiPrefix } from '../../app/constants';
 
 describe('ingredient-api-it', function () {
-    let token: string;
-    let user: string;
+    const token = "DUMMY_JWT";
+    const user = "DUMMY_USER";
 
     const addRecipe = async () => {
         const recipeRepo = new RecipePSRepo();
@@ -22,15 +21,13 @@ describe('ingredient-api-it', function () {
     before(async function () {
         await dropDatabase();
         await createDatabase();
-        user = await userScaffold.createUser();
-        token = createToken(user);
     });
 
     after(async function () {
         await dropDatabase();
     });
 
-    const app = buildApp([getIngredientRoutes()], []);
+    const app = buildApp([getIngredientRoutes(dummyCheckToken(user))], []);
 
     it('#POST /recipe/:recipeid/ingredient adds new ingredient', async function () {
         const recipe = await addRecipe();

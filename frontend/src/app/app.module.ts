@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -14,6 +14,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth/auth-interceptor';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { SharedModule } from './shared/shared.module';
+import { AuthProvider } from './auth/auth-provider';
 
 @NgModule({
   declarations: [
@@ -34,12 +35,21 @@ import { SharedModule } from './shared/shared.module';
     SharedModule
   ],
   providers: [
+    AuthProvider,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
+      multi: true
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (provider: AuthProvider) => () => provider.load(),
+      deps: [AuthProvider],
       multi: true
     }
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  
+}

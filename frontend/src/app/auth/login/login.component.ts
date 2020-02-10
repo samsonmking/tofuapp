@@ -34,9 +34,10 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     this.userFacade.passwordFailed$
       .pipe(untilDestroyed(this)) 
-      .subscribe(_ => 
-        this.passwordControl.setErrors({ 'invalid': true }));
+      .subscribe(_ => {
+        this.passwordControl.setErrors({ 'invalid': true });
         this.ref.markForCheck();
+      });
   }
 
   ngOnDestroy(): void {

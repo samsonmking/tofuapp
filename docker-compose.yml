@@ -2,7 +2,7 @@ version: '3'
 
 services:
   db:
-    image: postgres
+    image: postgres:11.6
     ports:
       - "5432:5432"
     volumes:
@@ -30,7 +30,6 @@ services:
       - $HOME/docker/volumes/certbot/www:/var/www/certbot
       - $HOME/docker/volumes/app_images:/var/www/image/recipe
     depends_on:
-      - app
       - certbot
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
   certbot:

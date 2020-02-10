@@ -3,15 +3,13 @@ import { buildApp } from './app';
 import { getImageRoutes, getImageResources } from './recipe-image';
 import { getIngredientRoutes } from './ingredient';
 import { getShoppingListRoutes } from './shopping-list';
-import { getUserRoutes } from './user';
 const { NODE_ENV } = process.env;
 
 const routes = [
     getRecipeRoute(),
     getImageRoutes(),
     getIngredientRoutes(),
-    getShoppingListRoutes(),
-    getUserRoutes()
+    getShoppingListRoutes()
 ];
 
 const staticResources = NODE_ENV == 'dev' ? [ getImageResources() ] : [];

@@ -34,6 +34,7 @@
     "cors": "^2.8.5",
     "dotenv": "^8.1.0",
     "express": "^4.16.4",
+    "firebase-admin": "^8.9.2",
     "jsonwebtoken": "^8.5.1",
     "mocha": "^6.0.1",
     "mock-fs": "^4.8.0",
