@@ -26,14 +26,9 @@ export async function createDatabase() {
     await postgres.end();
 
     const newDb = await connect(PGDATABASE);
-    const userSchema = `CREATE TABLE IF NOT EXISTS users (
-        id text primary key,
-        password text not null
-    )`;
-    await newDb.query(userSchema);
     const recipeSchema = `CREATE TABLE IF NOT EXISTS recipes (
         id serial primary key,
-        user_id text references users(id) not null,
+        user_id text not null,
         name text not null,
         url text not null
     )`;
@@ -49,7 +44,7 @@ export async function createDatabase() {
     const shoppingListSchema = `CREATE TABLE IF NOT EXISTS shopping_lists (
         id serial primary key,
         name text,
-        user_id text references users(id)
+        user_id text not null
     )`;
     await newDb.query(shoppingListSchema);
     const shoppingListItemSchema = `CREATE TABLE IF NOT EXISTS shopping_list_items (

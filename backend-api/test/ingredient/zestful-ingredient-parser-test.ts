@@ -36,7 +36,7 @@ describe('zestful-ingredient-parser', function() {
         expect(result.error).to.have.lengthOf(1);
         expect(result.recipeIngredients).to.have.lengthOf(0);
     });
-    it('#parse() unit and quantity are null if only the ingredient is specified', async function() {
+    it('#parse() unit and quantity are not set if only the ingredient is specified', async function() {
         const testee = new ZestfulIngredientParser();
         const result = await testee.parse([
             "egg"
@@ -44,9 +44,7 @@ describe('zestful-ingredient-parser', function() {
 
         expect(result.error).to.have.lengthOf(0);
         expect(result.recipeIngredients).to.deep.include({
-            ingredient: 'egg',
-            quantity: null,
-            unit: null
+            ingredient: 'egg'
         });
     })
 });

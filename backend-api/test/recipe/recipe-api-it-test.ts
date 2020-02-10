@@ -3,21 +3,18 @@ import { buildApp } from '../../app/app';
 import { Recipe, getRecipeRoute } from '../../app/recipe';
 import { expect } from 'chai';
 import { dropDatabase, createDatabase } from '../../app/db/create-schema';
-import { userScaffold } from '../../app/user';
 import { MockImageConverter } from '../mocks/mock-image-converter';
-import { createToken } from '../mocks/token';
+import { createToken, dummyCheckToken } from '../mocks/token';
 import { apiPrefix } from '../../app/constants';
 
 describe('recipe-api-it', function() {
-    const app = buildApp([getRecipeRoute(new MockImageConverter())], []);
+    const app = buildApp([getRecipeRoute(dummyCheckToken('DUMMY_USER'), new MockImageConverter())], []);
     let newRecipe: Recipe;
-    let token: string;
+    const token = "DUMMY_JWT"
 
     before(async function() {
         await dropDatabase();
         await createDatabase();
-        const user = await userScaffold.createUser();
-        token = createToken(user);
     });
 
     after(async function() {

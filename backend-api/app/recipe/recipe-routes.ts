@@ -1,18 +1,20 @@
 import { Route } from "../route";
 import express from 'express';
 import { RecipeController } from "./recipe-controller";
-import { checkToken } from "../auth";
 import { apiPrefix } from '../constants';
+import { Request, Response, NextFunction } from 'express';
 
 export class RecipeRoutes implements Route {
-    constructor(private recipeController: RecipeController) {
+    constructor(
+        private readonly recipeController: RecipeController,
+        private readonly auth: (req: Request, res: Response, next: NextFunction) => Promise<void>) {
     }
 
     contributeRoutes(app: express.Application): void {
-        app.get(`${apiPrefix}/recipe`, checkToken, this.recipeController.getRecipies);
-        app.get(`${apiPrefix}/recipe/:id`, checkToken, this.recipeController.getRecipe);
-        app.post(`${apiPrefix}/recipe`, checkToken, this.recipeController.addNewRecipe);
-        app.put(`${apiPrefix}/recipe/:id`, checkToken, this.recipeController.updateRecipe);
-        app.delete(`${apiPrefix}/recipe/:id`, checkToken, this.recipeController.deleteRecipe);
+        app.get(`${apiPrefix}/recipe`, this.auth, this.recipeController.getRecipies);
+        app.get(`${apiPrefix}/recipe/:id`, this.auth, this.recipeController.getRecipe);
+        app.post(`${apiPrefix}/recipe`, this.auth, this.recipeController.addNewRecipe);
+        app.put(`${apiPrefix}/recipe/:id`, this.auth, this.recipeController.updateRecipe);
+        app.delete(`${apiPrefix}/recipe/:id`, this.auth, this.recipeController.deleteRecipe);
     }
 }

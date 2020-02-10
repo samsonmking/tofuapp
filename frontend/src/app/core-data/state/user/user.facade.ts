@@ -2,10 +2,11 @@ import { AppState, selectUser } from '..';
 import { ActionsSubject, Store, select } from '@ngrx/store';
 import { Injectable } from '@angular/core';
 import { LoginRequest, LogoutRequest, LoginUsernameFailed, LoginPasswordFailed, UserActionTypes } from './user.actions';
-import { Observable } from 'rxjs';
+import { Observable, from } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 import { UserState } from './user.reducer';
 import { ofType } from '@ngrx/effects';
+import * as firebase from 'firebase/app';
 
 @Injectable({
     providedIn: 'root'
@@ -41,5 +42,9 @@ export class UserFacade {
 
     logout() {
         this.store.dispatch(new LogoutRequest);
+    }
+
+    getAuth() {
+        return from(firebase.auth().currentUser.getIdToken())
     }
 }

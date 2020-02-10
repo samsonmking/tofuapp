@@ -1,6 +1,5 @@
 import { Action } from '@ngrx/store';
 import { User } from '../../models/user/user';
-import { Auth } from '../../models/user/auth';
 import { UserData } from '../../models/user/user-data';
 
 export enum UserActionTypes {
@@ -22,7 +21,7 @@ export class LoginRequest implements Action {
 
 export class LoginComplete implements Action {
     type = UserActionTypes.LoginComplete;
-    constructor(public user: User, public auth: Auth) { }
+    constructor(public user: User) { }
 }
 
 export class LoginUsernameFailed implements Action {
