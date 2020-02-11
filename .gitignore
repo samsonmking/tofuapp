@@ -8,3 +8,4 @@
 !.vscode/launch.json
 !.vscode/extensions.json
 .history/*
+*tofu-app-fb-firebase-adminsdk.json
