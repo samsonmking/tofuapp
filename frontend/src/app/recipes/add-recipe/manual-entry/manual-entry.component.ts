@@ -40,7 +40,7 @@ export class ManualEntryComponent implements OnInit, OnDestroy {
     this.recipeFacade.recipeCreated$
       .pipe(untilDestroyed(this))
       .subscribe(_ => {
-        this.entryForm.resetForm();
+        setTimeout(() => this.entryForm.resetForm());
         this.snackbar.open('Recipe Added', null, { duration: 5000 });
       });
 
