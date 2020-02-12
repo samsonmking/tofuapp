@@ -22,7 +22,7 @@
     <div class="sans-serif-emphasis">Ingredients</div>
     <ul>
       <li *ngFor="let ingredient of (ingredients$ | async)">
-        {{ingredient.quantity || ""}} {{ingredient.unit || ""}} {{ingredient.ingredient}}
+        {{ingredient.quantity ? (ingredient.quantity | number:'1.0-3') : ""}} {{ingredient.unit || ""}} {{ingredient.ingredient}}
       </li>
     </ul>
   </mat-dialog-content>
