@@ -16,8 +16,8 @@
         <app-default-shopping-list></app-default-shopping-list>
     </mat-sidenav>
 
-    <mat-sidenav-content>
-      <div class="float">
+    <mat-sidenav-content >
+      <div class="float"> 
         <button mat-fab (click)="addNewRecipe()"><i class="material-icons">add</i></button>
       </div>
 
@@ -29,6 +29,7 @@
           <app-recipe-thumb *ngIf="recipeChunk[2] as recipe" [recipe]="recipe"></app-recipe-thumb>
           <app-recipe-thumb *ngIf="recipeChunk[3] as recipe" [recipe]="recipe"></app-recipe-thumb>
         </div>
+        <div class="filler"></div>
       </cdk-virtual-scroll-viewport>
 
     </mat-sidenav-content>
