@@ -17,6 +17,12 @@
     </mat-sidenav>
 
     <mat-sidenav-content >
+      <div class="search-header">
+        <i class="material-icons">search</i>
+        <input class="search-box" type="text" placeholder="Search" (keyup)="filterText$.next($event.target.value)">
+      </div>
+          
+
       <div class="float"> 
         <button mat-fab (click)="addNewRecipe()"><i class="material-icons">add</i></button>
       </div>

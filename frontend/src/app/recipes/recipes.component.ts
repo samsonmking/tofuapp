@@ -1,10 +1,10 @@
 import { Component, OnInit, ChangeDetectionStrategy, ViewChild } from '@angular/core';
 import { RecipeFacade } from '../core-data/state/recipe/recipes.facade';
-import { Observable, combineLatest } from 'rxjs';
+import { Observable, combineLatest, BehaviorSubject, Subject } from 'rxjs';
 import { DisplayRecipe } from '../core-data/models/recipe/display-recipe';
 import { MatDialog, MatDrawer } from '@angular/material';
 import { ManualEntryComponent } from './add-recipe/manual-entry/manual-entry.component';
-import { map, filter, mergeAll, distinctUntilChanged } from 'rxjs/operators';
+import { map, filter, mergeAll, distinctUntilChanged, debounceTime, startWith } from 'rxjs/operators';
 import { MediaObserver } from '@angular/flex-layout';
 import { ShoppingListFacade } from '../core-data/state/shopping-list/shopping-list.facade';
 
@@ -22,6 +22,7 @@ export class RecipesComponent implements OnInit {
   sideNavConfig$: Observable<SideNavConfig>;
   currentListName$: Observable<string>
   mqAlias$: any;
+  filterText$ = new Subject<string>();
 
 
   constructor(private fascade: RecipeFacade,
@@ -73,8 +74,18 @@ export class RecipesComponent implements OnInit {
         curr.mode === prev.mode && curr.open === prev.open)
     );
 
-    this.recipes$ = combineLatest(this.fascade.recipes$, chunkSize$).pipe(
-        map(([recipes, size]) => this.chunk(recipes, size))
+    const debounceFilter$ = this.filterText$.pipe(
+      debounceTime(500),
+      startWith('')
+    );
+
+    const filteredRecipes$ = combineLatest(this.fascade.recipes$, debounceFilter$).pipe(
+      map(([recipes, fString]) => 
+        fString.length > 0 ? recipes.filter(r => r.name.toLowerCase().includes(fString.toLowerCase())) : recipes)
+    );
+
+    this.recipes$ = combineLatest(filteredRecipes$, chunkSize$).pipe(
+        map(([recipes, size]) => this.chunk(recipes, size)),
     );
   }
 
@@ -96,6 +107,10 @@ export class RecipesComponent implements OnInit {
 
   toggle() {
     this.sidenav.toggle();
+  }
+
+  filterChange(e: any) {
+    console.log(e.value);
   }
 }
 
