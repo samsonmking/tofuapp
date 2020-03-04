@@ -3,7 +3,8 @@
     <i class="material-icons">restaurant_menu</i>
     {{currentListName$ | async}}
   </div>
-  <button mat-flat-button (click)="createNewList()" class="menu-button"><i class="material-icons">add_circle</i>Create new list</button>
+  <mat-divider></mat-divider>
+  
   <mat-list fxFlex="1 1" fxLayout="column" fxLayoutAlign="stretch">
     <mat-list-item  class="list-item" *ngFor="let recipe of recipesInList$ | async">
       <div fxFlexFill fxLayout="row" fxLayoutAlign="start center">
@@ -16,4 +17,6 @@
       </div>
     </mat-list-item>
   </mat-list>
+  <button mat-flat-button color="accent" (click)="createNewList()" class="add-list-button">Create new list <i class="material-icons">add_circle</i></button>
+
 </div>

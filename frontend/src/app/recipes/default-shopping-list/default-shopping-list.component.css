@@ -10,3 +10,7 @@
 button .material-icons {
     margin-right: 5px;
 }
+
+mat-list {
+    margin-bottom: 30px;
+}

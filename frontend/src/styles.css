@@ -4,8 +4,9 @@ html, body {
     min-height: 400px;
     min-width: 200px;
 }
+
 .sub-heading {
-    background-color: #A7765E;  
+    background-color: unset;  
 }
 
 .sub-heading-fixed {
@@ -15,6 +16,7 @@ html, body {
     height: 36px;
     width: 100%;
     z-index: 2;
+    flex-direction: row;
 }
 .sub-heading-fixed:focus {
     outline: none;
@@ -23,14 +25,14 @@ html, body {
 /* sm */
 @media screen and (min-width: 600px) and (max-width: 959px) {
     .sub-heading-fixed {
-        display: block;
+        display: flex; 
     }
 }
 
 /* xs */
 @media screen and (max-width: 599px) {
     .sub-heading-fixed {
-        display: block;
+        display: flex;
     }
 }
 
@@ -90,12 +92,18 @@ html {
     html {
         font-size: 14px;
     }
+    .sub-heading {
+        background-color: #A7765E;  
+    }
 }
 
 /* xs */
 @media screen and (max-width: 599px) {
     html {
         font-size: 12px;
+    }
+    .sub-heading {
+        background-color: #A7765E;  
     }
 }
 

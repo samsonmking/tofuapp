@@ -23,6 +23,7 @@ export class RecipesComponent implements OnInit {
   currentListName$: Observable<string>
   mqAlias$: any;
   filterText$ = new Subject<string>();
+  searchToggle: false;
 
 
   constructor(private fascade: RecipeFacade,
@@ -63,11 +64,11 @@ export class RecipesComponent implements OnInit {
       map(alias => {
         switch(alias) {
           case 'xs':
-            return { open: false, mode: 'over', top: 100 }
+            return { open: false, mode: 'over', top: 100, searchShownByDefault: false }
           case 'sm':
-            return { open: false, mode: 'over', top: 100 }
+            return { open: false, mode: 'over', top: 100, searchShownByDefault: false }
           default:
-            return { open: true, mode: 'side', top: 64 }
+            return { open: true, mode: 'side', top: 64, searchShownByDefault: true }
         }
       }),
       distinctUntilChanged((curr, prev) => 
@@ -118,4 +119,5 @@ export interface SideNavConfig {
   open: boolean;
   mode: string;
   top: number;
+  searchShownByDefault: boolean;
 }

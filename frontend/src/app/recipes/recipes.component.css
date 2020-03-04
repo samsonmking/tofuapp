@@ -36,11 +36,12 @@ mat-sidenav {
 
 .scroll-container {
     width: 100%;
-    height: 100%;
+    flex: 1 1 100%;
 }
 
+/* 56px (button height) + 3rem (1.5 rem from bottom * 2) - 10px (recipe-thumb bottom margin) */
 .filler {
-    height: 85px;
+    height: calc((56px + 3rem) - 10px);
     width: 100%;
 }
 
@@ -50,15 +51,30 @@ mat-sidenav {
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
-    margin-top: 10px;
+    flex: 0 0 auto;
+    background-color: #A7765E;
+}
+
+.search-header i {
+    position: absolute;
+    right: 15px;
+    color: gray;
 }
 
 .search-box {
-    margin: 0px 10px 0px 0px;
     border: 2px solid #A7765E;
     height: 25px;
     border-radius: 5px;
-    width: 33%
+    width: 33%;
+    margin: 7px 10px;
+}
+
+.search-button {
+    margin-left: auto;
+}
+
+.sub-heading-spacer {
+    margin-top: 10px;
 }
 
 
@@ -83,7 +99,7 @@ mat-sidenav {
         height: calc(100% - 36px);
     }
     .search-box {
-        width: 70%
+        width: 100%;
     }
 }
 
@@ -101,13 +117,13 @@ mat-sidenav {
         height: calc(100% - 36px);
     }
     .search-box {
-        width: 70%
+        width: 100%;
     }
 }
 
 .float {
     position: fixed;
-    right: 1rem;
-    bottom: 1rem;
+    right: 1.5rem;
+    bottom: 1.5rem;
     z-index: 9;
 }

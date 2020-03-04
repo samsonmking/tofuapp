@@ -2,6 +2,9 @@
   <button mat-button (click)="toggle()">
     <i class="material-icons">restaurant_menu</i> {{currentListName$ | async}}
   </button>
+  <button class="search-button" mat-button (click)="searchToggle = !searchToggle">
+    <i class="material-icons">search</i>
+  </button>
 </div>
 <div *ngIf="sideNavConfig$ | async as config" class="recipe-container app-container">
 
@@ -16,10 +19,10 @@
         <app-default-shopping-list></app-default-shopping-list>
     </mat-sidenav>
 
-    <mat-sidenav-content >
-      <div class="search-header">
-        <i class="material-icons">search</i>
-        <input class="search-box" type="text" placeholder="Search" (keyup)="filterText$.next($event.target.value)">
+    <mat-sidenav-content>
+      <div *ngIf="searchToggle || config.searchShownByDefault" class="search-header">
+          <i *ngIf="config.searchShownByDefault" class="material-icons">search</i>
+          <input class="search-box" type="text" placeholder="Search" (keyup)="filterText$.next($event.target.value)">
       </div>
           
 
@@ -27,7 +30,9 @@
         <button mat-fab (click)="addNewRecipe()"><i class="material-icons">add</i></button>
       </div>
 
-      <cdk-virtual-scroll-viewport class="scroll-container" itemSize="325" minBufferPx="650"
+      <cdk-virtual-scroll-viewport class="scroll-container" 
+        itemSize="325" 
+        minBufferPx="650"
         maxBufferPx="1300">
         <div class="recipe-thumb-container" *cdkVirtualFor="let recipeChunk of recipes$; trackBy: hashRecipeIds; templateCacheSize:0;">
           <app-recipe-thumb *ngIf="recipeChunk[0] as recipe" [recipe]="recipe"></app-recipe-thumb>
