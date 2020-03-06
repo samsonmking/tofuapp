@@ -3,7 +3,6 @@
     <i class="material-icons">restaurant_menu</i>
     {{currentListName$ | async}}
   </div>
-  <mat-divider></mat-divider>
   
   <mat-list fxFlex="1 1" fxLayout="column" fxLayoutAlign="stretch">
     <mat-list-item  class="list-item" *ngFor="let recipe of recipesInList$ | async">

@@ -2,6 +2,10 @@
     background-color: #FF5722;
 }
 
+.selection-container {
+    height: 100%;
+}
+
 .mat-list-base .mat-list-item {
     width: auto;
 }
@@ -19,4 +23,8 @@
     margin: 5px;
     width: 95%;
     box-sizing: border-box;
+}
+
+.shopping-lists {
+    height: 100%;
 }

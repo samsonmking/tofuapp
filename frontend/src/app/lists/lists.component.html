@@ -2,6 +2,11 @@
     <button mat-button (click)="toggle()">
         <i class="material-icons">list</i> Lists
     </button>
+    <mat-select (selectionChange)="setSort($event)" [value]="selectedSort$ | async">
+        <mat-option value="checked">Checked</mat-option>
+        <mat-option value="ingredient">Ingredient</mat-option>
+        <mat-option value="recipe">Recipe</mat-option>
+    </mat-select>
 </div>
 
 <div class="list-container" *ngIf="sideNavConfig$ | async as config">

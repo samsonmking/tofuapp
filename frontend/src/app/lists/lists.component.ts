@@ -2,7 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { MediaObserver } from '@angular/flex-layout';
 import { mergeAll, map, filter, distinctUntilChanged } from 'rxjs/operators';
-import { MatDrawer } from '@angular/material';
+import { MatDrawer, MatSelectChange } from '@angular/material';
+import { ListSortService } from './list-detail/list-sort-service';
 
 @Component({
   selector: 'app-lists',
@@ -12,8 +13,13 @@ import { MatDrawer } from '@angular/material';
 export class ListsComponent implements OnInit {
   @ViewChild('sidenav') sidenav: MatDrawer;
   sideNavConfig$: Observable<SideNavConfig>;
+  selectedSort$: Observable<string>;
 
-  constructor(private readonly mediaObserver: MediaObserver) {
+  constructor(private readonly mediaObserver: MediaObserver,
+    private readonly listSortService: ListSortService) {
+    this.selectedSort$ = this.listSortService.sort$.pipe(
+      map(value => value.active)
+    );
 
     const mqAlias$ = this.mediaObserver.asObservable().pipe(
       mergeAll(),
@@ -43,6 +49,10 @@ export class ListsComponent implements OnInit {
 
   toggle() {
     this.sidenav.toggle();
+  }
+
+  setSort(event: MatSelectChange) {
+    this.listSortService.sort$.next({ active: event.value, direction: 'desc' });
   }
 
 }

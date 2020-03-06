@@ -18,9 +18,16 @@ mat-sidenav {
     flex: 0 0;
 }
 
-/* md */
-@media screen and (min-width: 960px) and (max-width: 1279px) {
 
+
+.sub-heading mat-select {
+    background-color: white;
+    border: 2px solid #A7765E;
+    padding: 0.50em;
+    border-radius: 5px;
+    width: 60%;
+    margin: 7px 10px;
+    margin-left: auto;
 }
 
 /* sm */
@@ -33,6 +40,10 @@ mat-sidenav {
         margin-top:36px;
         height: calc(100% - 36px);
     }
+    .sub-heading {
+        display: flex;
+        align-items: center;
+    }
 }
 
 /* xs */
@@ -44,5 +55,9 @@ mat-sidenav {
     .list-content-container {
         margin-top:36px;
         height: calc(100% - 36px);
+    }
+    .sub-heading {
+        display: flex;
+        align-items: center;
     }
 }

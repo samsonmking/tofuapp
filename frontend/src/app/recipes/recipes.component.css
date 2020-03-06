@@ -46,7 +46,6 @@ mat-sidenav {
 }
 
 .search-header {
-    background-color: transparent;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;

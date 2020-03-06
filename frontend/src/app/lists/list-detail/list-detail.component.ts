@@ -3,7 +3,8 @@ import { ShoppingListItemFacade } from 'src/app/core-data/state/shopping-list-it
 import { Observable } from 'rxjs';
 import { DisplayListItem } from 'src/app/core-data/models/shopping-list-item/display-list-item';
 import { ListSortService } from './list-sort-service';
-import { MatSelectionListChange} from '@angular/material';
+import { MatSelectionListChange, MatSelectChange} from '@angular/material';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-list-detail',
@@ -12,10 +13,14 @@ import { MatSelectionListChange} from '@angular/material';
 })
 export class ListDetailComponent implements OnInit {
   sortedItems$: Observable<DisplayListItem[]>;
+  selectedSort$: Observable<string>;
 
   constructor(private readonly listSortService: ListSortService,
     private readonly listItemsFacade: ShoppingListItemFacade) {
     this.sortedItems$ = this.listSortService.sortedItems$
+    this.selectedSort$ = this.listSortService.sort$.pipe(
+      map(value => value.active)
+    )
   }
 
   ngOnInit() {
@@ -29,8 +34,8 @@ export class ListDetailComponent implements OnInit {
     this.listItemsFacade.checkListItem(event.option.value.itemId, event.option.selected);
   }
 
+  setSort(event: MatSelectChange) {
+    this.listSortService.sort$.next({ active: event.value, direction: 'desc' });
+  }
 }
-
-
-
 

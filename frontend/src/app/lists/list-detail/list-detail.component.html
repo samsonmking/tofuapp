@@ -1,13 +1,21 @@
-<mat-selection-list dense class="list-detail-container" (selectionChange)=selectionChanged($event)>
-  <mat-list-option *ngFor="let item of sortedItems$ | async"
-    [checkboxPosition]="before"
-    [selected]="item.checked"
-    [value]="item">
-    <div class="shopping-list-item">
-        <div class="list-component list-name">{{item.ingredientName}}</div>
-        <div class="list-component list-quantity">{{item.ingredientQuantity | number:'1.0-3'}} {{item.ingredientUnit}}</div>
-        <div class="list-component list-recipe">{{item.recipeName}}</div>
-    </div>
-
-  </mat-list-option >
-</mat-selection-list>
+<div class="list-sort-header">
+  <mat-select (selectionChange)="setSort($event)" [value]="selectedSort$ | async">
+    <mat-option value="checked">Checked</mat-option>
+    <mat-option value="ingredient">Ingredient</mat-option>
+    <mat-option value="recipe">Recipe</mat-option>
+  </mat-select>
+</div>
+<div class="list-detail-container">
+  <mat-selection-list dense  (selectionChange)=selectionChanged($event)>
+    <mat-list-option *ngFor="let item of sortedItems$ | async"
+      [checkboxPosition]="before"
+      [selected]="item.checked"
+      [value]="item">
+      <div class="shopping-list-item">
+          <div class="list-component list-name">{{item.ingredientName}}</div>
+          <div class="list-component list-quantity">{{item.ingredientQuantity | number:'1.0-3'}} {{item.ingredientUnit}}</div>
+          <div class="list-component list-recipe">{{item.recipeName}}</div>
+      </div>
+    </mat-list-option >
+  </mat-selection-list>
+</div>

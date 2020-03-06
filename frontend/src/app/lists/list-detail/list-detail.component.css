@@ -3,14 +3,13 @@
     contain: content;
     overflow-y: scroll;
     width: 80%;
-    height: calc(100% - 64px);
+    height: calc(100% - 64px - 44px);
     box-sizing: border-box;
 }
 
 .shopping-list-item {
     display: flex;
     flex-flow: row wrap;
-    
 }
 
 .shopping-list-item .list-component {
@@ -31,6 +30,26 @@
     color: gray;
 }
 
+.list-sort-header {
+    height: 44px;
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    flex: 0 0 auto;
+    background-color: #A7765E;
+}
+
+.list-sort-header mat-select {
+    background-color: white;
+    border: 2px solid #A7765E;
+    padding: 0.20em;
+    border-radius: 5px;
+    width: 25%;
+    margin: 7px 10px;
+}
+
 /* md */
 @media screen and (min-width: 960px) and (max-width: 1279px) {
 
@@ -44,6 +63,9 @@
     .list-detail-container {
         width: 100%;
         height: calc(100% - 100px);
+    }
+    .list-sort-header {
+        display: none;
     }
 }
 
@@ -64,5 +86,8 @@
     }  
     .list-recipe {
         flex: 1 1 100%;
+    }
+    .list-sort-header {
+        display: none;
     }
 }
