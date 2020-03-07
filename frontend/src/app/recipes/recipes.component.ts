@@ -23,7 +23,7 @@ export class RecipesComponent implements OnInit {
   currentListName$: Observable<string>
   mqAlias$: any;
   filterText$ = new Subject<string>();
-  searchToggle: false;
+  searchToggle: boolean;
 
 
   constructor(private fascade: RecipeFacade,
@@ -108,10 +108,6 @@ export class RecipesComponent implements OnInit {
 
   toggle() {
     this.sidenav.toggle();
-  }
-
-  filterChange(e: any) {
-    console.log(e.value);
   }
 }
 

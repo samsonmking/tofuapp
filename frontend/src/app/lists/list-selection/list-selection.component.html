@@ -1,6 +1,6 @@
 <div fxLayout="column" fxLayoutAlign="stretch" class="selection-container">
   <div fxFlex="1 1" class="shopping-lists">
-    <div class="sub-heading list-header sans-serif-emphasis">SHOPPING LISTS</div>
+    <div class="list-header sans-serif-emphasis">SHOPPING LISTS</div>
     <mat-list fxLayout="column" fxLayoutAlign="stretch">
       <mat-list-item class="list-item" *ngFor="let list of lists$ | async"
         [class.active]="(defaultListId$ | async) === list.id" routerLink="/lists/{{list.id}}">

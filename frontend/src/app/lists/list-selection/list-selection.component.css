@@ -28,3 +28,17 @@
 .shopping-lists {
     height: 100%;
 }
+
+/* sm */
+@media screen and (min-width: 600px) and (max-width: 959px) {
+    .list-header {
+        display: none;
+    }
+}
+
+/* xs */
+@media screen and (max-width: 599px) {
+    .list-header {
+        display: none;
+    }
+}
