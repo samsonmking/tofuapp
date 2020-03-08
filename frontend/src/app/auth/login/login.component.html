@@ -7,6 +7,7 @@
       <mat-form-field>
         <input matInput formControlName="username" placeholder="Email">
       </mat-form-field>
+      
       <div *ngIf="usernameControl.errors && usernameControl.errors.invalid" fxLayout="row" fxLayoutAlign="start center" class="form-error">
         <i class="material-icons error-icon">error</i>
         Incorrect Email
@@ -18,7 +19,8 @@
         <i class="material-icons error-icon">error</i>
         Incorrect Password
       </div>
-      <button fxFlexAlign="end" mat-raised-button color="primary" [disabled]="!loginForm.valid">Submit</button>
+      <button fxFlexAlign="end" mat-raised-button color="primary" [disabled]="!loginForm.valid">Submit</button>   
     </form>
+    <button class="forgot-password" (click)="resetPassword()">Forgot Password?</button>
   </mat-card-content>
 </mat-card>

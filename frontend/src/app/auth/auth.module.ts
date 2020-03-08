@@ -5,15 +5,20 @@ import { MaterialModule } from '../material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { RegisterComponent } from './register/register.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ResetPasswordComponent
   ],
   exports: [
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+  ],
+  entryComponents: [
+    ResetPasswordComponent
   ],
   imports: [
     CommonModule,

@@ -7,6 +7,7 @@ import { map, filter } from 'rxjs/operators';
 import { UserState } from './user.reducer';
 import { ofType } from '@ngrx/effects';
 import * as firebase from 'firebase/app';
+import { UserService } from '../../services/user/user.service';
 
 @Injectable({
     providedIn: 'root'
@@ -18,7 +19,11 @@ export class UserFacade {
     passwordFailed$: Observable<LoginPasswordFailed>;
     registerFailed$: Observable<RegisterError>;
     
-    constructor(private store: Store<AppState>, private actions$: ActionsSubject) {
+    constructor(
+        private store: Store<AppState>,
+        private actions$: ActionsSubject,
+        private service: UserService
+        ) {
         this.loggedIn$ = this.store.pipe(
             select(selectUser),
             map(user => user.loggedIn)
@@ -51,6 +56,10 @@ export class UserFacade {
 
     register(email: string, password: string) {
         this.store.dispatch(new RegisterRequest(email, password));
+    }
+
+    resetPassword(email: string) {
+        return this.service.resetPassword(email);
     }
 
     getAuth() {

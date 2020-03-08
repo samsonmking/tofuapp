@@ -37,6 +37,10 @@ export class UserService {
                 })
             );
     }
+
+    resetPassword(email: string) {
+        return firebase.auth().sendPasswordResetEmail(email);
+    }
 }
 
 export interface LoginError extends Error {

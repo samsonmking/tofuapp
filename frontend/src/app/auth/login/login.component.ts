@@ -2,6 +2,8 @@ import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { UserFacade } from 'src/app/core-data/state/user/user.facade';
 import { untilDestroyed } from 'ngx-take-until-destroy';
+import { MatDialog } from '@angular/material';
+import { ResetPasswordComponent } from '../reset-password/reset-password.component';
 
 @Component({
   selector: 'app-login',
@@ -13,9 +15,12 @@ export class LoginComponent implements OnInit, OnDestroy {
   readonly usernameControl: AbstractControl;
   readonly passwordControl: AbstractControl;
 
-  constructor(private readonly formBuilder: FormBuilder,
+  constructor(
+    private readonly formBuilder: FormBuilder,
     private readonly userFacade: UserFacade,
-    private readonly ref: ChangeDetectorRef) {
+    private readonly ref: ChangeDetectorRef,
+    private readonly matDialog: MatDialog
+    ) {
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.compose([Validators.required, Validators.email])],
       password: ['', Validators.required]
@@ -48,5 +53,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     const username = this.loginForm.value.username;
     const password = this.loginForm.value.password;
     this.userFacade.login(username, password);
+  }
+
+  resetPassword() {
+    this.matDialog.open(ResetPasswordComponent, { width: '400px' });
   }
 }
