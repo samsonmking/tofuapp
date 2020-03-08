@@ -1,7 +1,7 @@
 import { AppState, selectUser } from '..';
 import { ActionsSubject, Store, select } from '@ngrx/store';
 import { Injectable } from '@angular/core';
-import { LoginRequest, LogoutRequest, LoginUsernameFailed, LoginPasswordFailed, UserActionTypes } from './user.actions';
+import { LoginRequest, LogoutRequest, LoginUsernameFailed, LoginPasswordFailed, UserActionTypes, RegisterRequest, RegisterError } from './user.actions';
 import { Observable, from } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 import { UserState } from './user.reducer';
@@ -16,6 +16,7 @@ export class UserFacade {
     user$: Observable<UserState>;
     usernameFailed$: Observable<LoginUsernameFailed>;
     passwordFailed$: Observable<LoginPasswordFailed>;
+    registerFailed$: Observable<RegisterError>;
     
     constructor(private store: Store<AppState>, private actions$: ActionsSubject) {
         this.loggedIn$ = this.store.pipe(
@@ -34,6 +35,10 @@ export class UserFacade {
         this.passwordFailed$ = this.actions$.pipe(
             ofType<LoginPasswordFailed>(UserActionTypes.LoginPasswordFailed)
         );
+
+        this.registerFailed$ = this.actions$.pipe(
+            ofType<RegisterError>(UserActionTypes.RegisterError)
+        );
     }
 
     login(username: string, password: string) {
@@ -42,6 +47,10 @@ export class UserFacade {
 
     logout() {
         this.store.dispatch(new LogoutRequest);
+    }
+
+    register(email: string, password: string) {
+        this.store.dispatch(new RegisterRequest(email, password));
     }
 
     getAuth() {

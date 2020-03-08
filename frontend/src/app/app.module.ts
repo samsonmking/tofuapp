@@ -15,11 +15,12 @@ import { AuthInterceptor } from './auth/auth-interceptor';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { SharedModule } from './shared/shared.module';
 import { AuthProvider } from './auth/auth-provider';
+import { LandingModule } from './landing/landing.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ToolbarComponent,
+    ToolbarComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +33,8 @@ import { AuthProvider } from './auth/auth-provider';
     RecipesModule,
     ListsModule,
     AuthModule,
-    SharedModule
+    SharedModule,
+    LandingModule
   ],
   providers: [
     AuthProvider,

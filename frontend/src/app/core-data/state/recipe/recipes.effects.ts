@@ -47,7 +47,7 @@ export class RecipesEffects {
 
     @Effect()
     loggedIn$ = this.actions$.pipe(
-        ofType(UserActionTypes.LoginComplete, UserActionTypes.LoadUserComplete),
+        ofType(UserActionTypes.LoginComplete, UserActionTypes.LoadUserComplete, UserActionTypes.RegisterComplete),
         map(_ => new GetAllRequest())
     );
 

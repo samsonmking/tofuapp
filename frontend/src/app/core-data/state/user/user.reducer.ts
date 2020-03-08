@@ -1,4 +1,10 @@
-import { UserActions, UserActionTypes, LoginComplete, LogoutComplete, LoadUserComplete, } from './user.actions';
+import {
+    UserActions,
+    UserActionTypes,
+    LoginComplete,
+    RegisterComplete,
+    LoadUserComplete
+} from './user.actions';
 import { User } from '../../models/user/user';
 
 export interface UserState {
@@ -18,6 +24,14 @@ export function userReducer(state: UserState = { loggedIn: false }, action: User
 
         case UserActionTypes.LogoutComplete: {
             return { loggedIn: false }
+        }
+
+        case UserActionTypes.RegisterComplete: {
+            const registerAction = action as RegisterComplete;
+            return { ...state,
+                loggedIn: true,
+                user: registerAction.user
+            }
         }
 
         case UserActionTypes.LoadUserComplete: {

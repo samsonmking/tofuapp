@@ -1,26 +1,24 @@
-<div fxFlexFill fxLayout="column" fxLayoutAlign="center center" class="login-container">
-  <mat-card>
-    <mat-card-title>
-      Login
-    </mat-card-title>
-    <mat-card-content>
-      <form fxLayout="column" [formGroup]="loginForm" (ngSubmit)="login()">
-        <mat-form-field>
-          <input matInput formControlName="username" placeholder="Username">
-        </mat-form-field>
-        <div *ngIf="usernameControl.errors && usernameControl.errors.invalid" fxLayout="row" fxLayoutAlign="start center" class="form-error">
-          <i class="material-icons error-icon">error</i>
-          Incorrect Username
-        </div>
-        <mat-form-field>
-          <input matInput formControlName="password" placeHolder="Password" type="password">
-        </mat-form-field>
-        <div *ngIf="passwordControl.errors && passwordControl.errors.invalid" fxLayout="row" fxLayoutAlign="start center" class="form-error">
-          <i class="material-icons error-icon">error</i>
-          Incorrect Password
-        </div>
-        <button fxFlexAlign="end" mat-raised-button color="primary" [disabled]="!loginForm.valid">Submit</button>
-      </form>
-    </mat-card-content>
-  </mat-card>
-</div>
+<mat-card>
+  <mat-card-title>
+    Existing User
+  </mat-card-title>
+  <mat-card-content>
+    <form fxLayout="column" [formGroup]="loginForm" (ngSubmit)="login()">
+      <mat-form-field>
+        <input matInput formControlName="username" placeholder="Email">
+      </mat-form-field>
+      <div *ngIf="usernameControl.errors && usernameControl.errors.invalid" fxLayout="row" fxLayoutAlign="start center" class="form-error">
+        <i class="material-icons error-icon">error</i>
+        Incorrect Email
+      </div>
+      <mat-form-field>
+        <input matInput formControlName="password" placeholder="Password" type="password">
+      </mat-form-field>
+      <div *ngIf="passwordControl.errors && passwordControl.errors.invalid" fxLayout="row" fxLayoutAlign="start center" class="form-error">
+        <i class="material-icons error-icon">error</i>
+        Incorrect Password
+      </div>
+      <button fxFlexAlign="end" mat-raised-button color="primary" [disabled]="!loginForm.valid">Submit</button>
+    </form>
+  </mat-card-content>
+</mat-card>

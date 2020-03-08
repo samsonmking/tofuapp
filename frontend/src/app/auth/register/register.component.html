@@ -1,0 +1,31 @@
+<mat-card>
+  <mat-card-title>
+    New User
+  </mat-card-title>
+  <mat-card-content>
+    <form fxLayout="column" [formGroup]="registerForm" (ngSubmit)="register()">
+      <mat-form-field>
+        <input matInput formControlName="email" placeholder="Email">
+      </mat-form-field>
+      <div *ngIf="emailControl.errors && emailControl.errors.invalid" fxLayout="row" fxLayoutAlign="start center" class="form-error">
+        <i class="material-icons error-icon">error</i>
+        {{emailError}}
+      </div>
+      <mat-form-field>
+        <input matInput formControlName="password" placeholder="Password" type="password">
+      </mat-form-field>
+      <div *ngIf="passwordControl.errors && passwordControl.errors.invalid" fxLayout="row" fxLayoutAlign="start center" class="form-error">
+        <i class="material-icons error-icon">error</i>
+        {{passwordError}}
+      </div>
+      <mat-form-field>
+        <input matInput formControlName="confirmPassword" placeholder="Confirm Password" type="password">
+      </mat-form-field>
+      <div *ngIf="confirmPasswordControl.errors && confirmPasswordControl.errors.invalid" fxLayout="row" fxLayoutAlign="start center" class="form-error">
+        <i class="material-icons error-icon">error</i>
+        Passwords do not match
+      </div>
+      <button fxFlexAlign="end" mat-raised-button color="primary" [disabled]="!registerForm.valid">Submit</button>
+    </form>
+  </mat-card-content>
+</mat-card>

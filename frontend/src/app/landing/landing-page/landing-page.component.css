@@ -1,0 +1,32 @@
+.landing-container {
+    height: 100%;
+    min-height: 100%;
+    width: 100%;
+    min-width: 100%;
+    background-image: url('/assets/img/background-1080.jpg');
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+mat-tab-group {
+    width: 30%;
+    background-color: white;
+}
+
+
+/* lt-md */
+@media screen and (max-width: 959px) {
+    mat-tab-group {
+        width: 60%;
+    }
+}
+
+/* lt-sm */
+@media screen and (max-width: 599px) {
+    mat-tab-group {
+        width: 80%;
+    }
+}

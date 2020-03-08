@@ -11,7 +11,10 @@ export enum UserActionTypes {
     LoadUserComplete = '[User] Load user complete',
     LoadUserFailed = '[User] Load user failed',
     LogoutRequest = '[User] Logout Request',
-    LogoutComplete = '[User] Logout Complete'
+    LogoutComplete = '[User] Logout Complete',
+    RegisterRequest = '[User] Register Request',
+    RegisterError = '[User] Register Error',
+    RegisterComplete = '[User] Register Complete'
 }
 
 export class LoginRequest implements Action {
@@ -59,6 +62,30 @@ export class LogoutComplete implements Action {
     constructor() { }
 }
 
+export class RegisterRequest implements Action {
+    type = UserActionTypes.RegisterRequest;
+    constructor(public email: string, public password: string) { }
+}
+
+export class RegisterError implements Action {
+    type = UserActionTypes.RegisterError;
+    constructor(public error: RegisterError.ErrorType) { }
+}
+
+export namespace RegisterError {
+    export enum ErrorType {
+        EmailInUse = 'auth/email-already-in-use',
+        InvalidEmail = 'auth/invalid-email',
+        WeakPassword = 'auth/weak-password',
+        Other = 'other'
+    }
+}
+
+export class RegisterComplete implements Action {
+    type = UserActionTypes.RegisterComplete;
+    constructor(public user: User) {}
+}
+
 export type UserActions = 
 LoginRequest |
 LoginComplete |
@@ -68,4 +95,7 @@ LogoutRequest |
 LogoutComplete |
 LoadUserRequest |
 LoadUserComplete | 
-LoadUserFailed;
+LoadUserFailed |
+RegisterRequest |
+RegisterError |
+RegisterComplete;

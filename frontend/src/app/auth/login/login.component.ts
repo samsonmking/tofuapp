@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private readonly userFacade: UserFacade,
     private readonly ref: ChangeDetectorRef) {
     this.loginForm = this.formBuilder.group({
-      username: ['', Validators.required],
+      username: ['', Validators.compose([Validators.required, Validators.email])],
       password: ['', Validators.required]
     });
     this.usernameControl = this.loginForm.controls['username'];
@@ -28,14 +28,14 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.userFacade.usernameFailed$
       .pipe(untilDestroyed(this))  
       .subscribe(_ => {
-        this.usernameControl.setErrors({ 'invalid': true });
+        this.usernameControl.setErrors({ invalid: true });
         this.ref.markForCheck();
       });
 
     this.userFacade.passwordFailed$
       .pipe(untilDestroyed(this)) 
       .subscribe(_ => {
-        this.passwordControl.setErrors({ 'invalid': true });
+        this.passwordControl.setErrors({ invalid: true });
         this.ref.markForCheck();
       });
   }

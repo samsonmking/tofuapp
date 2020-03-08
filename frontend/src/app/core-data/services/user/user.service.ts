@@ -10,7 +10,8 @@ export class UserService {
     login(username: string, password: string): Observable<User> {
         return from(
             firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-                .then(() => firebase.auth().signInWithEmailAndPassword(username, password))).pipe(
+                .then(() => firebase.auth().signInWithEmailAndPassword(username, password)))
+                .pipe(
                     map(fbUser => {
                         return { id: fbUser.user.email } as User;
                     }),
@@ -23,8 +24,31 @@ export class UserService {
     logout() {
         return from(firebase.auth().signOut())
     }
+
+    register(email: string, password: string) {
+        return from(firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+                .then(() => firebase.auth().createUserWithEmailAndPassword(email, password)))
+            .pipe(
+                map(fbUser => {
+                    return { id: fbUser.user.email } as User;
+                }),
+                catchError(e => {
+                    return throwError({ code: e.code } as LoginError)
+                })
+            );
+    }
 }
 
 export interface LoginError extends Error {
-    code: 'auth/invalid-email' | 'auth/user-disabled' | 'auth/user-not-found' | 'auth/wrong-password'
+    code: 'auth/invalid-email' |
+         'auth/user-disabled' |
+         'auth/user-not-found' |
+         'auth/wrong-password';
+}
+
+export interface RegisterServiceError extends Error {
+    code: 'auth/email-already-in-use' |
+        'auth/invalid-email' |
+        'auth/operation-not-allowed' |
+        'auth/weak-password';
 }

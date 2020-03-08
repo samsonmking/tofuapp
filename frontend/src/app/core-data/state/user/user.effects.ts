@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Effect, Actions, ofType } from '@ngrx/effects';
-import { UserService, LoginError } from '../../services/user/user.service';
+import { UserService, LoginError, RegisterServiceError } from '../../services/user/user.service';
 import { 
     UserActionTypes,
     LoginRequest,
@@ -8,7 +8,10 @@ import {
     LogoutRequest,
     LogoutComplete,
     LoginUsernameFailed,
-    LoginPasswordFailed
+    LoginPasswordFailed,
+    RegisterRequest,
+    RegisterComplete,
+    RegisterError
 } from './user.actions';
 import { map, switchMap, tap, withLatestFrom, catchError } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
@@ -44,7 +47,7 @@ export class UserEffects {
 
     @Effect({ dispatch: false })
     loginComplete$ = this.actions$.pipe(
-        ofType<LoginComplete>(UserActionTypes.LoginComplete),
+        ofType(UserActionTypes.LoginComplete, UserActionTypes.RegisterComplete),
         withLatestFrom(this.store.pipe(select(selectRouterState))),
         tap(([_, router]) => {
             const routerState = router.state;
@@ -74,5 +77,27 @@ export class UserEffects {
             new RemoveListsFromStore(),
             new RemoveListItemsFromStore()
         ])
+    );
+
+    @Effect()
+    registerRequest$ = this.actions$.pipe(
+        ofType<RegisterRequest>(UserActionTypes.RegisterRequest),
+        switchMap((request: RegisterRequest) => {
+            return this.service.register(request.email, request.password).pipe(
+                map(user => new RegisterComplete(user)),
+                catchError((e: RegisterServiceError) => {
+                    switch(e.code) {
+                        case 'auth/email-already-in-use': 
+                            return of(new RegisterError(RegisterError.ErrorType.EmailInUse));
+                        case 'auth/invalid-email':
+                            return of(new RegisterError(RegisterError.ErrorType.InvalidEmail));
+                        case 'auth/weak-password':
+                            return of(new RegisterError(RegisterError.ErrorType.WeakPassword));
+                        default:
+                            return of(new RegisterError(RegisterError.ErrorType.Other));
+                    } 
+                })
+            )
+        })
     );
 }
