@@ -3,7 +3,7 @@
     <div class="list-header sans-serif-emphasis">SHOPPING LISTS</div>
     <mat-list fxLayout="column" fxLayoutAlign="stretch">
       <mat-list-item class="list-item" *ngFor="let list of lists$ | async"
-        [class.active]="(defaultListId$ | async) === list.id" routerLink="/lists/{{list.id}}">
+        [class.active]="(defaultListId$ | async) === list.id" routerLink="{{listBase}}/{{list.id}}">
         <div fxFlexFill fxLayout="row" fxLayoutAlign="start center">
           <div fxFlex="1 0">{{list.name}}</div>
           <div fxFlex="0 0 30px">

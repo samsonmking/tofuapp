@@ -3,6 +3,7 @@ import { AuthModule } from './auth.module';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { UserFacade } from '../core-data/state/user/user.facade';
 import { tap } from 'rxjs/operators';
+import { getRouteUrl, RoutePaths } from '../shared/routes';
 
 @Injectable({ providedIn: AuthModule })
 export class LoggedInGuard implements CanActivate {
@@ -15,7 +16,7 @@ export class LoggedInGuard implements CanActivate {
         return this.userFacade.loggedIn$.pipe(
             tap(loggedIn => {
                 if (!loggedIn) {
-                    this.router.navigate(['/login'], {
+                    this.router.navigate([getRouteUrl(RoutePaths.Login)], {
                         queryParams: {
                             return: state.url
                         }

@@ -5,6 +5,7 @@ import { ShoppingList } from 'src/app/core-data/models/shopping-list/shopping-li
 import { MatDialog } from '@angular/material';
 import { AddListComponent } from 'src/app/shared/add-list/add-list.component';
 import { RenameListComponent } from '../rename-list/rename-list.component';
+import { getRouteUrl, RoutePaths } from 'src/app/shared/routes';
 
 @Component({
   selector: 'app-list-selection',
@@ -12,6 +13,7 @@ import { RenameListComponent } from '../rename-list/rename-list.component';
   styleUrls: ['./list-selection.component.css']
 })
 export class ListSelectionComponent implements OnInit {
+  readonly listBase = getRouteUrl(RoutePaths.Lists);
   lists$: Observable<ShoppingList[]>;
   defaultListId$: Observable<number>;
 

@@ -24,6 +24,7 @@ import { ShoppingListItemsActionTypes, RemoveItemsFromListRequest, RemoveItemsFr
 import { of, EMPTY } from 'rxjs';
 import { Router } from '@angular/router';
 import { UserActionTypes } from '../user/user.actions';
+import { getRouteUrl, RoutePaths } from 'src/app/shared/routes';
 
 @Injectable({providedIn: 'root'})
 export class ShoppingListEffects {
@@ -64,7 +65,7 @@ export class ShoppingListEffects {
         ofType<CreateNewListRequest>(ShoppingListActionTypes.CreateNewListRequest),
         switchMap(action => this.service.addShoppingList({ name: action.name }).pipe(
             map(list => new CreateNewListComplete(list)),
-            tap(action =>  this.router.navigate([`/lists/${action.list.id}`]))
+            tap(action =>  this.router.navigate([`${getRouteUrl(RoutePaths.Lists)}/${action.list.id}`]))
         ))
     );
 
@@ -87,7 +88,7 @@ export class ShoppingListEffects {
         withLatestFrom(this.actions$.pipe(ofType<RouterNavigatedAction<RouterStateUrl>>(ROUTER_NAVIGATED))),
         tap(([action, route]) => {
             if(route.payload.routerState.url.includes('lists')) {
-                this.router.navigate([`/lists/${action.list.id}`]);
+                this.router.navigate([`${getRouteUrl(RoutePaths.Lists)}/${action.list.id}`]);
             }
         })
     );
@@ -100,7 +101,7 @@ export class ShoppingListEffects {
             if(route.payload.routerState.url.includes('lists')) {
                 const params = route.payload.routerState.params;
                 if(action.id) {
-                    this.router.navigate([`/lists/${action.id}`]);
+                    this.router.navigate([`${getRouteUrl(RoutePaths.Lists)}/${action.id}`]);
                 }
             }
         })

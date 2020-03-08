@@ -5,14 +5,16 @@ import { RecipeDetailComponent } from './recipes/recipe-detail/recipe-detail.com
 import { ListsComponent } from './lists/lists.component';
 import { ListDetailComponent } from './lists/list-detail/list-detail.component';
 import { LoggedInGuard } from './auth/logged-in-guard';
-import { LoginComponent } from './auth/login/login.component';
 import { NotLoggedInGuard } from './auth/not-logged-in-guard';
 import { LandingPageComponent } from './landing/landing-page/landing-page.component';
+import { RoutePaths } from './shared/routes';
+
+
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: RoutePaths.Login, pathMatch: 'full' },
   {
-    path: 'recipes',
+    path: RoutePaths.Recipes,
     canActivate: [LoggedInGuard],
     component: RecipesComponent,
     children: [
@@ -20,7 +22,7 @@ export const routes: Routes = [
     ]
   },
   {
-    path: 'lists',
+    path: RoutePaths.Lists,
     canActivate: [LoggedInGuard],
     component: ListsComponent,
     children: [
@@ -28,7 +30,7 @@ export const routes: Routes = [
     ]
   },
   {
-    path: 'login',
+    path: RoutePaths.Login,
     component: LandingPageComponent,
     canActivate: [NotLoggedInGuard]
   },

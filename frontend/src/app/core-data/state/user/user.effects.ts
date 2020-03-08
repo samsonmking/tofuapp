@@ -22,6 +22,7 @@ import { RemoveRecipesFromStore } from '../recipe/recipes.actions';
 import { RemoveIngredientsFromStore } from '../ingredient/ingredient.actions';
 import { RemoveListsFromStore } from '../shopping-list/shopping-list.actions';
 import { RemoveListItemsFromStore } from '../shopping-list-item/shopping-list-items.actions';
+import { getRouteUrl, RoutePaths } from 'src/app/shared/routes';
 
 @Injectable({providedIn: 'root'})
 export class UserEffects {
@@ -54,7 +55,7 @@ export class UserEffects {
             if(routerState && routerState.queryParams["return"]) {
                 this.router.navigate([routerState.queryParams["return"]]);
             } else {
-                this.router.navigate(["/recipes"]);
+                this.router.navigate([getRouteUrl(RoutePaths.Recipes)]);
             }
         })
     );
@@ -70,7 +71,7 @@ export class UserEffects {
     @Effect()
     logoutComplete$ = this.actions$.pipe(
         ofType<LogoutComplete>(UserActionTypes.LogoutComplete),
-        tap(_ => this.router.navigate(['/login'])),
+        tap(_ => this.router.navigate([getRouteUrl(RoutePaths.Login)])),
         switchMap(_ => [
             new RemoveRecipesFromStore(),
             new RemoveIngredientsFromStore(),
