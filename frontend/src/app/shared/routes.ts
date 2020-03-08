@@ -1,6 +1,6 @@
 export enum RoutePaths {
     Recipes = 'recipes',
-    Login = 'login',
+    Login = '',
     Lists = 'lists'
   }
   

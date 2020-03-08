@@ -9,10 +9,7 @@ import { NotLoggedInGuard } from './auth/not-logged-in-guard';
 import { LandingPageComponent } from './landing/landing-page/landing-page.component';
 import { RoutePaths } from './shared/routes';
 
-
-
 export const routes: Routes = [
-  { path: '', redirectTo: RoutePaths.Login, pathMatch: 'full' },
   {
     path: RoutePaths.Recipes,
     canActivate: [LoggedInGuard],

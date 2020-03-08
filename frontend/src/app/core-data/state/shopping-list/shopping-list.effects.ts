@@ -20,7 +20,11 @@ import { RouterNavigatedAction, ROUTER_NAVIGATED } from '@ngrx/router-store';
 import { RouterStateUrl } from '../custom-route-serializer';
 import { AppState } from '..';
 import { Store } from '@ngrx/store';
-import { ShoppingListItemsActionTypes, RemoveItemsFromListRequest, RemoveItemsFromListComplete } from '../shopping-list-item/shopping-list-items.actions';
+import { 
+    ShoppingListItemsActionTypes,
+    RemoveItemsFromListRequest,
+    RemoveItemsFromListComplete
+} from '../shopping-list-item/shopping-list-items.actions';
 import { of, EMPTY } from 'rxjs';
 import { Router } from '@angular/router';
 import { UserActionTypes } from '../user/user.actions';
@@ -62,10 +66,14 @@ export class ShoppingListEffects {
 
     @Effect()
     createNewList$ = this.actions$.pipe(
-        ofType<CreateNewListRequest>(ShoppingListActionTypes.CreateNewListRequest),
+        ofType<CreateNewListRequest>(ShoppingListActionTypes.CreateNewListRequest),    
         switchMap(action => this.service.addShoppingList({ name: action.name }).pipe(
             map(list => new CreateNewListComplete(list)),
-            tap(action =>  this.router.navigate([`${getRouteUrl(RoutePaths.Lists)}/${action.list.id}`]))
+            tap((action) =>  {
+                if (this.router.url.includes(RoutePaths.Lists)) {
+                    this.router.navigate([`${getRouteUrl(RoutePaths.Lists)}/${action.list.id}`])
+                }          
+            })
         ))
     );
 
@@ -73,7 +81,7 @@ export class ShoppingListEffects {
     routerNavigationToLists$ = this.actions$.pipe(
         ofType<RouterNavigatedAction<RouterStateUrl>>(ROUTER_NAVIGATED),
         filter(route => {
-            return route.payload.routerState.url.includes('lists') &&
+            return route.payload.routerState.url.includes(RoutePaths.Lists) &&
                 route.payload.routerState.params['id']
         }),
         map(route => {
@@ -87,7 +95,7 @@ export class ShoppingListEffects {
         ofType<CreateDefaultListComplete>(ShoppingListActionTypes.CreateDefaultListComplete),
         withLatestFrom(this.actions$.pipe(ofType<RouterNavigatedAction<RouterStateUrl>>(ROUTER_NAVIGATED))),
         tap(([action, route]) => {
-            if(route.payload.routerState.url.includes('lists')) {
+            if(route.payload.routerState.url.includes(RoutePaths.Lists)) {
                 this.router.navigate([`${getRouteUrl(RoutePaths.Lists)}/${action.list.id}`]);
             }
         })
@@ -98,7 +106,7 @@ export class ShoppingListEffects {
         ofType<SetDefaultList>(ShoppingListActionTypes.SetDefaultList),
         withLatestFrom(this.actions$.pipe(ofType<RouterNavigatedAction<RouterStateUrl>>(ROUTER_NAVIGATED))),
         tap(([action, route]) => {
-            if(route.payload.routerState.url.includes('lists')) {
+            if(route.payload.routerState.url.includes(RoutePaths.Lists)) {
                 const params = route.payload.routerState.params;
                 if(action.id) {
                     this.router.navigate([`${getRouteUrl(RoutePaths.Lists)}/${action.id}`]);
