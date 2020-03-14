@@ -3,10 +3,12 @@ version: '3'
 services:
   db:
     image: postgres:11.6
+    restart: unless-stopped
     volumes:
       - $HOME/docker/volumes/postgres:/var/lib/postgresql/data
   app:
     image: docker.pkg.github.com/samsonmking/tofuapp/app:latest
+    restart: unless-stopped
     env_file:
       - ./prod.env
     environment:
@@ -17,6 +19,7 @@ services:
       - $HOME/docker/volumes/app_images:/usr/src/app/images
   nginx:
     image: docker.pkg.github.com/samsonmking/tofuapp/frontend
+    restart: unless-stopped
     ports:
       - "80:80"
       - "443:443"
