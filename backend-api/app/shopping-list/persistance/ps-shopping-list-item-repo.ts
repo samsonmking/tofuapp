@@ -7,7 +7,8 @@ export class ShoppingListItemRepoPS implements ShoppingListItemRepo {
         const result = await query(`
             SELECT id, shopping_list_id, ingredient_id, recipe_id, checked  
             FROM shopping_list_items 
-            WHERE shopping_list_id=$1`, [listId]);
+            WHERE shopping_list_id=$1
+            ORDER BY id ASC`, [listId]);
         return result.rows;
     }    
     

@@ -7,7 +7,8 @@ export class ShoppingListPSRepo implements ShoppingListRepo {
         const result = await query(`
             SELECT id, name 
             FROM shopping_lists
-            WHERE user_id=$1`, [userId]);
+            WHERE user_id=$1
+            ORDER BY id DESC`, [userId]);
         return result.rows;
     }    
     
