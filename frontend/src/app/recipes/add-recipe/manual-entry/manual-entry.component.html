@@ -1,16 +1,16 @@
 <form [formGroup]="newRecipeForm" (ngSubmit)="onRecipeSubmit()" #entryFrom="ngForm">
   <mat-card-content>
     <mat-form-field>
-      <input matInput type="text" formControlName="name" placeholder="Name">
+      <input matInput type="text" formControlName="name" placeholder="Name" autocomplete="off">
     </mat-form-field>
     <mat-form-field>
-      <input matInput formControlName="url" placeholder="Recipe URL">
+      <input matInput formControlName="url" placeholder="Recipe URL" autocomplete="off">
     </mat-form-field>
     <mat-form-field>
-      <input matInput formControlName="imageUrl" placeholder="Image URL">
+      <input matInput formControlName="imageUrl" placeholder="Image URL" autocomplete="off">
     </mat-form-field>
     <mat-form-field>
-      <textarea matInput formControlName="ingredients" placeholder="Ingredients" class="ingredient-list"></textarea>
+      <textarea matInput formControlName="ingredients" placeholder="Ingredients" class="ingredient-list" autocomplete="off"></textarea>
     </mat-form-field>
     <div *ngIf="errors$ | async as errors" class="form-error sans-serif-emphasis">
         <ul *ngFor="let error of errors">

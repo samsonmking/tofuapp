@@ -5,7 +5,7 @@
   <mat-card-content>
     <form fxLayout="column" [formGroup]="loginForm" (ngSubmit)="login()">
       <mat-form-field>
-        <input matInput formControlName="username" placeholder="Email">
+        <input matInput formControlName="username" placeholder="Email" autocomplete="off">
       </mat-form-field>
       
       <div *ngIf="usernameControl.errors && usernameControl.errors.invalid" fxLayout="row" fxLayoutAlign="start center" class="form-error">
@@ -13,7 +13,7 @@
         Incorrect Email
       </div>
       <mat-form-field>
-        <input matInput formControlName="password" placeholder="Password" type="password">
+        <input matInput formControlName="password" placeholder="Password" type="password" autocomplete="off">
       </mat-form-field>
       <div *ngIf="passwordControl.errors && passwordControl.errors.invalid" fxLayout="row" fxLayoutAlign="start center" class="form-error">
         <i class="material-icons error-icon">error</i>

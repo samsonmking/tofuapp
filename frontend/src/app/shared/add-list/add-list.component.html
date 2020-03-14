@@ -1,6 +1,6 @@
 <form [formGroup]="saveListForm" (ngSubmit)="createList()" fxLayout="column">
   <mat-form-field>
-    <input matInput formControlName="name" placeholder="Shopping List Name">
+    <input matInput formControlName="name" placeholder="Shopping List Name" autocomplete="off">
   </mat-form-field>
   <button mat-flat-button color="accent" fxFlexAlign="end" [disabled]="!saveListForm.valid">Submit</button>
 </form>

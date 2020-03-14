@@ -22,7 +22,7 @@
     <mat-sidenav-content>
       <div *ngIf="searchToggle || config.searchShownByDefault" class="search-header">
           <i *ngIf="config.searchShownByDefault" class="material-icons">search</i>
-          <input class="search-box" type="text" placeholder="Search" (keyup)="filterText$.next($event.target.value)">
+          <input class="search-box" type="text" placeholder="Search" (keyup)="filterText$.next($event.target.value)" autocomplete="off">
       </div>
           
 
