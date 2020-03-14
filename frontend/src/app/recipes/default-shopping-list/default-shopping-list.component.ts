@@ -6,6 +6,7 @@ import { ShoppingListFacade } from 'src/app/core-data/state/shopping-list/shoppi
 import { map } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { AddListComponent } from 'src/app/shared/add-list/add-list.component';
+import { getRouteUrl, RoutePaths } from 'src/app/shared/routes';
 
 @Component({
   selector: 'app-default-shopping-list',
@@ -16,6 +17,7 @@ import { AddListComponent } from 'src/app/shared/add-list/add-list.component';
 export class DefaultShoppingListComponent implements OnInit {
   public recipesInList$: Observable<Recipe[]>;
   public currentListName$: Observable<string>;
+  readonly recipeBase = getRouteUrl(RoutePaths.Recipes);
 
   constructor(
     private readonly itemFacade: ShoppingListItemFacade,

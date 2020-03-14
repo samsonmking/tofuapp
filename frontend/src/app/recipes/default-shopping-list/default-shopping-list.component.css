@@ -14,3 +14,7 @@ button .material-icons {
 mat-list {
     margin-bottom: 30px;
 }
+
+.recipe-title {
+    cursor: pointer;
+}

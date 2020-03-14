@@ -7,7 +7,7 @@
   <mat-list fxFlex="1 1" fxLayout="column" fxLayoutAlign="stretch">
     <mat-list-item  class="list-item" *ngFor="let recipe of recipesInList$ | async">
       <div fxFlexFill fxLayout="row" fxLayoutAlign="start center">
-        <div fxFlex="1 0" class="recipe-title">{{recipe.name}}</div>
+        <div fxFlex="1 0" class="recipe-title" routerLink="{{recipeBase}}/{{recipe.id}}">{{recipe.name}}</div>
         <div fxFlex="0 0 30px">
           <button mat-icon-button (click)="removeFromList(recipe.id)">
             <i class="material-icons">remove_circle</i>
