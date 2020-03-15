@@ -66,6 +66,15 @@ mat-tab-group {
     padding-bottom: 20px;
 }
 
+.youtube {
+    flex: 0 0 360px;
+    background-color: #f0e3c2;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+}
+
 .footer {
     text-align: center;
     font-weight: normal;
