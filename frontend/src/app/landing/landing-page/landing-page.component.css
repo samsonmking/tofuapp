@@ -30,6 +30,7 @@ mat-tab-group {
 }
 
 .row-container {
+    flex: 1 0 auto;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -60,7 +61,6 @@ mat-tab-group {
 }
 
 .features {
-    flex: 1 1 100%;
     background-color: #ffe6a7;
     background-size: cover;
     padding-bottom: 20px;
@@ -76,6 +76,7 @@ mat-tab-group {
 }
 
 .footer {
+    flex: 0 0;
     text-align: center;
     font-weight: normal;
     background-color: #A7765E;
